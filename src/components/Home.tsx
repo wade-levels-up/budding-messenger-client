@@ -8,7 +8,7 @@ const Home = () => {
       </header>
       <main className="flex flex-col">
         <Outlet />
-        <h2>Here are some other pages</h2>
+        <h2>Here are some other links</h2>
         <nav>
           <ul>
             <li>
