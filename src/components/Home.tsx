@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
       <header>
-        <h1>Budding Messenger</h1>
+        <h1 className="text-center text-4xl mb-6">🌱 Budding Messenger</h1>
       </header>
       <main className="flex flex-col">
         <Outlet />

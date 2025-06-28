@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Home from "./components/Home.tsx";
-import Login from "./components/Login.tsx";
+import SignIn from "./components/SignIn.tsx";
 import Error from "./components/Error.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    children: [{ index: true, element: <Login /> }],
+    children: [{ index: true, element: <SignIn /> }],
     errorElement: <Error />,
   },
 ]);
