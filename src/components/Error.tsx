@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
+  const navigate = useNavigate();
+
+  const navigateHome = () => {
+    navigate("/");
+  };
+
   return (
-    <div>
-      <h1>Oh no, this route doesn't exist!</h1>
-      <Link to="/">
-        You can go back to the home page by clicking here, though!
-      </Link>
+    <div className="flex flex-col gap-8 items-center">
+      <h1 className="text-xl">Oh no... This route doesn't exist!</h1>
+      <p>Click the button below to return home.</p>
+      <button
+        className="bg-lime-600 text-white p-2 pl-4 pr-4 rounded-xl hover:bg-lime-500 hover:cursor-pointer"
+        onClick={navigateHome}
+      >
+        Home
+      </button>
     </div>
   );
 };
