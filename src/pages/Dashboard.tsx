@@ -1,7 +1,7 @@
-import DashHeader from "./DashHeader";
-import DashMain from "./DashMain";
-import DashSideNav from "./DashSideNav";
-import DashFooter from "./DashFooter";
+import DashHeader from "../components/ui/DashHeader";
+import DashMain from "../components/ui/DashMain";
+import DashSideNav from "../components/ui/DashSideNav";
+import DashFooter from "../components/ui/DashFooter";
 
 const Dashboard = () => {
   return (

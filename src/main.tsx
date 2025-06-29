@@ -2,11 +2,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Home from "./components/Home.tsx";
-import SignUp from "./components/SignUp.tsx";
-import SignIn from "./components/SignIn.tsx";
-import Error from "./components/Error.tsx";
-import Dashboard from "./components/Dashboard.tsx";
+import Home from "./pages/Home.tsx";
+import SignUp from "./components/forms/SignUp.tsx";
+import SignIn from "./components/forms/SignIn.tsx";
+import Error from "./components/ui/Error.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import VerifyAccount from "./components/ui/VerifyAccount.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <SignIn /> },
       { path: "sign-up", element: <SignUp /> },
+      { path: "verify-user", element: <VerifyAccount /> },
     ],
     errorElement: <Error />,
   },
