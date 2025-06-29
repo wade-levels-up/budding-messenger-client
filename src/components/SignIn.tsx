@@ -14,7 +14,7 @@ const SignIn = () => {
             />
           </li>
           <li>
-            <label htmlFor="email">Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
               type="password"
               id="password"
