@@ -5,6 +5,7 @@ import "./index.css";
 import Home from "./components/Home.tsx";
 import SignIn from "./components/SignIn.tsx";
 import Error from "./components/Error.tsx";
+import Dashboard from "./components/Dashboard.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     element: <Home />,
     children: [{ index: true, element: <SignIn /> }],
     errorElement: <Error />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
