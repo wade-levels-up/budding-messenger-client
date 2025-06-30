@@ -29,6 +29,9 @@ const SignIn = () => {
       return;
     }
 
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+
     navigate("/dashboard");
   };
 
