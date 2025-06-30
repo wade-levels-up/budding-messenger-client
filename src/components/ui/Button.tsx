@@ -4,6 +4,7 @@ import {
   faHouseChimney,
   faArrowPointer,
   faSeedling,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -32,6 +33,8 @@ const Button = ({
     icon = <FontAwesomeIcon icon={faArrowPointer} />;
   if (text.toLowerCase() === "sign up")
     icon = <FontAwesomeIcon icon={faSeedling} />;
+  if (text.toLowerCase() === "dashboard")
+    icon = <FontAwesomeIcon icon={faUser} />;
 
   function handleNavigate() {
     if (href) {
