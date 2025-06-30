@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../ui/Button";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -42,7 +43,7 @@ const SignUp = () => {
   };
 
   return loading ? (
-    <p>Loading...</p>
+    <LoadingSpinner />
   ) : submitted ? (
     <div className="flex flex-col gap-8 p-4 items-center">
       <h2 className="text-2xl text-left w-full">Success!</h2>
