@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
-    if (username && token) {
+    if (username && token && token) {
       setUsername(username);
       setReturningUser(true);
     }
@@ -20,7 +20,7 @@ const Home = () => {
       <header>
         <h1 className="text-center text-4xl mb-6">🌱 Budding Messenger</h1>
       </header>
-      <main className="flex grow justify-center flex-col items-center gap-6">
+      <main className="flex grow justify-center flex-col items-center gap-6 w-full">
         {returningUser ? (
           <>
             <h2 className="text-xl">Welcome back {username}!</h2>

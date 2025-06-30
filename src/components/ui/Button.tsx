@@ -10,19 +10,20 @@ import {
 type ButtonProps = {
   text?: string;
   type?: "button" | "submit" | "reset";
-  func?: React.MouseEventHandler<HTMLButtonElement>;
+  func?: () => void;
   href?: string;
+  fullWidth?: boolean;
 };
-
-const tailwindButtonStyle =
-  "inline-flex items-center gap-2 w-fit bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 pb-1 text-white rounded-lg mb-2";
 
 const Button = ({
   text = "button",
   type = "button",
   func,
   href,
+  fullWidth,
 }: ButtonProps) => {
+  const width = fullWidth ? "w-full" : "w-fit";
+  const tailwindButtonStyle = `inline-flex items-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 pb-1 text-white rounded-lg mb-2`;
   const navigate = useNavigate();
 
   let icon;
@@ -37,6 +38,9 @@ const Button = ({
     icon = <FontAwesomeIcon icon={faUser} />;
 
   function handleNavigate() {
+    if (func) {
+      func();
+    }
     if (href) {
       navigate(href);
     }

@@ -8,6 +8,7 @@ import DashFooter from "../components/ui/DashFooter";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [usersJoinDate, setUsersJoinDate] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,6 +24,7 @@ const Dashboard = () => {
       });
 
       if (!response.ok) {
+        localStorage.clear();
         navigate("/");
         return;
       }
@@ -34,6 +36,7 @@ const Dashboard = () => {
       }
 
       localStorage.setItem("username", data.userData.username);
+      setUsersJoinDate(data.userData.joined);
       setUsername(data.userData.username);
     };
 
@@ -42,7 +45,7 @@ const Dashboard = () => {
 
   return (
     <div className="relative w-full grow flex flex-col lg:grid lg:grid-cols-[200px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-lg p-2 shadow-md">
-      <DashHeader username={username} />
+      <DashHeader username={username} joined={usersJoinDate} />
       <DashMain />
       <DashSideNav />
       <DashFooter />

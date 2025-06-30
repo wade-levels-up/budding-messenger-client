@@ -38,7 +38,7 @@ const SignIn = () => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-full p-4 rounded-xl m-4"
+      className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-4"
     >
       <fieldset>
         <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
