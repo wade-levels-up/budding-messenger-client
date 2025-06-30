@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../ui/Button";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -43,13 +44,14 @@ const SignUp = () => {
   return loading ? (
     <p>Loading...</p>
   ) : submitted ? (
-    <div className="flex flex-col gap-8 p-4">
-      <h2 className="text-2xl">Success!</h2>
+    <div className="flex flex-col gap-8 p-4 items-center">
+      <h2 className="text-2xl text-left w-full">Success!</h2>
       <p className="text-pretty text-center max-w-[600px] outline-2 outline-solid outline-lime-300 p-4 rounded-xl shadow-xl">
         Please check your inbox or junk folder to verify your account via the
         link before signing in
       </p>
-      <p className="text-right">Thank you</p>
+      <p className="text-right w-full">Thank you</p>
+      <Button text="Home" href="/" />
     </div>
   ) : (
     <form
@@ -99,13 +101,9 @@ const SignUp = () => {
               </p>
             </li>
           )}
-          <li className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-lime-600 hover:bg-lime-500 hover:cursor-pointer pl-2 pr-2 pb-1 text-white rounded-lg mb-2"
-            >
-              Submit
-            </button>
+          <li className="flex justify-evenly">
+            <Button text="Home" href="/" />
+            <Button text="Submit" type="submit" />
           </li>
         </ul>
       </fieldset>

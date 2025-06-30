@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../ui/Button";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -41,15 +42,7 @@ const SignIn = () => {
         <ul className="flex flex-col gap-2">
           <li>
             <p className="text-center">
-              No account?{" "}
-              <button
-                type="button"
-                onClick={() => navigate("/sign-up")}
-                className="bg-lime-600 hover:bg-lime-500 hover:cursor-pointer pl-2 pr-2 pb-1 text-white rounded-lg mb-2"
-              >
-                Sign Up
-              </button>{" "}
-              here.
+              No account? <Button text="Sign up" href="/sign-up" />
             </p>
           </li>
           <li>
@@ -81,14 +74,11 @@ const SignIn = () => {
               </p>
             </li>
           )}
-          <li className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-lime-600 hover:bg-lime-500 hover:cursor-pointer pl-2 pr-2 pb-1 text-white rounded-lg mb-2"
-            >
-              Submit
-            </button>
-          </li>
+          {email && password.length >= 8 && (
+            <li className="flex justify-center">
+              <Button text="Submit" type="submit" />
+            </li>
+          )}
         </ul>
       </fieldset>
     </form>
