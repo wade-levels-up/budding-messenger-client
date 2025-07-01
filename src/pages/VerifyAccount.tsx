@@ -25,8 +25,7 @@ const VerifyAccount = () => {
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(`${errorData.message}`);
+        setError(`Unable to verify email`);
         setLoading(false);
         return;
       }
@@ -45,7 +44,7 @@ const VerifyAccount = () => {
         <>
           {error ? (
             <>
-              <h1>Error</h1>
+              <h1 className="text-xl">Error</h1>
               <div className="mb-2 bg-red-400 p-2 rounded">
                 <p className="text-center text-pretty">
                   <span>Error: {error}</span>
@@ -53,7 +52,7 @@ const VerifyAccount = () => {
               </div>
             </>
           ) : (
-            <h1>Account verified!</h1>
+            <h1 className="text-xl">Account verified!</h1>
           )}
           <p>Click the button below to return home.</p>
           <Button text="Home" href="/" />
