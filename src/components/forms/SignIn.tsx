@@ -6,6 +6,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -36,55 +37,59 @@ const SignIn = () => {
   };
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-4"
-    >
-      <fieldset>
-        <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
-        <ul className="flex flex-col gap-2">
-          <li>
-            <p className="text-center">
-              No account? <Button text="Sign up" href="/sign-up" />
-            </p>
-          </li>
-          <li>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
-              value={email}
-              onChange={handleFormInput}
-            />
-          </li>
-          <li>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
-              value={password}
-              onChange={handleFormInput}
-            />
-          </li>
-          {error && (
-            <li className="mb-2 bg-red-400 p-2 rounded">
-              <p className="text-center text-pretty">
-                <span>Error:</span> {error}
-              </p>
+    <>
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
+      >
+        <fieldset>
+          <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
+          <ul className="flex flex-col gap-2">
+            <li>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
+                value={email}
+                onChange={handleFormInput}
+              />
             </li>
-          )}
-          {email && password.length >= 8 && (
+            <li>
+              <label htmlFor="password">Password:</label>
+              <div className="relative flex justify-end items-center mt-2 mb-4">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className="p-2 pr-14 rounded-lg bg-white w-full"
+                  value={password}
+                  onChange={handleFormInput}
+                />
+                <Button
+                  func={() => setShowPassword(!showPassword)}
+                  customIcon={showPassword ? "eye" : "eyeSlash"}
+                  customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                />
+              </div>
+            </li>
+            {error && (
+              <li className="mb-2 bg-red-300 p-1 rounded">
+                <p className="text-center text-pretty">{error}</p>
+              </li>
+            )}
             <li className="flex justify-center">
               <Button text="Submit" type="submit" />
             </li>
-          )}
-        </ul>
-      </fieldset>
-    </form>
+          </ul>
+        </fieldset>
+      </form>
+      <div className="flex flex-col gap-2">
+        <p className="text-center">No account?</p>
+        <Button text="Sign up" href="/sign-up" />
+      </div>
+    </>
   );
 };
 

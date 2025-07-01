@@ -9,6 +9,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,6 +34,9 @@ const SignUp = () => {
 
     if (!response.ok) {
       const errorData = await response.json();
+      if (!username || !password || !email) {
+        errorData.message = "Please fill in all fields";
+      }
       setError(`${errorData.message}`);
       setLoading(false);
       return;
@@ -55,60 +59,72 @@ const SignUp = () => {
       <Button text="Home" href="/" />
     </div>
   ) : (
-    <form
-      onSubmit={handleFormSubmit}
-      className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-4"
-    >
-      <fieldset>
-        <legend className="text-center text-2xl p-3 mb-4">Sign up</legend>
-        <ul className="flex flex-col gap-2">
-          <li>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
-              value={email}
-              onChange={handleFormInput}
-            />
-          </li>
-          <li>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
-              value={username}
-              onChange={handleFormInput}
-            />
-          </li>
-          <li>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
-              value={password}
-              onChange={handleFormInput}
-            />
-          </li>
-          {error && (
-            <li className="mb-2 bg-red-400 p-2 rounded">
-              <p className="text-center text-pretty">
-                <span>Error:</span> {error}
-              </p>
+    <>
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
+      >
+        <fieldset>
+          <legend className="text-center text-2xl p-3 mb-4">Sign up</legend>
+          <ul className="flex flex-col gap-2">
+            <li>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
+                value={email}
+                onChange={handleFormInput}
+                minLength={3}
+                maxLength={100}
+              />
             </li>
-          )}
-          <li className="flex justify-evenly">
-            <Button text="Home" href="/" />
-            <Button text="Submit" type="submit" />
-          </li>
-        </ul>
-      </fieldset>
-    </form>
+            <li>
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
+                value={username}
+                onChange={handleFormInput}
+                minLength={2}
+                maxLength={24}
+              />
+            </li>
+            <li>
+              <label htmlFor="password">Password:</label>
+              <div className="relative flex justify-end items-center mt-2 mb-4">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className="p-2 pr-14 rounded-lg bg-white w-full"
+                  value={password}
+                  onChange={handleFormInput}
+                  minLength={8}
+                />
+                <Button
+                  func={() => setShowPassword(!showPassword)}
+                  customIcon={showPassword ? "eye" : "eyeSlash"}
+                  customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                />
+              </div>
+            </li>
+            {error && (
+              <li className="mb-2 bg-red-300 p-1 rounded">
+                <p className="text-center text-pretty">{error}</p>
+              </li>
+            )}
+            <li className="flex justify-evenly">
+              <Button text="Submit" type="submit" />
+            </li>
+          </ul>
+        </fieldset>
+      </form>
+      <Button text="Home" href="/" />
+    </>
   );
 };
 
