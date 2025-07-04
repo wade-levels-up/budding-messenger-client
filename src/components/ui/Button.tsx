@@ -7,6 +7,10 @@ import {
   faUser,
   faEye,
   faEyeSlash,
+  faUserGroup,
+  faComments,
+  faFaceSmile,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -18,6 +22,7 @@ type ButtonProps = {
   customStyle?: string;
   customIcon?: string;
   ariaLabel?: string;
+  hideText?: boolean;
 };
 
 const Button = ({
@@ -29,12 +34,14 @@ const Button = ({
   customStyle,
   customIcon,
   ariaLabel,
+  hideText,
 }: ButtonProps) => {
   const width = fullWidth ? "w-full" : "w-fit";
-  const tailwindButtonStyle = `inline-flex items-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 pb-1 text-white rounded-lg mb-2`;
+  const tailwindButtonStyle = `inline-flex items-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 p-1 text-white rounded-lg mb-2`;
   const navigate = useNavigate();
 
   let icon;
+  const iconSize = "xl";
 
   if (text) {
     if (text.toLowerCase() === "home")
@@ -50,10 +57,31 @@ const Button = ({
   let customIconComponent;
 
   if (customIcon === "eye") {
-    customIconComponent = <FontAwesomeIcon icon={faEye} />;
+    customIconComponent = <FontAwesomeIcon icon={faEye} size={iconSize} />;
   }
   if (customIcon === "eyeSlash") {
-    customIconComponent = <FontAwesomeIcon icon={faEyeSlash} />;
+    customIconComponent = <FontAwesomeIcon icon={faEyeSlash} size={iconSize} />;
+  }
+  if (customIcon === "userGroup") {
+    customIconComponent = (
+      <FontAwesomeIcon icon={faUserGroup} size={iconSize} />
+    );
+  }
+  if (customIcon === "conversations") {
+    customIconComponent = <FontAwesomeIcon icon={faComments} size={iconSize} />;
+  }
+  if (customIcon === "friends") {
+    customIconComponent = (
+      <FontAwesomeIcon icon={faFaceSmile} size={iconSize} />
+    );
+  }
+  if (customIcon === "user") {
+    customIconComponent = <FontAwesomeIcon icon={faUser} size={iconSize} />;
+  }
+  if (customIcon === "signOut") {
+    customIconComponent = (
+      <FontAwesomeIcon icon={faRightFromBracket} size={iconSize} />
+    );
   }
 
   const handleClick = () => {
@@ -71,8 +99,9 @@ const Button = ({
       type={type}
       className={customStyle || tailwindButtonStyle}
       aria-label={ariaLabel}
+      title={text}
     >
-      {text} {icon} {customIconComponent}
+      {!hideText && text} {icon} {customIconComponent}
     </button>
   );
 };
