@@ -20,9 +20,22 @@ type ButtonProps = {
   href?: string;
   fullWidth?: boolean;
   customStyle?: string;
-  customIcon?: string;
+  icon?: string;
   ariaLabel?: string;
-  hideText?: boolean;
+  showText?: boolean;
+};
+
+const buttonIcons = {
+  faArrowPointer,
+  faComments,
+  faEye,
+  faEyeSlash,
+  faFaceSmile,
+  faHouseChimney,
+  faRightFromBracket,
+  faSeedling,
+  faUser,
+  faUserGroup,
 };
 
 const Button = ({
@@ -32,57 +45,25 @@ const Button = ({
   href,
   fullWidth,
   customStyle,
-  customIcon,
+  icon,
   ariaLabel,
-  hideText,
+  showText,
 }: ButtonProps) => {
   const width = fullWidth ? "w-full" : "w-fit";
-  const tailwindButtonStyle = `inline-flex items-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 p-1 text-white rounded-lg mb-2`;
+  const tailwindButtonStyle = `inline-flex items-center justify-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 p-1 text-white rounded-lg mb-2`;
   const navigate = useNavigate();
 
-  let icon;
-  const iconSize = "xl";
+  const iconSize = "lg";
 
-  if (text) {
-    if (text.toLowerCase() === "home")
-      icon = <FontAwesomeIcon icon={faHouseChimney} />;
-    if (text.toLowerCase() === "submit")
-      icon = <FontAwesomeIcon icon={faArrowPointer} />;
-    if (text.toLowerCase() === "sign up")
-      icon = <FontAwesomeIcon icon={faSeedling} />;
-    if (text.toLowerCase() === "dashboard")
-      icon = <FontAwesomeIcon icon={faUser} />;
-  }
-
-  let customIconComponent;
-
-  if (customIcon === "eye") {
-    customIconComponent = <FontAwesomeIcon icon={faEye} size={iconSize} />;
-  }
-  if (customIcon === "eyeSlash") {
-    customIconComponent = <FontAwesomeIcon icon={faEyeSlash} size={iconSize} />;
-  }
-  if (customIcon === "userGroup") {
-    customIconComponent = (
-      <FontAwesomeIcon icon={faUserGroup} size={iconSize} />
+  const createButtonIcon = (icon: string) => {
+    const iconName = icon;
+    return (
+      <FontAwesomeIcon
+        icon={buttonIcons[iconName as keyof typeof buttonIcons]}
+        size={iconSize}
+      />
     );
-  }
-  if (customIcon === "conversations") {
-    customIconComponent = <FontAwesomeIcon icon={faComments} size={iconSize} />;
-  }
-  if (customIcon === "friends") {
-    customIconComponent = (
-      <FontAwesomeIcon icon={faFaceSmile} size={iconSize} />
-    );
-  }
-  if (customIcon === "user") {
-    customIconComponent = <FontAwesomeIcon icon={faUser} size={iconSize} />;
-  }
-  if (customIcon === "signOut") {
-    customIconComponent = (
-      <FontAwesomeIcon icon={faRightFromBracket} size={iconSize} />
-    );
-  }
+  };
 
   const handleClick = () => {
     if (href) {
@@ -101,7 +82,8 @@ const Button = ({
       aria-label={ariaLabel}
       title={text}
     >
-      {!hideText && text} {icon} {customIconComponent}
+      <span className="hidden lg:flex">{text}</span>
+      {icon && createButtonIcon(icon)}
     </button>
   );
 };

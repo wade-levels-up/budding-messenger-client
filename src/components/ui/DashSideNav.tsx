@@ -5,8 +5,8 @@ const DashSideNav = () => {
     localStorage.clear();
   };
 
-  const smallDeviceButtonStyle =
-    "pl-3 pr-3 p-2 text-lime-600 rounded hover:bg-white hover:cursor-pointer focus:bg-white active:bg-white";
+  const sideNavButtonStyle =
+    "flex flex-row w-full justify-between gap-1 pl-3 pr-3 p-2 text-lime-600 rounded hover:bg-white hover:cursor-pointer focus:bg-white active:bg-white";
 
   return (
     <>
@@ -15,50 +15,45 @@ const DashSideNav = () => {
           <li>
             <Button
               text="Profile"
-              customIcon="user"
+              icon="faUser"
               ariaLabel="Profile"
-              hideText
-              customStyle={smallDeviceButtonStyle}
+              customStyle={sideNavButtonStyle}
               fullWidth
             />
           </li>
           <li>
             <Button
               text="Friends"
-              customIcon="friends"
+              icon="faUserGroup"
               ariaLabel="Friends"
-              hideText
-              customStyle={smallDeviceButtonStyle}
+              customStyle={sideNavButtonStyle}
               fullWidth
             />
           </li>
           <li>
             <Button
               text="Conversations"
-              customIcon="conversations"
+              icon="faComments"
               ariaLabel="Conversations"
-              hideText
-              customStyle={smallDeviceButtonStyle}
+              customStyle={sideNavButtonStyle}
               fullWidth
             />
           </li>
           <li>
             <Button
               text="View All Users"
-              customIcon="userGroup"
+              icon="faUserGroup"
               ariaLabel="View All Users"
-              hideText
-              customStyle={smallDeviceButtonStyle}
+              customStyle={sideNavButtonStyle}
               fullWidth
             />
           </li>
           <li>
             <Button
               text="Sign Out"
-              customIcon="signOut"
+              icon="faRightFromBracket"
               ariaLabel="Sign Out"
-              hideText
-              customStyle={smallDeviceButtonStyle}
+              customStyle={sideNavButtonStyle}
               func={clearLocalStorage}
               href="/"
               fullWidth

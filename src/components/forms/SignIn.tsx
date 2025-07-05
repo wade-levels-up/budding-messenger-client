@@ -69,7 +69,7 @@ const SignIn = () => {
                 />
                 <Button
                   func={() => setShowPassword(!showPassword)}
-                  customIcon={showPassword ? "eye" : "eyeSlash"}
+                  icon={showPassword ? "faEye" : "faEyeSlash"}
                   customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
                 />
               </div>
