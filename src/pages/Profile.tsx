@@ -83,8 +83,12 @@ const Profile = () => {
                     value={newBio}
                     onChange={handleBioInput}
                   ></textarea>
-                  <p>{error}</p>
                 </li>
+                {error && (
+                  <li className="mb-2 bg-red-300 p-1 rounded">
+                    <p className="text-center text-pretty">{error}</p>
+                  </li>
+                )}
                 <li className="text-center">
                   <Button text="Submit" type="submit" />
                 </li>
