@@ -1,14 +1,43 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import DashHeader from "../components/ui/DashHeader";
 import DashMain from "../components/ui/DashMain";
 import DashSideNav from "../components/ui/DashSideNav";
 import DashFooter from "../components/ui/DashFooter";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+
+type UserData = {
+  username: string;
+  bio: string;
+  joined: string;
+  profile_picture_path: string;
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [usersJoinDate, setUsersJoinDate] = useState("");
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  const getUserData = useCallback(async () => {
+    const response = await fetch("http://localhost:3000/users/me", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    if (!response.ok) {
+      localStorage.clear();
+      navigate("/");
+      return;
+    }
+
+    const data = await response.json();
+    if (!data.userData) {
+      navigate("/");
+      return;
+    }
+
+    localStorage.setItem("username", data.userData.username);
+    setUserData(data.userData);
+  }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,36 +46,17 @@ const Dashboard = () => {
       return;
     }
 
-    const getUserData = async () => {
-      const response = await fetch("http://localhost:3000/users/me", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-
-      if (!response.ok) {
-        localStorage.clear();
-        navigate("/");
-        return;
-      }
-
-      const data = await response.json();
-      if (!data.userData) {
-        navigate("/");
-        return;
-      }
-
-      localStorage.setItem("username", data.userData.username);
-      setUsersJoinDate(data.userData.joined);
-      setUsername(data.userData.username);
-    };
-
     getUserData();
-  });
+  }, [navigate, getUserData]);
+
+  if (!userData) return <LoadingSpinner />;
 
   return (
     <div className="relative w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-lg p-2 shadow-md">
-      <DashHeader username={username} joined={usersJoinDate} />
-      <DashMain />
+      <DashHeader username={userData.username} joined={userData.joined} />
+      <DashMain>
+        <Outlet context={[userData, getUserData]} />
+      </DashMain>
       <DashSideNav />
       <DashFooter />
     </div>

@@ -8,6 +8,7 @@ import SignIn from "./components/forms/SignIn.tsx";
 import Error from "./components/ui/Error.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import VerifyAccount from "./pages/VerifyAccount.tsx";
+import Profile from "./pages/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    children: [{ index: true, element: <Profile /> }],
   },
 ]);
 

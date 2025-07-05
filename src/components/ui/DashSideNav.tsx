@@ -25,7 +25,7 @@ const DashSideNav = () => {
           <li>
             <Button
               text="Friends"
-              icon="faUserGroup"
+              icon="faFaceSmile"
               ariaLabel="Friends"
               customStyle={sideNavButtonStyle}
               fullWidth
