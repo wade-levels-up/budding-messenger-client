@@ -52,7 +52,7 @@ const Profile = () => {
       <div className="flex flex-col gap-6 p-3">
         <div className="flex justify-center">
           <img
-            className="border border-[3px] border-lime-200 shadow-md"
+            className="border[3px] border-lime-200 shadow-md"
             src={
               profile_picture_path || "src/assets/default_profile_picture.jpg"
             }
