@@ -19,6 +19,7 @@ const DashSideNav = () => {
               ariaLabel="Profile"
               customStyle={sideNavButtonStyle}
               fullWidth
+              vanishingText
             />
           </li>
           <li>
@@ -28,6 +29,7 @@ const DashSideNav = () => {
               ariaLabel="Friends"
               customStyle={sideNavButtonStyle}
               fullWidth
+              vanishingText
             />
           </li>
           <li>
@@ -37,6 +39,7 @@ const DashSideNav = () => {
               ariaLabel="Conversations"
               customStyle={sideNavButtonStyle}
               fullWidth
+              vanishingText
             />
           </li>
           <li>
@@ -46,6 +49,7 @@ const DashSideNav = () => {
               ariaLabel="View All Users"
               customStyle={sideNavButtonStyle}
               fullWidth
+              vanishingText
             />
           </li>
           <li>
@@ -57,6 +61,7 @@ const DashSideNav = () => {
               func={clearLocalStorage}
               href="/"
               fullWidth
+              vanishingText
             />
           </li>
         </ul>
