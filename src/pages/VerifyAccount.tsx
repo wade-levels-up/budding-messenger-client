@@ -55,7 +55,7 @@ const VerifyAccount = () => {
             <h1 className="text-xl">Account verified!</h1>
           )}
           <p>Click the button below to return home.</p>
-          <Button text="Home" href="/" />
+          <Button text="Home" href="/" ariaLabel="Home" />
         </>
       )}
     </div>

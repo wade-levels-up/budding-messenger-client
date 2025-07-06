@@ -71,6 +71,7 @@ const SignIn = () => {
                   func={() => setShowPassword(!showPassword)}
                   icon={showPassword ? "faEye" : "faEyeSlash"}
                   customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                  ariaLabel="Show / Hide Password"
                 />
               </div>
             </li>
@@ -80,14 +81,14 @@ const SignIn = () => {
               </li>
             )}
             <li className="flex justify-center">
-              <Button text="Submit" type="submit" />
+              <Button text="Submit" type="submit" ariaLabel="Submit" />
             </li>
           </ul>
         </fieldset>
       </form>
       <div className="flex flex-col gap-2">
         <p className="text-center">No account?</p>
-        <Button text="Sign up" href="/sign-up" />
+        <Button text="Sign up" href="/sign-up" ariaLabel="Sign Up" />
       </div>
     </>
   );

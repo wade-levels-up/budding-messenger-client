@@ -49,16 +49,18 @@ const Profile = () => {
   return (
     <>
       <h2 className="text-center">{username}'s Profile Page</h2>
-      <div className="flex flex-col gap-6 p-3">
-        <div className="flex justify-center">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-3">
+        <div className="relative">
           <img
-            className="border[3px] border-lime-200 shadow-md"
+            className="border-inset border-3 border-lime-200 shadow-md max-w-[300px]"
             src={
               profile_picture_path || "src/assets/default_profile_picture.jpg"
             }
             alt={`${username}'s Profile Picture`}
-            width={250}
           />
+          <div className="absolute bottom-[0px] right-[10px]">
+            <Button icon="faUserPen" ariaLabel="Update Profile Picture" />
+          </div>
         </div>
         <div>
           <div className="flex justify-between">
@@ -66,6 +68,8 @@ const Profile = () => {
             <Button
               text="Update Bio"
               func={() => setUpdatingBio(!updatingBio)}
+              ariaLabel="Update Bio"
+              icon="faPen"
             />
           </div>
           <hr />
@@ -90,7 +94,7 @@ const Profile = () => {
                   </li>
                 )}
                 <li className="text-center">
-                  <Button text="Submit" type="submit" />
+                  <Button text="Submit" type="submit" ariaLabel="Submit" />
                 </li>
               </ul>
             </form>

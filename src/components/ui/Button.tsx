@@ -11,6 +11,8 @@ import {
   faComments,
   faFaceSmile,
   faRightFromBracket,
+  faPen,
+  faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -36,6 +38,8 @@ const buttonIcons = {
   faSeedling,
   faUser,
   faUserGroup,
+  faPen,
+  faUserPen,
 };
 
 const Button = ({
@@ -80,7 +84,7 @@ const Button = ({
       type={type}
       className={customStyle || tailwindButtonStyle}
       aria-label={ariaLabel}
-      title={text}
+      title={ariaLabel}
     >
       {vanishingText ? (
         <span className="hidden lg:flex">{text}</span>

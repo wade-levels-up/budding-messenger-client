@@ -56,7 +56,7 @@ const SignUp = () => {
         link before signing in
       </p>
       <p className="text-right w-full">Thank you</p>
-      <Button text="Home" href="/" />
+      <Button text="Home" href="/" ariaLabel="Home" />
     </div>
   ) : (
     <>
@@ -109,6 +109,7 @@ const SignUp = () => {
                   func={() => setShowPassword(!showPassword)}
                   icon={showPassword ? "faEye" : "faEyeSlash"}
                   customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                  ariaLabel="Show / Hide Password"
                 />
               </div>
             </li>
@@ -118,12 +119,12 @@ const SignUp = () => {
               </li>
             )}
             <li className="flex justify-evenly">
-              <Button text="Submit" type="submit" />
+              <Button text="Submit" type="submit" ariaLabel="Submit" />
             </li>
           </ul>
         </fieldset>
       </form>
-      <Button text="Home" href="/" />
+      <Button text="Home" href="/" ariaLabel="Home" />
     </>
   );
 };
