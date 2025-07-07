@@ -62,7 +62,7 @@ const Button = ({
   vanishingText,
 }: ButtonProps) => {
   const width = fullWidth ? "w-full" : "w-fit";
-  const tailwindButtonStyle = `inline-flex items-center justify-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-1 pr-3 p-1 text-white rounded-lg transition-colors`;
+  const tailwindButtonStyle = `inline-flex items-center justify-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-2 pr-3 p-1 text-white rounded-lg transition-colors`;
   const navigate = useNavigate();
 
   const iconSize = "lg";
