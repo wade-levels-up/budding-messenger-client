@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import ProfilePicture from "../components/ui/ProfilePicture";
 
 type UserData = {
   username: string;
@@ -100,13 +101,13 @@ const Profile = () => {
       } z-50 fixed animate-fade-in overflow-auto bg-black/80 inset-0 items-center justify-center`}
     >
       {submittedPic ? (
-        <div className="flex flex-col items-center gap-2 bg-yellow-200 p-3 pt-6 pb-6 rounded-xl">
+        <div className="flex flex-col items-center gap-2 bg-lime-100 p-6 w-screen animate-pulse">
           <LoadingSpinner />
         </div>
       ) : (
-        <form className="flex" onSubmit={handleUpdatePicFormSubmit}>
-          <ul className="flex flex-col gap-2 p-6 w-full rounded-xl bg-yellow-200/10">
-            <li className="flex flex-col items-center gap-2 bg-yellow-200 p-3 pt-6 pb-6 rounded-xl">
+        <form className="flex w-80" onSubmit={handleUpdatePicFormSubmit}>
+          <ul className="flex flex-col gap-2 p-6 w-full rounded-xl bg-lime-200/10">
+            <li className="flex flex-col items-center gap-2 bg-lime-100 p-3 pt-6 pb-6 rounded-xl">
               <label
                 htmlFor="file"
                 className="bg-lime-600 hover:bg-lime-500 text-white px-10 py-2 rounded-lg cursor-pointer transition-colors"
@@ -135,8 +136,9 @@ const Profile = () => {
               </li>
             )}
             <li>
-              <div className="flex justify-end gap-1">
+              <div className="flex justify-between gap-1">
                 <Button
+                  text="Cancel"
                   icon="faXmark"
                   func={() => {
                     setUpdatingPic(false);
@@ -144,6 +146,7 @@ const Profile = () => {
                   ariaLabel="Cancel"
                 />
                 <Button
+                  text="Update"
                   type="submit"
                   icon="faCheck"
                   ariaLabel="Update Profile Picture"
@@ -161,9 +164,8 @@ const Profile = () => {
       <h2 className="text-center text-xl">Profile Page</h2>
       {updatePictureModal}
       <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-3">
-        <div className="relative border-inset border-3 rounded-xl border-lime-200 shadow-md">
-          <img
-            className=" w-[300px] h-min-[300px]"
+        <div className="relative">
+          <ProfilePicture
             src={
               profile_picture_path
                 ? `${profile_picture_path}?t=${Date.now()}` // Cache-busting string - adding Date as a query parameter force retrieval of the updated file
@@ -171,9 +173,9 @@ const Profile = () => {
             }
             alt={`${username}'s Profile Picture`}
           />
-          <div className="bg-yellow-200 p-2 flex items-center justify-end rounded-xl">
+          <div className="p-2 flex absolute z-2 right-1 bottom-3 items-center justify-end rounded-xl">
             <Button
-              icon="faUserPen"
+              icon="faCamera"
               func={() => {
                 setUpdatingPic(true);
               }}
@@ -182,7 +184,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex flex-col gap-3 w-full grow">
-          <div className="flex justify-between bg-yellow-200 rounded-xl p-3 items-center">
+          <div className="flex justify-between bg-lime-200 rounded-xl p-3 items-center">
             <h3 className="text-xl">Bio</h3>
             {!updatingBio && (
               <Button

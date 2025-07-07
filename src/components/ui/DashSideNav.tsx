@@ -6,7 +6,7 @@ const DashSideNav = () => {
   };
 
   const sideNavButtonStyle =
-    "flex flex-row w-full justify-between gap-1 pl-3 pr-3 p-2 text-lime-600 rounded hover:bg-white hover:cursor-pointer focus:bg-white active:bg-white";
+    "flex bg-lime-600 flex-row w-full justify-between gap-1 pl-3 pr-3 p-2 text-white rounded hover:bg-lime-500 hover:cursor-pointer focus:bg-lime-500 active:bg-lime-500";
 
   return (
     <>
@@ -20,7 +20,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
-              href="/dashboard"
+              href="/dashboard/profile"
             />
           </li>
           <li>
@@ -31,7 +31,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
-              href="/friends"
+              href="/dashboard/friends"
             />
           </li>
           <li>
@@ -42,7 +42,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
-              href="/conversations"
+              href="/dashboard/conversations"
             />
           </li>
           <li>
@@ -53,7 +53,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
-              href="/all-users"
+              href="/dashboard/all-users"
             />
           </li>
           <li>

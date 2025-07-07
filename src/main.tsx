@@ -9,6 +9,7 @@ import Error from "./components/ui/Error.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import VerifyAccount from "./pages/VerifyAccount.tsx";
 import Profile from "./pages/Profile.tsx";
+import AllUsers from "./pages/AllUsers.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
-    children: [{ index: true, element: <Profile /> }],
+    children: [
+      { index: true, element: <Profile /> },
+      { path: "/dashboard/profile", element: <Profile /> },
+      { path: "/dashboard/all-users", element: <AllUsers /> },
+    ],
   },
 ]);
 
