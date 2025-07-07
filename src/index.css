@@ -9,6 +9,14 @@
     0%, 100% { transform: rotate(-2deg); }
     50% { transform: rotate(2deg); }
   }
+
+  .animate-fade-in {
+    animation: fade-in 500ms ease;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 100; }
+  }
 }
 
 :root {

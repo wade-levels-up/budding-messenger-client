@@ -18,6 +18,7 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [updatingPic, setUpdatingPic] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [submittedPic, setSubmittedPic] = useState(false);
 
   useEffect(() => {
     if (bio) {
@@ -65,6 +66,8 @@ const Profile = () => {
       return;
     }
 
+    setSubmittedPic(true);
+
     const formData = new FormData();
     formData.append("file", selectedFile);
 
@@ -79,6 +82,8 @@ const Profile = () => {
       }
     );
 
+    setSubmittedPic(false);
+
     if (!response.ok) {
       setError(`Unable to update Profile Picture`);
       return;
@@ -92,42 +97,62 @@ const Profile = () => {
     <div
       className={`${
         updatingPic ? "flex" : "hidden"
-      } z-50 fixed overflow-auto bg-black/80 inset-0 items-center justify-center`}
+      } z-50 fixed animate-fade-in overflow-auto bg-black/80 inset-0 items-center justify-center`}
     >
-      <form className="flex" onSubmit={handleUpdatePicFormSubmit}>
-        <ul className="flex flex-col gap-3 p-6 rounded-xl bg-yellow-200/10">
-          <li className="flex items-center gap-2 bg-yellow-200 p-3 rounded-xl">
-            <label htmlFor="file">File:</label>
-            <input
-              className="bg-white p-2 rounded-xl text-black"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-          </li>
-          {error && (
-            <li className="mb-2 bg-red-300 p-1 rounded">
-              <p className="text-center text-pretty">{error}</p>
+      {submittedPic ? (
+        <div className="flex flex-col items-center gap-2 bg-yellow-200 p-3 pt-6 pb-6 rounded-xl">
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <form className="flex" onSubmit={handleUpdatePicFormSubmit}>
+          <ul className="flex flex-col gap-2 p-6 w-full rounded-xl bg-yellow-200/10">
+            <li className="flex flex-col items-center gap-2 bg-yellow-200 p-3 pt-6 pb-6 rounded-xl">
+              <label
+                htmlFor="file"
+                className="bg-lime-600 hover:bg-lime-500 text-white px-10 py-2 rounded-lg cursor-pointer transition-colors"
+              >
+                Choose File
+              </label>
+              <input
+                id="file"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              {selectedFile && (
+                <span className="text-s text-gray-700 mt-1">
+                  {selectedFile.name}
+                </span>
+              )}
+              <p className="text-center w-full m-2">
+                Max file size 1<abbr title="Megabyte"> MB</abbr>
+              </p>
             </li>
-          )}
-          <li>
-            <div className="flex justify-end gap-1">
-              <Button
-                icon="faXmark"
-                func={() => {
-                  setUpdatingPic(false);
-                }}
-                ariaLabel="Cancel"
-              />
-              <Button
-                type="submit"
-                icon="faCheck"
-                ariaLabel="Update Profile Picture"
-              />
-            </div>
-          </li>
-        </ul>
-      </form>
+            {error && (
+              <li className="mb-2 bg-red-300 p-1 rounded">
+                <p className="text-center text-pretty">{error}</p>
+              </li>
+            )}
+            <li>
+              <div className="flex justify-end gap-1">
+                <Button
+                  icon="faXmark"
+                  func={() => {
+                    setUpdatingPic(false);
+                  }}
+                  ariaLabel="Cancel"
+                />
+                <Button
+                  type="submit"
+                  icon="faCheck"
+                  ariaLabel="Update Profile Picture"
+                />
+              </div>
+            </li>
+          </ul>
+        </form>
+      )}
     </div>
   );
 
