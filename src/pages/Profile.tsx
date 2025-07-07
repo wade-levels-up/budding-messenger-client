@@ -229,7 +229,7 @@ const Profile = () => {
               </ul>
             </form>
           ) : (
-            <p>
+            <p className="max-w-[35ch] text-pretty">
               {bio ||
                 `Hmm... Looks like you haven't written a Bio yet. Click Update Bio to write one!`}
             </p>
