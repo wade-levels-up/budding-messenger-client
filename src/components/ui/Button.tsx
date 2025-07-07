@@ -13,6 +13,8 @@ import {
   faRightFromBracket,
   faPen,
   faUserPen,
+  faCheck,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -40,6 +42,8 @@ const buttonIcons = {
   faUserGroup,
   faPen,
   faUserPen,
+  faCheck,
+  faXmark,
 };
 
 const Button = ({
@@ -54,7 +58,7 @@ const Button = ({
   vanishingText,
 }: ButtonProps) => {
   const width = fullWidth ? "w-full" : "w-fit";
-  const tailwindButtonStyle = `inline-flex items-center justify-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-4 pr-4 p-1 text-white rounded-lg mb-2`;
+  const tailwindButtonStyle = `inline-flex items-center justify-center ${width} gap-2 bg-lime-600 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer pl-3 pr-4 p-1 text-white rounded-lg`;
   const navigate = useNavigate();
 
   const iconSize = "lg";

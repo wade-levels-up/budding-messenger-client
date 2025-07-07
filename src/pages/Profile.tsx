@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Button from "../components/ui/Button";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 type UserData = {
   username: string;
@@ -15,6 +16,8 @@ const Profile = () => {
   const [updatingBio, setUpdatingBio] = useState(false);
   const [newBio, setNewBio] = useState("");
   const [error, setError] = useState("");
+  const [updatingPic, setUpdatingPic] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (bio) {
@@ -26,7 +29,13 @@ const Profile = () => {
     setNewBio(e.target.value);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleBioFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3000/users/me/bio", {
       method: "PUT",
@@ -46,46 +55,132 @@ const Profile = () => {
     getUserData();
   };
 
+  const handleUpdatePicFormSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    if (!selectedFile) {
+      setError("Please select a file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    const response = await fetch(
+      "http://localhost:3000/users/me/profile_picture",
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      setError(`Unable to update Profile Picture`);
+      return;
+    }
+
+    setUpdatingPic(false);
+    getUserData();
+  };
+
+  const updatePictureModal = (
+    <div
+      className={`${
+        updatingPic ? "flex" : "hidden"
+      } z-50 fixed overflow-auto bg-black/80 inset-0 items-center justify-center`}
+    >
+      <form className="flex" onSubmit={handleUpdatePicFormSubmit}>
+        <ul className="flex flex-col gap-3 p-6 rounded-xl bg-yellow-200/10">
+          <li className="flex items-center gap-2 bg-yellow-200 p-3 rounded-xl">
+            <label htmlFor="file">File:</label>
+            <input
+              className="bg-white p-2 rounded-xl text-black"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </li>
+          {error && (
+            <li className="mb-2 bg-red-300 p-1 rounded">
+              <p className="text-center text-pretty">{error}</p>
+            </li>
+          )}
+          <li>
+            <div className="flex justify-end gap-1">
+              <Button
+                icon="faXmark"
+                func={() => {
+                  setUpdatingPic(false);
+                }}
+                ariaLabel="Cancel"
+              />
+              <Button
+                type="submit"
+                icon="faCheck"
+                ariaLabel="Update Profile Picture"
+              />
+            </div>
+          </li>
+        </ul>
+      </form>
+    </div>
+  );
+
   return (
     <>
-      <h2 className="text-center">{username}'s Profile Page</h2>
+      <h2 className="text-center text-xl">Profile Page</h2>
+      {updatePictureModal}
       <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-3">
-        <div className="relative">
+        <div className="relative border-inset border-3 rounded-xl border-lime-200 shadow-md">
           <img
-            className="border-inset border-3 border-lime-200 shadow-md max-w-[300px]"
+            className=" w-[300px] h-min-[300px]"
             src={
-              profile_picture_path || "src/assets/default_profile_picture.jpg"
+              profile_picture_path
+                ? `${profile_picture_path}?t=${Date.now()}` // Cache-busting string - adding Date as a query parameter force retrieval of the updated file
+                : "src/assets/default_profile_picture.jpg"
             }
             alt={`${username}'s Profile Picture`}
           />
-          <div className="absolute bottom-[0px] right-[10px]">
-            <Button icon="faUserPen" ariaLabel="Update Profile Picture" />
-          </div>
-        </div>
-        <div>
-          <div className="flex justify-between">
-            <h3 className="text-xl">Bio</h3>
+          <div className="bg-yellow-200 p-2 flex items-center justify-end rounded-xl">
             <Button
-              text="Update Bio"
-              func={() => setUpdatingBio(!updatingBio)}
-              ariaLabel="Update Bio"
-              icon="faPen"
+              icon="faUserPen"
+              func={() => {
+                setUpdatingPic(true);
+              }}
+              ariaLabel="Update Profile Picture"
             />
           </div>
-          <hr />
+        </div>
+        <div className="flex flex-col gap-3 w-full grow">
+          <div className="flex justify-between bg-yellow-200 rounded-xl p-3 items-center">
+            <h3 className="text-xl">Bio</h3>
+            {!updatingBio && (
+              <Button
+                text="Update Bio"
+                func={() => setUpdatingBio(!updatingBio)}
+                ariaLabel="Update Bio"
+                icon="faPen"
+              />
+            )}
+          </div>
           {updatingBio ? (
-            <form onSubmit={handleFormSubmit}>
-              <ul>
-                <li>
+            <form onSubmit={handleBioFormSubmit} className="flex grow">
+              <ul className="w-full">
+                <li className="w-full">
                   <label htmlFor="bio"></label>
                   <textarea
                     name="bio"
                     id="bio"
                     placeholder="Tell us about yourself"
-                    rows={5}
-                    cols={30}
+                    rows={8}
                     value={newBio}
                     onChange={handleBioInput}
+                    className="bg-white p-2 w-full"
                   ></textarea>
                 </li>
                 {error && (
@@ -93,8 +188,17 @@ const Profile = () => {
                     <p className="text-center text-pretty">{error}</p>
                   </li>
                 )}
-                <li className="text-center">
-                  <Button text="Submit" type="submit" ariaLabel="Submit" />
+                <li className="flex flex-row gap-1 justify-end p-2">
+                  <Button
+                    icon="faXmark"
+                    func={() => setUpdatingBio(false)}
+                    ariaLabel="Cancel"
+                  />
+                  <Button
+                    icon="faCheck"
+                    type="submit"
+                    ariaLabel="Submit Changes"
+                  />
                 </li>
               </ul>
             </form>

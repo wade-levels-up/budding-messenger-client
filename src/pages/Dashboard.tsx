@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   const getUserData = useCallback(async () => {
+    setUserData(null);
+
     const response = await fetch("http://localhost:3000/users/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -52,7 +54,7 @@ const Dashboard = () => {
   if (!userData) return <LoadingSpinner />;
 
   return (
-    <div className="relative w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-lg p-2 shadow-md">
+    <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-xl p-2 shadow-md">
       <DashHeader username={userData.username} joined={userData.joined} />
       <DashMain>
         <Outlet context={[userData, getUserData]} />
