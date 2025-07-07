@@ -15,6 +15,7 @@ import {
   faUserPen,
   faCheck,
   faXmark,
+  faBackward,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -44,6 +45,7 @@ const buttonIcons = {
   faUserPen,
   faCheck,
   faXmark,
+  faBackward,
 };
 
 const Button = ({

@@ -186,7 +186,6 @@ const Profile = () => {
             <h3 className="text-xl">Bio</h3>
             {!updatingBio && (
               <Button
-                text="Update Bio"
                 func={() => setUpdatingBio(!updatingBio)}
                 ariaLabel="Update Bio"
                 icon="faPen"

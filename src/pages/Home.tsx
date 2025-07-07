@@ -27,7 +27,7 @@ const Home = () => {
             <p className="text-center">
               Click the button below to go to your dashboard
             </p>
-            <Button text="Dashboard" href="/dashboard" />
+            <Button text="Dashboard" href="/dashboard" ariaLabel="Dashboard" />
           </>
         ) : (
           <Outlet />

@@ -20,6 +20,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
+              href="/dashboard"
             />
           </li>
           <li>
@@ -30,6 +31,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
+              href="/friends"
             />
           </li>
           <li>
@@ -40,6 +42,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
+              href="/conversations"
             />
           </li>
           <li>
@@ -50,6 +53,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
+              href="/all-users"
             />
           </li>
           <li>
