@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import ProfilePicture from "../components/ui/ProfilePicture";
+import defaultProfilePicture from "../assets/default_profile_picture.jpg";
 
 type UserData = {
   username: string;
@@ -169,7 +170,7 @@ const Profile = () => {
             src={
               profile_picture_path
                 ? `${profile_picture_path}?t=${Date.now()}` // Cache-busting string - adding Date as a query parameter force retrieval of the updated file
-                : "src/assets/default_profile_picture.jpg"
+                : defaultProfilePicture
             }
             alt={`${username}'s Profile Picture`}
           />
