@@ -163,7 +163,7 @@ const Profile = () => {
     <>
       <h2 className="text-center text-xl">Profile Page</h2>
       {updatePictureModal}
-      <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-3">
+      <div className="flex flex-col w-full max-w-[55ch] lg:flex-row items-center lg:items-start gap-6 p-3">
         <div className="relative">
           <ProfilePicture
             src={
@@ -183,7 +183,7 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-3 w-full grow">
+        <div className="flex flex-col gap-3 w-full">
           <div className="flex justify-between bg-lime-200 rounded-xl p-3 items-center">
             <h3 className="text-xl">Bio</h3>
             {!updatingBio && (
@@ -229,7 +229,7 @@ const Profile = () => {
               </ul>
             </form>
           ) : (
-            <p className="max-w-[35ch] text-pretty">
+            <p className="p-2 text-pretty">
               {bio ||
                 `Hmm... Looks like you haven't written a Bio yet. Click Update Bio to write one!`}
             </p>
