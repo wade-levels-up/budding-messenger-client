@@ -95,6 +95,7 @@ const Profile = () => {
     getUserData();
   };
 
+  // To-do: extract updatePictureModal into it's own Component
   const updatePictureModal = (
     <div
       className={`${
