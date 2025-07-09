@@ -9,7 +9,7 @@ const ConversationWindow = () => {
   return (
     <div className="flex flex-col justify-between h-full w-full">
       <h2 className="text-xl text-center">New Message to {recipient}</h2>
-      <NewMessage />
+      <NewMessage recipient={recipient ?? ""} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import "./index.css";
 import Home from "./pages/Home.tsx";
 import SignUp from "./components/forms/SignUp.tsx";
 import SignIn from "./components/forms/SignIn.tsx";
-import Error from "./components/ui/Error.tsx";
+import Error from "./pages/Error.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import VerifyAccount from "./pages/VerifyAccount.tsx";
 import Profile from "./pages/Profile.tsx";

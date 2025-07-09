@@ -32,7 +32,6 @@ const SignIn = () => {
 
     const data = await response.json();
     localStorage.setItem("token", data.token);
-
     navigate("/dashboard");
   };
 
