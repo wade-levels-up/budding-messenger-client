@@ -13,7 +13,10 @@ type UserData = {
 };
 
 const Profile = () => {
-  const [userData, getUserData] = useOutletContext<[UserData, () => void]>();
+  const { userData, getUserData } = useOutletContext<{
+    userData: UserData;
+    getUserData: () => void;
+  }>();
   const { username, bio, profile_picture_path } = userData;
   const [updatingBio, setUpdatingBio] = useState(false);
   const [newBio, setNewBio] = useState("");

@@ -3,10 +3,16 @@ import Button from "../ui/Button";
 
 type NewMessageParams = {
   recipient: string;
+  firstMessage: boolean;
+  conversationId: number;
 };
 
-const NewMessage = ({ recipient }: NewMessageParams) => {
-  const [openingMessage, setOpeningMessage] = useState("");
+const NewMessage = ({
+  recipient,
+  firstMessage,
+  conversationId,
+}: NewMessageParams) => {
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [messageSent, setMessageSent] = useState(false);
 
@@ -27,13 +33,13 @@ const NewMessage = ({ recipient }: NewMessageParams) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/conversations", {
+      const response = await fetch(`http://localhost:3000/conversations`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sender, recipient, openingMessage }),
+        body: JSON.stringify({ sender, recipient, openingMessage: message }),
       });
 
       if (!response.ok) {
@@ -41,7 +47,7 @@ const NewMessage = ({ recipient }: NewMessageParams) => {
         return;
       }
 
-      setOpeningMessage("");
+      setMessage("");
       setError("");
       setMessageSent(true);
     } catch {
@@ -73,8 +79,8 @@ const NewMessage = ({ recipient }: NewMessageParams) => {
               placeholder="Aa"
               id="openingMessage"
               name="openingMessage"
-              value={openingMessage}
-              onChange={(e) => setOpeningMessage(e.target.value)}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
           </li>
           <li className="text-right">

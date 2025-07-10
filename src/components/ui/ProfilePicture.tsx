@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ImgHTMLAttributes } from "react";
+import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 
 type ProfileProps = {
   src: string;
@@ -17,7 +18,7 @@ const ProfilePicture = ({ src, alt, ...props }: ProfileProps) => {
         </div>
       )}
       <img
-        src={src}
+        src={src || defaultProfilePicture}
         alt={alt}
         className={`w-64 h-64 border-3 border-lime-600 rounded-full object-cover transition-opacity duration-300 ${
           loading ? "opacity-0" : "opacity-100"

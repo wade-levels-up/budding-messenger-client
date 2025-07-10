@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import defaultProfilePicture from "../assets/default_profile_picture.jpg";
 
 type User = {
@@ -8,9 +8,18 @@ type User = {
   joined: string;
 };
 
+type Recipient = {
+  username: string;
+  profile_picture_path: string;
+  joined: string;
+};
+
 const AllUsers = () => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [error, setError] = useState("");
+  const { setRecipient } = useOutletContext<{
+    setRecipient: (recipient: Recipient) => void;
+  }>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,11 +47,10 @@ const AllUsers = () => {
               <li
                 className="flex w-full max-w-2xs shadow-lg hover:bg-lime-200 hover:cursor-pointer items-center gap-4 border border-lime-500 p-2 rounded-l-full"
                 key={user.username}
-                onClick={() =>
-                  navigate(
-                    `/dashboard/new-conversation?recipient=${user.username}`
-                  )
-                }
+                onClick={() => {
+                  setRecipient(user);
+                  navigate(`/dashboard/conversation`);
+                }}
               >
                 <img
                   className="rounded-full w-24 h-24 object-cover"

@@ -16,6 +16,7 @@ type UserData = {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [recipient, setRecipient] = useState({});
 
   const getUserData = useCallback(async () => {
     setUserData(null);
@@ -57,7 +58,7 @@ const Dashboard = () => {
     <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-xl p-2 shadow-md">
       <DashHeader username={userData.username} joined={userData.joined} />
       <DashMain>
-        <Outlet context={[userData, getUserData]} />
+        <Outlet context={{ userData, getUserData, recipient, setRecipient }} />
       </DashMain>
       <DashSideNav />
       <DashFooter />
