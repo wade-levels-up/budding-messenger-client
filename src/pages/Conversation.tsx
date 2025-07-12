@@ -22,6 +22,7 @@ type User = {
 };
 
 type Message = {
+  id: number;
   authorName: string;
   content: string;
   createdAt: string;
@@ -112,7 +113,10 @@ const Conversation = () => {
     }
   }, [conversations, recipient]);
 
-  const firstMessage = messages.length > 0;
+  let conversationId;
+  if (messages.length > 0) {
+    conversationId = messages[0].conversationId;
+  }
 
   return (
     <div className="flex flex-col justify-between h-full w-full">
@@ -132,14 +136,14 @@ const Conversation = () => {
       )}
       {messages &&
         messages.map((message) => (
-          <p>
+          <p key={message.id} className="bg-lime-200 p-2 rounded-xl w-md">
             {message.authorName}: {message.content}
           </p>
         ))}
       <NewMessage
         recipient={recipient.username ?? ""}
-        firstMessage={firstMessage}
-        conversationId={messages[0].conversationId}
+        conversationId={conversationId}
+        setConversation={setConversations}
       />
     </div>
   );
