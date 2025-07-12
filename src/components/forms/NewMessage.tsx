@@ -4,16 +4,19 @@ import Button from "../ui/Button";
 type NewMessageParams = {
   recipient: string;
   conversationId: number | undefined;
+  getConversations: () => void;
 };
 
-const NewMessage = ({ recipient, conversationId }: NewMessageParams) => {
+const NewMessage = ({
+  recipient,
+  conversationId,
+  getConversations,
+}: NewMessageParams) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [messageSent, setMessageSent] = useState(false);
 
   const createNewConversation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMessageSent(false);
     const sender = localStorage.getItem("username");
     if (!recipient || !localStorage.getItem("token") || !sender) {
       setError("Message must have a recipient!");
@@ -44,7 +47,6 @@ const NewMessage = ({ recipient, conversationId }: NewMessageParams) => {
 
       setMessage("");
       setError("");
-      setMessageSent(true);
     } catch {
       setError("Network error. Please try again.");
     }
@@ -52,7 +54,6 @@ const NewMessage = ({ recipient, conversationId }: NewMessageParams) => {
 
   const createNewMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMessageSent(false);
     const sender = localStorage.getItem("username");
     if (!recipient || !localStorage.getItem("token") || !sender) {
       setError("Message must have a recipient!");
@@ -86,19 +87,11 @@ const NewMessage = ({ recipient, conversationId }: NewMessageParams) => {
 
       setMessage("");
       setError("");
-      setMessageSent(true);
+      getConversations();
     } catch {
       setError("Network error. Please try again.");
     }
   };
-
-  if (messageSent) {
-    return <span className="text-center text-xl">Message sent!</span>;
-  }
-
-  if (messageSent) {
-    return <span className="text-center text-xl">Message sent!</span>;
-  }
 
   return (
     <>
