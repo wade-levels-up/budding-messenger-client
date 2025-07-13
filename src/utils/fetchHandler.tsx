@@ -1,11 +1,12 @@
 type FetchAndSetParams = {
   url: string;
   method: string;
-  headers: HeadersInit;
+  headers?: HeadersInit;
   body: object;
   setStateFn: (value: string | object | string[] | object[]) => void;
   errorMsg: string;
   setErrorStateFn: (value: string) => void;
+  auxFn?: () => void;
 };
 
 export const fetchAndSetData = async ({
@@ -16,18 +17,20 @@ export const fetchAndSetData = async ({
   setStateFn,
   errorMsg,
   setErrorStateFn,
+  auxFn,
 }: FetchAndSetParams) => {
   const response = await fetch(url, {
     method,
     headers,
-    body: JSON.stringify(body),
+    ...(body && { body: JSON.stringify(body) }),
   });
 
   if (!response.ok) {
-    setErrorStateFn(errorMsg);
+    if (setErrorStateFn) setErrorStateFn(errorMsg);
     return;
   }
 
   const data = await response.json();
   setStateFn(data);
+  if (auxFn) auxFn();
 };
