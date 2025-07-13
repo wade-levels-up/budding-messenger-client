@@ -18,21 +18,24 @@ const SignIn = () => {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: password }),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, password: password }),
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      setError(`${errorData.message}`);
-      return;
+      if (!response.ok) {
+        setError("Unable to sign in. Please try again later.");
+        return;
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/dashboard");
+    } catch {
+      setError("Unable to sign in. Please try again later.");
     }
-
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
-    navigate("/dashboard");
   };
 
   return (
