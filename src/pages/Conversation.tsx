@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Button from "../components/ui/Button";
+import Message from "../components/ui/Message";
 
 type Recipient = {
   username: string;
@@ -35,6 +36,7 @@ const Conversation = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const getConversations = async () => {
     try {
@@ -67,6 +69,8 @@ const Conversation = () => {
         setError("No current user found.");
         return;
       }
+
+      if (!recipient.username) navigate("/dashboard");
 
       const conversationWithRecipientAndUser = conversations.find(
         (conversation) => {
@@ -134,22 +138,15 @@ const Conversation = () => {
           <p className="text-center text-pretty">{error}</p>
         </span>
       )}
-      <div className="grid grid-cols-[1fr_1fr] auto-rows-max w-full gap-3 py-8 px-4">
+      <div className="flex flex-col w-full gap-3 py-4 px-2">
         {messages &&
           messages.map((message, index) => {
             return (
-              <div
+              <Message
                 key={index}
-                className={`bg-lime-200 px-3 py-2 rounded-xl w-fit ${
-                  message.authorName === recipient.username
-                    ? "bg-lime-300 col-start-1 col-span-2 max-w-[50%]"
-                    : `bg-lime-200 col-start-2`
-                }`}
-              >
-                <span className="text-blue-500">{message.authorName}</span>
-                <hr className="text-blue-500" />
-                <p>{message.content}</p>
-              </div>
+                authorName={message.authorName}
+                content={message.content}
+              />
             );
           })}
       </div>
