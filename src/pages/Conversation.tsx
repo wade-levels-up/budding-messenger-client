@@ -37,6 +37,7 @@ const Conversation = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const loggedInUsersName = localStorage.getItem("username");
 
   const getConversations = async () => {
     try {
@@ -115,7 +116,7 @@ const Conversation = () => {
     if (conversations.length > 0) {
       getConversationMessages();
     }
-  }, [conversations, recipient]);
+  }, [conversations, recipient, navigate]);
 
   let conversationId;
   if (messages.length > 0) {
@@ -142,11 +143,17 @@ const Conversation = () => {
         {messages &&
           messages.map((message, index) => {
             return (
-              <Message
-                key={index}
-                authorName={message.authorName}
-                content={message.content}
-              />
+              <div
+                className={`flex w-full grow ${
+                  loggedInUsersName === message.authorName && "justify-end"
+                }`}
+              >
+                <Message
+                  key={index}
+                  authorName={message.authorName}
+                  content={message.content}
+                />
+              </div>
             );
           })}
       </div>

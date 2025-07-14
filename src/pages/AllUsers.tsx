@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import defaultProfilePicture from "../assets/default_profile_picture.jpg";
+import { useOutletContext } from "react-router-dom";
+import UserCard from "../components/ui/UserCard";
 
 type User = {
   username: string;
@@ -20,7 +20,6 @@ const AllUsers = () => {
   const { setRecipient } = useOutletContext<{
     setRecipient: (recipient: Recipient) => void;
   }>();
-  const navigate = useNavigate();
   const loggedInUsername = localStorage.getItem("username");
 
   useEffect(() => {
@@ -48,26 +47,7 @@ const AllUsers = () => {
         {error && <li>{error}</li>}
         {filteredUsers &&
           filteredUsers.map((user) => {
-            return (
-              <li
-                className="flex w-full max-w-2xs shadow-lg hover:bg-lime-200 hover:cursor-pointer items-center gap-4 border border-lime-500 p-2 rounded-l-full"
-                key={user.username}
-                onClick={() => {
-                  setRecipient(user);
-                  navigate(`/dashboard/conversation`);
-                }}
-              >
-                <img
-                  className="rounded-full w-24 h-24 object-cover"
-                  src={
-                    user.profile_picture_path
-                      ? `${user.profile_picture_path}?t=${Date.now()}`
-                      : defaultProfilePicture
-                  }
-                ></img>
-                <span>{user.username}</span>
-              </li>
-            );
+            return <UserCard user={user} auxFn={setRecipient} />;
           })}
       </ul>
     </>
