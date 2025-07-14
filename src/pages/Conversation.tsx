@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
@@ -38,6 +38,8 @@ const Conversation = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const loggedInUsersName = localStorage.getItem("username");
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const getConversations = async () => {
     try {
@@ -118,13 +120,20 @@ const Conversation = () => {
     }
   }, [conversations, recipient, navigate]);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   let conversationId;
   if (messages.length > 0) {
     conversationId = messages[0].conversationId;
   }
 
   return (
-    <div className="flex flex-col justify-between h-full w-full relative">
+    <div
+      onLoad={() => window.scrollTo(0, document.body.scrollHeight)}
+      className="flex flex-col justify-between h-full w-full relative"
+    >
       <div className="flex flex-col items-center gap-3">
         <h2 className="text-xl text-center">
           Conversation with {recipient.username}
@@ -156,6 +165,7 @@ const Conversation = () => {
               </div>
             );
           })}
+        <div ref={messagesEndRef} />
       </div>
       <div className="sticky gap-2 bottom-0 flex">
         <NewMessage
