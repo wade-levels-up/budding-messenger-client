@@ -46,7 +46,7 @@ const UserCard = ({ user, auxFn }: UserCardProps) => {
               icon="faUser"
               ariaLabel={`View ${user.username}'s Profile Page`}
               func={() =>
-                navigate(`/dashboard/user/profile?username=${user.username}`)
+                navigate(`/dashboard/profile?username=${user.username}`)
               }
             />
           </div>

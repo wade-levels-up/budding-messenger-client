@@ -31,7 +31,6 @@ const router = createBrowserRouter([
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/all-users", element: <AllUsers /> },
       { path: "/dashboard/conversation", element: <Conversation /> },
-      { path: "/dashboard/user/profile", element: <Profile /> },
     ],
   },
 ]);
