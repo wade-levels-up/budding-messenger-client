@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
+import Button from "../components/ui/Button";
 
 type Recipient = {
   username: string;
@@ -81,7 +82,6 @@ const Conversation = () => {
       );
 
       if (!conversationWithRecipientAndUser) {
-        setError("No conversation found.");
         return;
       }
 
@@ -119,7 +119,7 @@ const Conversation = () => {
   }
 
   return (
-    <div className="flex flex-col justify-between h-full w-full">
+    <div className="flex flex-col justify-between h-full w-full relative">
       <div className="flex flex-col items-center gap-3">
         <h2 className="text-xl text-center">
           Conversation with {recipient.username}
@@ -153,11 +153,19 @@ const Conversation = () => {
             );
           })}
       </div>
-      <NewMessage
-        recipient={recipient.username ?? ""}
-        conversationId={conversationId}
-        getConversations={getConversations}
-      />
+      <div className="sticky gap-2 bottom-0 flex">
+        <NewMessage
+          recipient={recipient.username ?? ""}
+          conversationId={conversationId}
+          getConversations={getConversations}
+        />
+        <Button
+          icon="faArrowsRotate"
+          customStyle="flex bg-lime-600 text-white p-2 justify-center items-center rounded-xl z-2 top-0 right-0 hover:cursor-pointer hover:bg-lime-500"
+          ariaLabel="Refresh Conversation / Send and Receive messages"
+          func={getConversations}
+        />
+      </div>
     </div>
   );
 };

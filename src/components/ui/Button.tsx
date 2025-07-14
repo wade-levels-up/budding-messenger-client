@@ -17,6 +17,7 @@ import {
   faXmark,
   faBackward,
   faCamera,
+  faArrowsRotate,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -48,6 +49,7 @@ const buttonIcons = {
   faXmark,
   faBackward,
   faCamera,
+  faArrowsRotate,
 };
 
 const Button = ({

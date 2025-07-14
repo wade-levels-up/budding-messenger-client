@@ -21,6 +21,7 @@ const AllUsers = () => {
     setRecipient: (recipient: Recipient) => void;
   }>();
   const navigate = useNavigate();
+  const loggedInUsername = localStorage.getItem("username");
 
   useEffect(() => {
     const getUsers = async () => {
@@ -36,13 +37,17 @@ const AllUsers = () => {
     getUsers();
   }, []);
 
+  const filteredUsers = users?.filter(
+    (user) => user.username !== loggedInUsername
+  );
+
   return (
     <>
       <h2 className="text-lg">All Users</h2>
       <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
         {error && <li>{error}</li>}
-        {users &&
-          users.map((user) => {
+        {filteredUsers &&
+          filteredUsers.map((user) => {
             return (
               <li
                 className="flex w-full max-w-2xs shadow-lg hover:bg-lime-200 hover:cursor-pointer items-center gap-4 border border-lime-500 p-2 rounded-l-full"
