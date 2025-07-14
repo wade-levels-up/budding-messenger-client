@@ -15,6 +15,8 @@ type UserCardProps = {
 
 const userCardStyle =
   "flex w-full max-w-2xs shadow-lg hover:bg-blue-100 hover:cursor-pointer items-center gap-4 border border-lime-500 p-1 rounded-l-full";
+const customButtonStyle =
+  "bg-lime-600 text-white w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
 
 const UserCard = ({ user, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
@@ -35,19 +37,29 @@ const UserCard = ({ user, auxFn }: UserCardProps) => {
           </span>
           <div className="flex flex-col items-center justify-end gap-2">
             <Button
+              icon="faUser"
+              ariaLabel={`View ${user.username}'s Profile Page`}
+              func={() =>
+                navigate(`/dashboard/profile?username=${user.username}`)
+              }
+              customStyle={customButtonStyle}
+            />
+            <Button
               ariaLabel={`Chat with ${user.username}`}
               func={() => {
                 auxFn(user);
                 navigate("/dashboard/conversation");
               }}
               icon="faComment"
+              customStyle={customButtonStyle}
             />
             <Button
-              icon="faUser"
-              ariaLabel={`View ${user.username}'s Profile Page`}
+              icon="faUserPlus"
+              ariaLabel={`Request to be Friends with ${user.username}`}
               func={() =>
                 navigate(`/dashboard/profile?username=${user.username}`)
               }
+              customStyle={customButtonStyle}
             />
           </div>
         </div>

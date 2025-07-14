@@ -19,6 +19,7 @@ import {
   faCamera,
   faArrowsRotate,
   faComment,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -52,6 +53,7 @@ const buttonIcons = {
   faBackward,
   faCamera,
   faArrowsRotate,
+  faUserPlus,
 };
 
 const Button = ({
