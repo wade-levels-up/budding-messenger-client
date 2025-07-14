@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Button from "../components/ui/Button";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import defaultProfilePicture from "../assets/default_profile_picture.jpg";
 import UpdatePictureModal from "../components/ui/UpdatePictureModal";
+import Bio from "../components/forms/Bio";
 
 type UserData = {
   username: string;
@@ -17,41 +18,11 @@ const Profile = () => {
     userData: UserData;
     getUserData: () => void;
   }>();
+
   const { username, bio, profile_picture_path } = userData;
   const [updatingBio, setUpdatingBio] = useState(false);
-  const [newBio, setNewBio] = useState("");
-  const [error, setError] = useState("");
   const [updatingPic, setUpdatingPic] = useState(false);
-
-  useEffect(() => {
-    if (bio) {
-      setNewBio(bio);
-    }
-  }, [bio]);
-
-  const handleBioInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewBio(e.target.value);
-  };
-
-  const handleBioFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const response = await fetch("http://localhost:3000/users/me/bio", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content: newBio }),
-    });
-
-    if (!response.ok) {
-      setError(`Unable to update Bio`);
-      return;
-    }
-
-    setUpdatingBio(false);
-    getUserData();
-  };
+  const [error, setError] = useState("");
 
   return (
     <>
@@ -95,39 +66,11 @@ const Profile = () => {
             )}
           </div>
           {updatingBio ? (
-            <form onSubmit={handleBioFormSubmit} className="flex grow">
-              <ul className="w-full">
-                <li className="w-full">
-                  <label htmlFor="bio"></label>
-                  <textarea
-                    name="bio"
-                    id="bio"
-                    placeholder="Tell us about yourself"
-                    rows={8}
-                    value={newBio}
-                    onChange={handleBioInput}
-                    className="bg-white p-2 w-full"
-                  ></textarea>
-                </li>
-                {error && (
-                  <li className="mb-2 bg-red-300 p-1 rounded">
-                    <p className="text-center text-pretty">{error}</p>
-                  </li>
-                )}
-                <li className="flex flex-row gap-1 justify-end p-2">
-                  <Button
-                    icon="faXmark"
-                    func={() => setUpdatingBio(false)}
-                    ariaLabel="Cancel"
-                  />
-                  <Button
-                    icon="faCheck"
-                    type="submit"
-                    ariaLabel="Submit Changes"
-                  />
-                </li>
-              </ul>
-            </form>
+            <Bio
+              userBio={bio}
+              getUserData={getUserData}
+              setUpdatingBio={setUpdatingBio}
+            />
           ) : (
             <p className="p-2 text-pretty">
               {bio ||
