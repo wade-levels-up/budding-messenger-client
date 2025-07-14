@@ -36,17 +36,6 @@ const DashSideNav = () => {
           </li>
           <li>
             <Button
-              text="Conversations"
-              icon="faComments"
-              ariaLabel="Conversations"
-              customStyle={sideNavButtonStyle}
-              fullWidth
-              vanishingText
-              href="/dashboard/conversations"
-            />
-          </li>
-          <li>
-            <Button
               text="View All Users"
               icon="faUserGroup"
               ariaLabel="View All Users"
