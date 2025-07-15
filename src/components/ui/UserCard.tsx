@@ -21,6 +21,17 @@ const customButtonStyle =
 
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
+
+  const addFriend = async (recipient: string) => {
+    try {
+      await fetch(`http://localhost:3000/friends/${recipient}`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
   return (
     <>
       <li className={userCardStyle} key={user.username}>
@@ -58,9 +69,10 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
               <Button
                 icon="faUserPlus"
                 ariaLabel={`Request to be Friends with ${user.username}`}
-                func={() =>
-                  navigate(`/dashboard/profile?username=${user.username}`)
-                }
+                func={() => {
+                  addFriend(user.username);
+                  navigate("/dashboard/friends");
+                }}
                 customStyle={customButtonStyle}
               />
             </div>
