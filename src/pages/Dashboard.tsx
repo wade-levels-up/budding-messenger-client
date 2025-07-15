@@ -6,11 +6,20 @@ import DashSideNav from "../components/ui/DashSideNav";
 import DashFooter from "../components/ui/DashFooter";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
+type Friend = {
+  username: string;
+  profile_picture_path: string;
+  joined: string;
+  bio: string;
+};
+
 type UserData = {
   username: string;
   bio: string;
   joined: string;
   profile_picture_path: string;
+  friends: Friend[];
+  friendsOf: Friend[];
 };
 
 const Dashboard = () => {
@@ -20,26 +29,30 @@ const Dashboard = () => {
 
   const getUserData = useCallback(async () => {
     setUserData(null);
+    try {
+      const response = await fetch("http://localhost:3000/users/me", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
 
-    const response = await fetch("http://localhost:3000/users/me", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
+      if (!response.ok) {
+        localStorage.clear();
+        navigate("/");
+        return;
+      }
 
-    if (!response.ok) {
-      localStorage.clear();
-      navigate("/");
-      return;
+      const data = await response.json();
+      if (!data.userData) {
+        navigate("/");
+        return;
+      }
+
+      localStorage.setItem("username", data.userData.username);
+      setUserData(data.userData);
+    } catch {
+      // To-do display error
+      navigate("/error");
     }
-
-    const data = await response.json();
-    if (!data.userData) {
-      navigate("/");
-      return;
-    }
-
-    localStorage.setItem("username", data.userData.username);
-    setUserData(data.userData);
   }, [navigate]);
 
   useEffect(() => {

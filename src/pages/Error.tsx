@@ -7,7 +7,9 @@ const Error = () => {
   return (
     <div className="flex flex-col gap-8 items-center">
       <h1 className="text-xl">Oh no... This page doesn't exist!</h1>
-      <p>Click below to return home or go back to where you came from.</p>
+      <p className="text-center">
+        Click below to return home or go back to where you came from.
+      </p>
       <div className="flex gap-2">
         <Button
           text="Back"

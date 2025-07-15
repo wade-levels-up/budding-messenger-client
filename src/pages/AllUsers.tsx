@@ -47,7 +47,9 @@ const AllUsers = () => {
         {error && <li>{error}</li>}
         {filteredUsers &&
           filteredUsers.map((user) => {
-            return <UserCard user={user} auxFn={setRecipient} />;
+            return (
+              <UserCard key={user.username} user={user} auxFn={setRecipient} />
+            );
           })}
       </ul>
     </>
