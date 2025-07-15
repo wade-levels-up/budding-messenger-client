@@ -7,7 +7,7 @@ const loggedInUsersName = localStorage.getItem("username");
 
 const Message = ({ authorName, content }: MessageProps) => {
   const messageStyle = `${
-    loggedInUsersName === authorName ? "bg-lime-200" : "bg-lime-300"
+    loggedInUsersName === authorName ? "bg-lime-200" : "bg-blue-100"
   } flex flex-col px-3 py-2 rounded-xl w-fit`;
 
   return (
