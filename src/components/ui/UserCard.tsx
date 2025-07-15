@@ -10,7 +10,8 @@ type Recipient = {
 
 type UserCardProps = {
   user: Recipient;
-  auxFn: (value: Recipient) => void;
+  friendCard?: boolean;
+  auxFn?: (value: Recipient) => void | undefined;
 };
 
 const userCardStyle =
@@ -18,7 +19,7 @@ const userCardStyle =
 const customButtonStyle =
   "bg-lime-600 text-white w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
 
-const UserCard = ({ user, auxFn }: UserCardProps) => {
+const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
   return (
     <>
@@ -47,20 +48,22 @@ const UserCard = ({ user, auxFn }: UserCardProps) => {
             <Button
               ariaLabel={`Chat with ${user.username}`}
               func={() => {
-                auxFn(user);
+                auxFn?.(user);
                 navigate("/dashboard/conversation");
               }}
               icon="faComment"
               customStyle={customButtonStyle}
             />
-            <Button
-              icon="faUserPlus"
-              ariaLabel={`Request to be Friends with ${user.username}`}
-              func={() =>
-                navigate(`/dashboard/profile?username=${user.username}`)
-              }
-              customStyle={customButtonStyle}
-            />
+            <div className={`${friendCard && "hidden"}`}>
+              <Button
+                icon="faUserPlus"
+                ariaLabel={`Request to be Friends with ${user.username}`}
+                func={() =>
+                  navigate(`/dashboard/profile?username=${user.username}`)
+                }
+                customStyle={customButtonStyle}
+              />
+            </div>
           </div>
         </div>
       </li>

@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   return (
     <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-xl p-2 shadow-md">
-      <DashHeader username={userData.username} joined={userData.joined} />
+      <DashHeader username={userData.username} />
       <DashMain>
         <Outlet context={{ userData, getUserData, recipient, setRecipient }} />
       </DashMain>

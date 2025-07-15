@@ -11,6 +11,7 @@ import VerifyAccount from "./pages/VerifyAccount.tsx";
 import Profile from "./pages/Profile.tsx";
 import AllUsers from "./pages/AllUsers.tsx";
 import Conversation from "./pages/Conversation.tsx";
+import Friends from "./pages/Friends.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/all-users", element: <AllUsers /> },
       { path: "/dashboard/conversation", element: <Conversation /> },
+      { path: "/dashboard/friends", element: <Friends /> },
     ],
   },
 ]);
