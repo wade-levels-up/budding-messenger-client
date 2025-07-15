@@ -2,10 +2,18 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import UserCard from "../components/ui/UserCard";
 
+type Friend = {
+  username: string;
+  profile_picture_path: string;
+  joined: string;
+  bio: string;
+};
+
 type User = {
   username: string;
   profile_picture_path: string;
   joined: string;
+  friends: Friend[];
 };
 
 type Recipient = {
@@ -47,8 +55,19 @@ const AllUsers = () => {
         {error && <li>{error}</li>}
         {filteredUsers &&
           filteredUsers.map((user) => {
+            let mutualFriend = false;
+            user.friends.forEach((friend) => {
+              if (friend.username === loggedInUsername) {
+                mutualFriend = true;
+              }
+            });
             return (
-              <UserCard key={user.username} user={user} auxFn={setRecipient} />
+              <UserCard
+                key={user.username}
+                friendCard={mutualFriend}
+                user={user}
+                auxFn={setRecipient}
+              />
             );
           })}
       </ul>
