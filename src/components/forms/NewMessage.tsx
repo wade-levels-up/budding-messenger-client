@@ -104,7 +104,7 @@ const NewMessage = ({
         className="w-full"
         onSubmit={conversationId ? createNewMessage : createNewConversation}
       >
-        <ul className="flex gap-2 w-full items-center">
+        <ul className="flex gap-2 w-full items-center mt-6">
           <li className="flex w-full justify-end items-center">
             <label className="hidden" htmlFor="openingMessage">
               Message:
