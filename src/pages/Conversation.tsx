@@ -153,12 +153,12 @@ const Conversation = () => {
           messages.map((message, index) => {
             return (
               <div
+                key={index}
                 className={`flex w-full grow ${
                   loggedInUsersName === message.authorName && "justify-end"
                 }`}
               >
                 <Message
-                  key={index}
                   authorName={message.authorName}
                   content={message.content}
                 />
@@ -172,12 +172,6 @@ const Conversation = () => {
           recipient={recipient.username ?? ""}
           conversationId={conversationId}
           getConversations={getConversations}
-        />
-        <Button
-          icon="faArrowsRotate"
-          customStyle="flex bg-lime-600 text-white p-2 justify-center items-center rounded-xl z-2 top-0 right-0 hover:cursor-pointer hover:bg-lime-500"
-          ariaLabel="Refresh Conversation / Send and Receive messages"
-          func={getConversations}
         />
       </div>
     </div>
