@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
-import Button from "../components/ui/Button";
 import Message from "../components/ui/Message";
 
 type Recipient = {
