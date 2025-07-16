@@ -13,7 +13,7 @@ type User = {
   username: string;
   profile_picture_path: string;
   joined: string;
-  friends: Friend[];
+  friendsOf: Friend[];
 };
 
 type Recipient = {
@@ -25,9 +25,11 @@ type Recipient = {
 const AllUsers = () => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [error, setError] = useState("");
-  const { setRecipient } = useOutletContext<{
+  const { setRecipient, userData } = useOutletContext<{
     setRecipient: (recipient: Recipient) => void;
+    userData: User;
   }>();
+  const { friendsOf } = userData;
   const loggedInUsername = localStorage.getItem("username");
 
   useEffect(() => {
@@ -56,8 +58,8 @@ const AllUsers = () => {
         {filteredUsers &&
           filteredUsers.map((user) => {
             let mutualFriend = false;
-            user.friends.forEach((friend) => {
-              if (friend.username === loggedInUsername) {
+            friendsOf.forEach((friend) => {
+              if (friend.username === user.username) {
                 mutualFriend = true;
               }
             });

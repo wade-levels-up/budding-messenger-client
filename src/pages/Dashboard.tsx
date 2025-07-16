@@ -18,7 +18,6 @@ type UserData = {
   bio: string;
   joined: string;
   profile_picture_path: string;
-  friends: Friend[];
   friendsOf: Friend[];
 };
 

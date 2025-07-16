@@ -23,16 +23,39 @@ type Recipient = {
 
 const Friends = () => {
   const [mutualFriends, setMutualFriends] = useState<Friend[]>([]);
+  const [userFriends, setUserFriends] = useState<Friend[]>([]);
   const { userData, setRecipient } = useOutletContext<{
     userData: UserData;
     setRecipient: (recipient: Recipient) => void;
   }>();
-  const { friends, friendsOf } = userData;
+  const { friendsOf } = userData;
+
+  useEffect(() => {
+    const retrieveUserFriends = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/friends", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to retrieve users friends");
+        }
+
+        const data = await response.json();
+        setUserFriends(data.friends);
+      } catch {
+        console.error("Unable to retrieve users friends");
+      }
+    };
+
+    retrieveUserFriends();
+  }, []);
 
   useEffect(() => {
     const mutualFriends: Friend[] = [];
     const findMutualFriends = () => {
-      friends.forEach((friend) => {
+      userFriends.forEach((friend) => {
         friendsOf.forEach((friendOf: Friend) => {
           if (friend.username === friendOf.username) {
             mutualFriends.push(friend);
@@ -42,7 +65,7 @@ const Friends = () => {
     };
     findMutualFriends();
     setMutualFriends(mutualFriends);
-  }, [friends, friendsOf]);
+  }, [userFriends, friendsOf]);
 
   return (
     <>
