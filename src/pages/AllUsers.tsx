@@ -33,27 +33,29 @@ const AllUsers = () => {
 
   return (
     <>
-      <h2 className="text-lg">All Users</h2>
-      <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
-        {error && <li>{error}</li>}
-        {filteredUsers &&
-          filteredUsers.map((user) => {
-            let mutualFriend = false;
-            friendsOf.forEach((friend) => {
-              if (friend.username === user.username) {
-                mutualFriend = true;
-              }
-            });
-            return (
-              <UserCard
-                key={user.username}
-                friendCard={mutualFriend}
-                user={user}
-                auxFn={setRecipient}
-              />
-            );
-          })}
-      </ul>
+      <div className="animate-fade-in-slow">
+        <h2 className="text-lg">All Users</h2>
+        <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+          {error && <li>{error}</li>}
+          {filteredUsers &&
+            filteredUsers.map((user) => {
+              let mutualFriend = false;
+              friendsOf.forEach((friend) => {
+                if (friend.username === user.username) {
+                  mutualFriend = true;
+                }
+              });
+              return (
+                <UserCard
+                  key={user.username}
+                  friendCard={mutualFriend}
+                  user={user}
+                  auxFn={setRecipient}
+                />
+              );
+            })}
+        </ul>
+      </div>
     </>
   );
 };

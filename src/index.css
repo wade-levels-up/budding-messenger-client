@@ -17,6 +17,14 @@
     from { opacity: 0; }
     to { opacity: 100; }
   }
+
+  .animate-fade-in-slow {
+    animation: fade-in 1s ease;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 100; }
+  }
 }
 
 :root {
