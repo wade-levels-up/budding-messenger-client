@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 import Button from "./Button";
-
-type Recipient = {
-  username: string;
-  profile_picture_path: string;
-  joined: string;
-};
+import type { Friend, UserData } from "../../types/types";
 
 type UserCardProps = {
-  user: Recipient;
+  user: Friend;
   friendCard?: boolean;
-  auxFn?: (value: Recipient) => void | undefined;
+  auxFn?: (value: Friend) => void | undefined;
+  getUsers?: () => void;
 };
 
 const userCardStyle =
@@ -22,14 +19,28 @@ const customButtonStyle =
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
 
+  const { getUserData } = useOutletContext<{
+    userData: UserData;
+    getUserData: () => void;
+  }>();
+
   const addFriend = async (recipient: string) => {
     try {
-      await fetch(`http://localhost:3000/friends/${recipient}`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await fetch(
+        `http://localhost:3000/friends/${recipient}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (!response.ok) {
+        return;
+      }
+
+      getUserData();
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   };
   return (

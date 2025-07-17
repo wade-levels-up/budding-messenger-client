@@ -1,33 +1,14 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import UserCard from "../components/ui/UserCard";
-
-type Friend = {
-  username: string;
-  profile_picture_path: string;
-  joined: string;
-  bio: string;
-};
-
-type User = {
-  username: string;
-  profile_picture_path: string;
-  joined: string;
-  friendsOf: Friend[];
-};
-
-type Recipient = {
-  username: string;
-  profile_picture_path: string;
-  joined: string;
-};
+import type { Friend, UserData } from "../types/types";
 
 const AllUsers = () => {
-  const [users, setUsers] = useState<User[] | null>(null);
+  const [users, setUsers] = useState<UserData[] | null>(null);
   const [error, setError] = useState("");
   const { setRecipient, userData } = useOutletContext<{
-    setRecipient: (recipient: Recipient) => void;
-    userData: User;
+    setRecipient: (recipient: Friend) => void;
+    userData: UserData;
   }>();
   const { friendsOf } = userData;
   const loggedInUsername = localStorage.getItem("username");
