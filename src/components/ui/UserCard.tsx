@@ -43,6 +43,27 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
       console.error(error);
     }
   };
+
+  const removeFriend = async (recipient: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/friends/${recipient}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (!response.ok) {
+        return;
+      }
+
+      getUserData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <li className={userCardStyle} key={user.username}>
@@ -76,7 +97,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
               icon="faComment"
               customStyle={customButtonStyle}
             />
-            <div className={`${friendCard && "hidden"}`}>
+            {!friendCard ? (
               <Button
                 icon="faUserPlus"
                 ariaLabel={`Request to be Friends with ${user.username}`}
@@ -86,7 +107,17 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
                 }}
                 customStyle={customButtonStyle}
               />
-            </div>
+            ) : (
+              <Button
+                icon="faUserXmark"
+                ariaLabel={`Remove ${user.username} as a friend`}
+                func={() => {
+                  removeFriend(user.username);
+                  navigate("/dashboard/friends");
+                }}
+                customStyle={customButtonStyle}
+              />
+            )}
           </div>
         </div>
       </li>

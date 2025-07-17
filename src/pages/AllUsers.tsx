@@ -6,9 +6,9 @@ import type { Friend, UserData } from "../types/types";
 const AllUsers = () => {
   const [users, setUsers] = useState<UserData[] | null>(null);
   const [error, setError] = useState("");
-  const { setRecipient, userData } = useOutletContext<{
-    setRecipient: (recipient: Friend) => void;
+  const { userData, setRecipient } = useOutletContext<{
     userData: UserData;
+    setRecipient: (recipient: Friend) => void;
   }>();
   const { friendsOf } = userData;
   const loggedInUsername = localStorage.getItem("username");

@@ -63,8 +63,7 @@ const Friends = () => {
     } catch {
       setError("Cannot retrieve users.");
     }
-    getUserData();
-  }, [getUserData]);
+  }, []);
 
   const getUsers = async () => {
     const response = await fetch("http://localhost:3000/users", {
