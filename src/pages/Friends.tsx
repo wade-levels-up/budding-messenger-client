@@ -80,8 +80,8 @@ const Friends = () => {
 
   return (
     <>
-      <div className="animate-fade-in-slow">
-        <h2 className="text-lg">Friends</h2>
+      <div className="animate-fade-in-slow flex flex-col gap-4">
+        <h2 className="text-lg text-center">Friends</h2>
         {mutualFriends.length > 0 ? (
           mutualFriends?.map((friend) => {
             return (
@@ -118,7 +118,7 @@ const Friends = () => {
             </p>
           </div>
         )}
-        <h3 className="text-lg">Friend Requests</h3>
+        <h3 className="text-lg text-center">Friend Requests</h3>
         {/* If users are a friendOf the logged in user but the logged in user isn't a friend of theirs show them in Friend Requests */}
         <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
           {allUsers?.map((user) => {

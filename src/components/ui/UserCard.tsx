@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 import Button from "./Button";
 import type { Friend, UserData } from "../../types/types";
+import { toast } from "react-toastify";
 
 type UserCardProps = {
   user: Friend;
@@ -38,6 +39,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
         return;
       }
 
+      toast(`Sent ${recipient} a friend request!`);
       getUserData();
     } catch (error) {
       console.error(error);
@@ -103,7 +105,6 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
                 ariaLabel={`Request to be Friends with ${user.username}`}
                 func={() => {
                   addFriend(user.username);
-                  navigate("/dashboard/friends");
                 }}
                 customStyle={customButtonStyle}
               />
