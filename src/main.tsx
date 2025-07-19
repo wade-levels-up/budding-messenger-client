@@ -12,6 +12,7 @@ import Profile from "./pages/Profile.tsx";
 import AllUsers from "./pages/AllUsers.tsx";
 import Conversation from "./pages/Conversation.tsx";
 import Friends from "./pages/Friends.tsx";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -40,5 +41,17 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      hideProgressBar={true}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </StrictMode>
 );

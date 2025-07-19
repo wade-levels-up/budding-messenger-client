@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 import Button from "./Button";
-import type { Friend, UserData } from "../../types/types";
+import type { Friend } from "../../types/types";
+import { toast } from "react-toastify";
 
 type UserCardProps = {
   user: Friend;
@@ -19,10 +20,8 @@ const customButtonStyle =
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
 
-  const { getUserData, notify } = useOutletContext<{
-    userData: UserData;
+  const { getUserData } = useOutletContext<{
     getUserData: () => void;
-    notify: (value: string) => void;
   }>();
 
   const addFriend = async (recipient: string) => {
@@ -39,7 +38,9 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
         return;
       }
 
-      notify(`Sent ${recipient} a friend request!`);
+      const notify = (msg: string) => toast(msg);
+
+      notify(`Friend request sent to ${recipient}`);
       getUserData();
     } catch (error) {
       console.error(error);
