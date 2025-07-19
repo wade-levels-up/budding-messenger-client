@@ -42,7 +42,7 @@ const SignIn = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
+        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
       >
         <fieldset>
           <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
@@ -88,8 +88,8 @@ const SignIn = () => {
           </ul>
         </fieldset>
       </form>
-      <div className="flex flex-col gap-2">
-        <p className="text-center">No account?</p>
+      <div className="flex items-center flex-col gap-2">
+        <p className="animate-wiggle text-center">No account?</p>
         <Button text="Sign up" href="/sign-up" ariaLabel="Sign Up" />
       </div>
     </>

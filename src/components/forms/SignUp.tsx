@@ -62,7 +62,7 @@ const SignUp = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
+        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
       >
         <fieldset>
           <legend className="text-center text-2xl p-3 mb-4">Sign up</legend>

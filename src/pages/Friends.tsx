@@ -80,72 +80,75 @@ const Friends = () => {
 
   return (
     <>
-      <div className="animate-fade-in-slow flex flex-col gap-4">
-        <h2 className="text-lg text-center">Friends</h2>
-        {mutualFriends.length > 0 ? (
-          mutualFriends?.map((friend) => {
-            return (
-              <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
-                <UserCard
-                  key={friend.username}
-                  user={friend}
-                  auxFn={setRecipient}
-                  friendCard={true}
-                />
-              </ul>
-            );
-          })
-        ) : (
-          <div className="text-center max-w-[40ch] flex flex-col gap-2">
-            <p className="bg-blue-100 p-6 rounded-xl shadow-md">
-              Looks like you don't have any friends on Budding Messenger yet 😔
-            </p>
-            <p className="bg-blue-100 p-6 rounded-xl shadow-md">
-              No worries! Have a look through{" "}
-              <a
-                className="text-blue-600 bg-blue-200 p-1 rounded-xl "
-                href="/dashboard/all-users"
-              >
-                'All Users'
-              </a>{" "}
-              and see who you might have things in common with, send them an
-              introductory message, and if things go swimmingly you can add each
-              other as friends!
-            </p>
-            <p className="bg-blue-100 p-6 rounded-xl shadow-md">
-              When you receive friend requests from other users check back here
-              to see them below.
-            </p>
-          </div>
-        )}
-        <h3 className="text-lg text-center">Friend Requests</h3>
-        {/* If users are a friendOf the logged in user but the logged in user isn't a friend of theirs show them in Friend Requests */}
-        <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
-          {allUsers?.map((user) => {
-            if (
-              user.friendsOf.some(
-                (friends) => friends.username === loggedInUsername
-              ) &&
-              !mutualFriends.some(
-                (mutualFriend) => mutualFriend.username === user.username
-              )
-            ) {
+      <div className="animate-fade-in-slow flex flex-col items-center gap-4 w-full p-4">
+        <div className="flex flex-col items-center gap-2 border-1 rounded-xl border-lime-300 py-4 px-6 w-full">
+          <h2 className="text-lg text-center">Friends</h2>
+          {mutualFriends.length > 0 ? (
+            mutualFriends?.map((friend) => {
               return (
-                <UserCard
-                  key={user.username}
-                  user={user}
-                  auxFn={setRecipient}
-                  getUsers={getUsers}
-                />
+                <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+                  <UserCard
+                    key={friend.username}
+                    user={friend}
+                    auxFn={setRecipient}
+                    friendCard={true}
+                  />
+                </ul>
               );
-            }
-          })}
-        </ul>
-        {error && (
-          <div className="mb-2 bg-red-300 p-1 rounded">
-            <p className="text-center text-pretty">{error}</p>
-          </div>
-        )}
+            })
+          ) : (
+            <div className="text-center max-w-[40ch] flex flex-col gap-2">
+              <p className="bg-lime-200 p-6 rounded-xl shadow-md">
+                Looks like you don't have any friends on Budding Messenger yet
+                😔
+              </p>
+              <p className="bg-lime-200 p-6 rounded-xl shadow-md">
+                Have a look through{" "}
+                <a
+                  className="text-blue-600 bg-lime-100 p-1 rounded-xl "
+                  href="/dashboard/all-users"
+                >
+                  'All Users'
+                </a>{" "}
+                and see who you might have things in common with.
+              </p>
+              <p className="bg-lime-200 p-6 rounded-xl shadow-md">
+                When you receive friend requests from other users check back
+                here to see them below.
+              </p>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col items-center gap-2 border-1 rounded-xl border-lime-300 py-4 px-6 w-full">
+          <h3 className="text-lg text-center">Friend Requests</h3>
+          {/* If users are a friendOf the logged in user but the logged in user isn't a friend of theirs show them in Friend Requests */}
+          <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+            {allUsers?.map((user) => {
+              if (
+                user.friendsOf.some(
+                  (friends) => friends.username === loggedInUsername
+                ) &&
+                !mutualFriends.some(
+                  (mutualFriend) => mutualFriend.username === user.username
+                )
+              ) {
+                return (
+                  <UserCard
+                    key={user.username}
+                    user={user}
+                    auxFn={setRecipient}
+                    getUsers={getUsers}
+                  />
+                );
+              }
+            })}
+          </ul>
+          {error && (
+            <div className="mb-2 bg-red-300 p-1 rounded">
+              <p className="text-center text-pretty">{error}</p>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
