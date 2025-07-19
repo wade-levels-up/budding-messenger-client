@@ -5,6 +5,7 @@ import DashMain from "../components/ui/DashMain";
 import DashSideNav from "../components/ui/DashSideNav";
 import DashFooter from "../components/ui/DashFooter";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { ToastContainer, toast } from "react-toastify";
 
 type Friend = {
   username: string;
@@ -25,6 +26,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [recipient, setRecipient] = useState({});
+  const notify = (msg: string) => toast(msg);
 
   const getUserData = useCallback(async () => {
     setUserData(null);
@@ -68,9 +70,23 @@ const Dashboard = () => {
 
   return (
     <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[80px_1fr_30px] rounded-xl p-2 shadow-md">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <DashHeader username={userData.username} />
       <DashMain>
-        <Outlet context={{ userData, getUserData, recipient, setRecipient }} />
+        <Outlet
+          context={{ userData, getUserData, recipient, setRecipient, notify }}
+        />
       </DashMain>
       <DashSideNav />
       <DashFooter />

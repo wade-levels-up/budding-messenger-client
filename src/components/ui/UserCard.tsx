@@ -3,7 +3,6 @@ import { useOutletContext } from "react-router-dom";
 import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 import Button from "./Button";
 import type { Friend, UserData } from "../../types/types";
-import { toast } from "react-toastify";
 
 type UserCardProps = {
   user: Friend;
@@ -20,9 +19,10 @@ const customButtonStyle =
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
 
-  const { getUserData } = useOutletContext<{
+  const { getUserData, notify } = useOutletContext<{
     userData: UserData;
     getUserData: () => void;
+    notify: (value: string) => void;
   }>();
 
   const addFriend = async (recipient: string) => {
@@ -39,7 +39,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
         return;
       }
 
-      toast(`Sent ${recipient} a friend request!`);
+      notify(`Sent ${recipient} a friend request!`);
       getUserData();
     } catch (error) {
       console.error(error);
@@ -114,7 +114,6 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
                 ariaLabel={`Remove ${user.username} as a friend`}
                 func={() => {
                   removeFriend(user.username);
-                  navigate("/dashboard/friends");
                 }}
                 customStyle={customButtonStyle}
               />
