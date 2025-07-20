@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../ui/Button";
+import { toast } from "react-toastify";
 
 type NewMessageParams = {
   recipient: string;
@@ -19,14 +20,12 @@ const NewMessage = ({
     e.preventDefault();
     const sender = localStorage.getItem("username");
     if (!recipient || !localStorage.getItem("token") || !sender) {
-      setError("Message must have a recipient!");
+      toast("🚫 Message must have a recipient");
       return;
     }
 
     if (recipient === sender) {
-      setError(
-        `Talking to yourself is a sign of madness you know? Error: Can't send message to self`
-      );
+      toast(`🚫 Can't send message to self`);
       return;
     }
 
@@ -41,14 +40,14 @@ const NewMessage = ({
       });
 
       if (!response.ok) {
-        setError("Failed to send message.");
+        toast("🚫 Failed to send message.");
         return;
       }
 
       setMessage("");
       setError("");
     } catch {
-      setError("Network error. Please try again.");
+      toast("😔 Network error. Please try again.");
     }
   };
 
@@ -56,14 +55,17 @@ const NewMessage = ({
     e.preventDefault();
     const sender = localStorage.getItem("username");
     if (!recipient || !localStorage.getItem("token") || !sender) {
-      setError("Message must have a recipient!");
+      toast("🚫 Message must have a recipient");
+      return;
+    }
+
+    if (message.length < 1) {
+      toast("🚫 Message must be at least 1 character long");
       return;
     }
 
     if (recipient === sender) {
-      setError(
-        `Talking to yourself is a sign of madness you know? Error: Can't send message to self`
-      );
+      toast(`🚫 Can't send message to self`);
       return;
     }
 
@@ -112,6 +114,7 @@ const NewMessage = ({
             <input
               className="bg-white p-2 w-full rounded-xl max-w-xl"
               type="text"
+              minLength={1}
               maxLength={200}
               placeholder="Aa"
               id="openingMessage"

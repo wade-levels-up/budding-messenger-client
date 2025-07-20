@@ -42,7 +42,7 @@ const SignIn = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-8 rounded-xl m-2"
+        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-4 rounded-xl m-2"
       >
         <fieldset>
           <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
@@ -72,7 +72,7 @@ const SignIn = () => {
                 <Button
                   func={() => setShowPassword(!showPassword)}
                   icon={showPassword ? "faEye" : "faEyeSlash"}
-                  customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                  customStyle="bg-lime-600 w-[40px] flex items-center justify-center text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
                   ariaLabel="Show / Hide Password"
                 />
               </div>

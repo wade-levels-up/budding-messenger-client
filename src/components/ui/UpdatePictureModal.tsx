@@ -71,7 +71,7 @@ const UpdatePictureModal = ({
         } z-50 fixed animate-fade-in overflow-auto bg-black/80 inset-0 items-center justify-center`}
       >
         {submittedPic ? (
-          <div className="flex flex-col items-center gap-2 bg-lime-100 p-6 w-screen animate-pulse">
+          <div className="flex flex-col items-center justify-center gap-2 bg-lime-100/90 p-6 w-screen h-screen animate-pulse">
             <LoadingSpinner />
           </div>
         ) : (

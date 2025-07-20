@@ -17,23 +17,24 @@ const Home = () => {
 
   return (
     <>
-      <header className="p-4">
-        <h1 className="text-center text-4xl mb-6">🌱 Budding Messenger</h1>
+      <header className="p-1">
+        <h1 className="text-center font-[Walter_Turncoat] font-bold text-3xl mb-2">
+          Budding Messenger
+        </h1>
       </header>
       <main className="flex grow justify-center flex-col items-center gap-6 w-full">
         {returningUser ? (
-          <>
+          <div className="flex flex-col items-center gap-4 animate-ghost-drop">
             <h2 className="text-xl">Welcome back {username}!</h2>
             <p className="text-center">
               Click the button below to go to your dashboard
             </p>
             <Button text="Dashboard" href="/dashboard" ariaLabel="Dashboard" />
-          </>
+          </div>
         ) : (
           <Outlet />
         )}
       </main>
-      <footer>Made by Wade</footer>
     </>
   );
 };

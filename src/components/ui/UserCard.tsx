@@ -13,9 +13,9 @@ type UserCardProps = {
 };
 
 const userCardStyle =
-  "flex w-full max-w-2xs shadow-lg hover:bg-blue-100 hover:cursor-pointer items-center gap-4 border border-lime-500 p-1 rounded-l-full";
+  "animate-fade-in-slow relative bg-blue-100/30 rounded-md flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100 hover:cursor-pointer items-center gap-1 border border-lime-500 py-2 px-1";
 const customButtonStyle =
-  "bg-lime-600 text-white w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
+  "bg-lime-600 max-w-[50px] text-white py-1 w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
 
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
@@ -78,11 +78,11 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
               : defaultProfilePicture
           }
         ></img>
-        <div className="flex w-full justify-between p-1">
-          <span className="flex flex-col justify-center text-blue-500">
+        <div className="flex flex-col w-full justify-between p-1">
+          <span className="text-center flex flex-col text-blue-500">
             {user.username}
           </span>
-          <div className="flex flex-col items-center justify-end gap-2">
+          <div className="flex w-full justify-center mt-2 bg-white/30 rounded-md p-1 gap-1">
             <Button
               icon="faUser"
               ariaLabel={`View ${user.username}'s Profile Page`}

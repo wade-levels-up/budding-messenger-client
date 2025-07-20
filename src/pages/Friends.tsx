@@ -80,8 +80,8 @@ const Friends = () => {
 
   return (
     <>
-      <div className="animate-fade-in-slow flex flex-col items-center gap-4 w-full p-4">
-        <div className="flex flex-col items-center gap-2 border-1 rounded-xl border-lime-300 py-4 px-6 w-full">
+      <div className="animate-fade-in-slow flex flex-col items-center gap-4 w-full p-1">
+        <div className="flex flex-col items-center gap-2 border-1 rounded-xl border-lime-300 py-2 px-3 w-full">
           <h2 className="text-lg text-center">Friends</h2>
           {mutualFriends.length > 0 ? (
             mutualFriends?.map((friend) => {
@@ -99,22 +99,18 @@ const Friends = () => {
           ) : (
             <div className="text-center max-w-[40ch] flex flex-col gap-2">
               <p className="bg-lime-200 p-6 rounded-xl shadow-md">
-                Looks like you don't have any friends on Budding Messenger yet
-                😔
+                Looks like you don't have any friends yet
               </p>
               <p className="bg-lime-200 p-6 rounded-xl shadow-md">
                 Have a look through{" "}
-                <a
-                  className="text-blue-600 bg-lime-100 p-1 rounded-xl "
-                  href="/dashboard/all-users"
-                >
+                <a className="text-blue-600" href="/dashboard/all-users">
                   'All Users'
                 </a>{" "}
-                and see who you might have things in common with.
+                and see who you might have things in common with
               </p>
               <p className="bg-lime-200 p-6 rounded-xl shadow-md">
                 When you receive friend requests from other users check back
-                here to see them below.
+                here to see them below
               </p>
             </div>
           )}

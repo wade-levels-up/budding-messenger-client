@@ -20,7 +20,7 @@ const ProfilePicture = ({ src, alt, ...props }: ProfileProps) => {
       <img
         src={src || defaultProfilePicture}
         alt={alt}
-        className={`w-64 h-64 border-3 border-lime-600 rounded-full object-cover transition-opacity duration-300 ${
+        className={`w-64 h-64 border-2 border-lime-200 rounded-full object-cover transition-opacity duration-300 ${
           loading ? "opacity-0" : "opacity-100"
         }`}
         onLoad={() => setLoading(false)}
