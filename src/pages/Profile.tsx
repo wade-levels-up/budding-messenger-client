@@ -139,7 +139,9 @@ const Profile = () => {
             )}
           </div>
         </div>
-        <h4 className="text-xl w-full bg-lime-200 rounded-xl p-3">Stats</h4>
+        <h4 className="text-xl w-full bg-lime-200 rounded-xl p-3">
+          Information
+        </h4>
         <div className="p-2">
           <span>
             Joined date:{" "}

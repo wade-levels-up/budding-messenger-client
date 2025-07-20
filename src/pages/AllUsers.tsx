@@ -47,7 +47,7 @@ const AllUsers = () => {
     <>
       <div className="animate-fade-in-slow flex flex-col items-center w-full">
         <h2 className="text-lg">All Users</h2>
-        <div className="flex gap-2 items-center">
+        <div className="flex lg:flex-row flex-col gap-2 items-center">
           <label htmlFor="search">Search by username</label>
           <input
             className="bg-white py-1 px-2 rounded-xl"
