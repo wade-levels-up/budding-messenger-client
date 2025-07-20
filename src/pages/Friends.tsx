@@ -84,11 +84,13 @@ const Friends = () => {
         <div className="flex flex-col items-center gap-2 border-1 rounded-xl border-lime-300 py-2 px-3 w-full">
           <h2 className="text-lg text-center">Friends</h2>
           {mutualFriends.length > 0 ? (
-            mutualFriends?.map((friend) => {
+            mutualFriends?.map((friend, index) => {
               return (
-                <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+                <ul
+                  key={index}
+                  className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4"
+                >
                   <UserCard
-                    key={friend.username}
                     user={friend}
                     auxFn={setRecipient}
                     friendCard={true}

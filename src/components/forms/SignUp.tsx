@@ -108,7 +108,7 @@ const SignUp = () => {
                 <Button
                   func={() => setShowPassword(!showPassword)}
                   icon={showPassword ? "faEye" : "faEyeSlash"}
-                  customStyle="bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
+                  customStyle="flex justify-center items-center bg-lime-600 w-[40px] text-white hover:bg-lime-500 hover:cursor-pointer p-1 pl-2 pr-2 absolute rounded right-1"
                   ariaLabel="Show / Hide Password"
                 />
               </div>

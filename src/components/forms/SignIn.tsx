@@ -26,7 +26,8 @@ const SignIn = () => {
       });
 
       if (!response.ok) {
-        setError("Unable to sign in. Please try again later.");
+        const data = await response.json();
+        setError(data.message);
         return;
       }
 
@@ -34,7 +35,34 @@ const SignIn = () => {
       localStorage.setItem("token", data.token);
       navigate("/dashboard");
     } catch {
-      setError("Unable to sign in. Please try again later.");
+      setError("Server error. Try again later.");
+    }
+  };
+
+  const handleGuestSignIn = async () => {
+    setEmail("guest@buddingmessenger.com.au");
+    setPassword("welcomeNewFriend1");
+    try {
+      const response = await fetch("http://localhost:3000/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "guest@buddingmessenger.com.au",
+          password: "welcomeNewFriend1",
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.message);
+        return;
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/dashboard");
+    } catch {
+      setError("Server error. Try again later.");
     }
   };
 
@@ -90,7 +118,10 @@ const SignIn = () => {
       </form>
       <div className="flex items-center flex-col gap-2">
         <p className="animate-wiggle text-center">No account?</p>
-        <Button text="Sign up" href="/sign-up" ariaLabel="Sign Up" />
+        <div className="flex gap-2">
+          <Button text="Sign in as Guest" func={handleGuestSignIn} />
+          <Button text="Sign up" href="/sign-up" />
+        </div>
       </div>
     </>
   );

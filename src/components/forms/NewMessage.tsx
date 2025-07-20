@@ -40,12 +40,15 @@ const NewMessage = ({
       });
 
       if (!response.ok) {
+        const data = await response.json();
         toast("🚫 Failed to send message.");
+        toast(data.message);
         return;
       }
 
       setMessage("");
       setError("");
+      getConversations();
     } catch {
       toast("😔 Network error. Please try again.");
     }

@@ -6,6 +6,7 @@ import type { Friend, UserData } from "../types/types";
 const AllUsers = () => {
   const [users, setUsers] = useState<UserData[] | null>(null);
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
   const { userData, setRecipient, getUsers } = useOutletContext<{
     userData: UserData;
     setRecipient: (recipient: Friend) => void;
@@ -28,14 +29,35 @@ const AllUsers = () => {
     getUsers();
   }, []);
 
-  const filteredUsers = users?.filter(
-    (user) => user.username !== loggedInUsername
-  );
+  const handleSearchByUsername = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearch((e.target as HTMLInputElement).value);
+  };
+
+  const filteredUsers = users?.filter((user) => {
+    if (search) {
+      return (
+        user.username !== loggedInUsername &&
+        user.username.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    return user.username !== loggedInUsername;
+  });
 
   return (
     <>
       <div className="animate-fade-in-slow flex flex-col items-center w-full">
         <h2 className="text-lg">All Users</h2>
+        <div className="flex gap-2 items-center">
+          <label htmlFor="search">Search by username</label>
+          <input
+            className="bg-white py-1 px-2 rounded-xl"
+            id="search"
+            name="search"
+            type="text"
+            onChange={handleSearchByUsername}
+            value={search}
+          />
+        </div>
         <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
           {error && <li>{error}</li>}
           {filteredUsers &&
