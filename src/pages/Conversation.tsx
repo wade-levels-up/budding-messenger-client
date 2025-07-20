@@ -3,6 +3,7 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
+import { socket } from "../utils/socketClient";
 
 type Recipient = {
   username: string;
@@ -128,12 +129,19 @@ const Conversation = () => {
     conversationId = messages[0].conversationId;
   }
 
+  socket.on("chat message", (msg) => {
+    alert(msg);
+  });
+
   return (
     <div
       onLoad={() => window.scrollTo(0, document.body.scrollHeight)}
       className="flex flex-col justify-between h-full w-full relative"
     >
       <div className="flex flex-col items-center gap-3">
+        <button onClick={() => socket.emit("chat message", "Testing!")}>
+          Socket Button
+        </button>
         <h2 className="text-xl text-center">
           Conversation with {recipient.username}
         </h2>
