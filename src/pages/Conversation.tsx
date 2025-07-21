@@ -32,12 +32,18 @@ type Message = {
 };
 
 const Conversation = () => {
+  console.log("Conversation component mounted");
   const { recipient } = useOutletContext<{ recipient: Recipient }>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const loggedInUsersName = localStorage.getItem("username");
+  let conversationId: number | undefined = undefined;
+
+  if (messages.length > 0) {
+    conversationId = messages[0].conversationId;
+  }
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -73,7 +79,9 @@ const Conversation = () => {
         return;
       }
 
-      if (!recipient.username) navigate("/dashboard");
+      if (!recipient.username) {
+        navigate("/dashboard");
+      }
 
       const conversationWithRecipientAndUser = conversations.find(
         (conversation) => {
@@ -120,18 +128,21 @@ const Conversation = () => {
     }
   }, [conversations, recipient, navigate]);
 
+  // Scrolls to end of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  let conversationId;
-  if (messages.length > 0) {
-    conversationId = messages[0].conversationId;
-  }
-
-  socket.on("chat message", (msg) => {
-    alert(msg);
-  });
+  useEffect(() => {
+    if (conversationId) {
+      socket.emit("join conversation", String(conversationId));
+    }
+    return () => {
+      if (conversationId) {
+        socket.emit("leave conversation", String(conversationId));
+      }
+    };
+  }, [conversationId]);
 
   return (
     <div
@@ -139,9 +150,6 @@ const Conversation = () => {
       className="flex flex-col justify-between h-full w-full relative"
     >
       <div className="flex flex-col items-center gap-3">
-        <button onClick={() => socket.emit("chat message", "Testing!")}>
-          Socket Button
-        </button>
         <h2 className="text-xl text-center">
           Conversation with {recipient.username}
         </h2>

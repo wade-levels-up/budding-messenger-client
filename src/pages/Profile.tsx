@@ -62,8 +62,6 @@ const Profile = () => {
     getAnotherUsersData();
   }, [queryUsername]);
 
-  console.table(userData);
-
   return (
     <>
       <div className="flex flex-col items-start max-w-[800px] w-full p-3">

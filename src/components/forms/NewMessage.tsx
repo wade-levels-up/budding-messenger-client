@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import { toast } from "react-toastify";
+import { socket } from "../../utils/socketClient";
 
 type NewMessageParams = {
   recipient: string;
@@ -15,6 +16,28 @@ const NewMessage = ({
 }: NewMessageParams) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const handler = () => {
+      getConversations();
+    };
+    socket.on("refresh", handler);
+
+    return () => {
+      socket.off("refresh", handler);
+    };
+  }, [getConversations]);
+
+  const sendNewMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit("chat message", {
+      conversationId: conversationId,
+      content: message,
+      sender: localStorage.getItem("username"),
+    });
+
+    setMessage("");
+  };
 
   const createNewConversation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,49 +77,49 @@ const NewMessage = ({
     }
   };
 
-  const createNewMessage = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const sender = localStorage.getItem("username");
-    if (!recipient || !localStorage.getItem("token") || !sender) {
-      toast("🚫 Message must have a recipient");
-      return;
-    }
+  // const createNewMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const sender = localStorage.getItem("username");
+  //   if (!recipient || !localStorage.getItem("token") || !sender) {
+  //     toast("🚫 Message must have a recipient");
+  //     return;
+  //   }
 
-    if (message.length < 1) {
-      toast("🚫 Message must be at least 1 character long");
-      return;
-    }
+  //   if (message.length < 1) {
+  //     toast("🚫 Message must be at least 1 character long");
+  //     return;
+  //   }
 
-    if (recipient === sender) {
-      toast(`🚫 Can't send message to self`);
-      return;
-    }
+  //   if (recipient === sender) {
+  //     toast(`🚫 Can't send message to self`);
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/conversations/${conversationId}/messages`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ sender, content: message }),
-        }
-      );
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3000/conversations/${conversationId}/messages`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ sender, content: message }),
+  //       }
+  //     );
 
-      if (!response.ok) {
-        setError("Failed to send message.");
-        return;
-      }
+  //     if (!response.ok) {
+  //       setError("Failed to send message.");
+  //       return;
+  //     }
 
-      setMessage("");
-      setError("");
-      getConversations();
-    } catch {
-      setError("Network error. Please try again.");
-    }
-  };
+  //     setMessage("");
+  //     setError("");
+  //     getConversations();
+  //   } catch {
+  //     setError("Network error. Please try again.");
+  //   }
+  // };
 
   return (
     <>
@@ -107,7 +130,7 @@ const NewMessage = ({
       )}
       <form
         className="w-full"
-        onSubmit={conversationId ? createNewMessage : createNewConversation}
+        onSubmit={conversationId ? sendNewMessage : createNewConversation}
       >
         <ul className="flex gap-2 w-full items-center mt-6">
           <li className="flex w-full justify-end items-center">
