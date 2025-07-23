@@ -3,7 +3,6 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
-import { io } from "socket.io-client";
 
 type Recipient = {
   username: string;
@@ -132,32 +131,6 @@ const Conversation = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const socket = io("http://localhost:3000", {
-      auth: { token },
-    });
-
-    socket.on("connect", () => {
-      console.log("Socket connected!");
-    });
-
-    if (conversationId) {
-      socket.emit("join conversation", String(conversationId));
-    }
-
-    socket.on("error", (err) => {
-      console.error("Socket.IO error:", err);
-    });
-
-    return () => {
-      if (conversationId) {
-        socket.emit("leave conversation", String(conversationId));
-      }
-      socket.disconnect();
-    };
-  }, [conversationId]);
 
   return (
     <div
