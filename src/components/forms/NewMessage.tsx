@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Button from "../ui/Button";
 import { toast } from "react-toastify";
-import { socket } from "../../utils/socketClient";
+import { io, Socket } from "socket.io-client";
 
 type NewMessageParams = {
   recipient: string;
@@ -16,21 +16,46 @@ const NewMessage = ({
 }: NewMessageParams) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const socket = io("http://localhost:3000", {
+      auth: { token },
+    });
+
+    socket.on("connect", () => {
+      console.log("Socket connected!");
+    });
+
+    if (conversationId) {
+      socket.emit("join conversation", String(conversationId));
+    }
+
     const handler = () => {
       getConversations();
     };
     socket.on("refresh", handler);
 
+    socket.on("error", (err) => {
+      console.error("Socket.IO error:", err);
+    });
+
+    socketRef.current = socket;
+
     return () => {
       socket.off("refresh", handler);
+      if (conversationId) {
+        socket.emit("leave conversation", String(conversationId));
+      }
+      socket.disconnect();
     };
-  }, [getConversations]);
+  }, [conversationId, getConversations]);
 
   const sendNewMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket.emit("chat message", {
+    if (!socketRef.current) return;
+    socketRef.current.emit("chat message", {
       conversationId: conversationId,
       content: message,
       sender: localStorage.getItem("username"),

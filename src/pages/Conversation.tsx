@@ -3,7 +3,6 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
-import { socket } from "../utils/socketClient";
 
 type Recipient = {
   username: string;
@@ -132,17 +131,6 @@ const Conversation = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  useEffect(() => {
-    if (conversationId) {
-      socket.emit("join conversation", String(conversationId));
-    }
-    return () => {
-      if (conversationId) {
-        socket.emit("leave conversation", String(conversationId));
-      }
-    };
-  }, [conversationId]);
 
   return (
     <div
