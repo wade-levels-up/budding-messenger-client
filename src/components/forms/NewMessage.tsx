@@ -77,50 +77,6 @@ const NewMessage = ({
     }
   };
 
-  // const createNewMessage = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const sender = localStorage.getItem("username");
-  //   if (!recipient || !localStorage.getItem("token") || !sender) {
-  //     toast("🚫 Message must have a recipient");
-  //     return;
-  //   }
-
-  //   if (message.length < 1) {
-  //     toast("🚫 Message must be at least 1 character long");
-  //     return;
-  //   }
-
-  //   if (recipient === sender) {
-  //     toast(`🚫 Can't send message to self`);
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:3000/conversations/${conversationId}/messages`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ sender, content: message }),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       setError("Failed to send message.");
-  //       return;
-  //     }
-
-  //     setMessage("");
-  //     setError("");
-  //     getConversations();
-  //   } catch {
-  //     setError("Network error. Please try again.");
-  //   }
-  // };
-
   return (
     <>
       {error && (
