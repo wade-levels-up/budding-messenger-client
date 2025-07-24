@@ -33,7 +33,8 @@ const Bio = ({ userBio, getUserData, setUpdatingBio }: BioParams) => {
     });
 
     if (!response.ok) {
-      setError(`Unable to update Bio`);
+      const data = await response.json();
+      setError(`${data.message}`);
       return;
     }
 
