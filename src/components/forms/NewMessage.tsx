@@ -19,14 +19,32 @@ const NewMessage = ({
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const socket = io("http://localhost:3000", {
-      auth: { token },
-    });
+    if (!socketRef.current) {
+      const token = localStorage.getItem("token");
+      socketRef.current = io("http://localhost:3000", {
+        auth: { token },
+      });
 
-    socket.on("connect", () => {
-      console.log("Socket connected!");
-    });
+      socketRef.current.on("connect", () => {
+        console.log("Socket connected!");
+      });
+
+      socketRef.current.on("error", (err) => {
+        console.error("Socket.IO error:", err);
+      });
+    }
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const socket = socketRef.current;
+    if (!socket) return;
 
     if (conversationId) {
       socket.emit("join conversation", String(conversationId));
@@ -37,18 +55,11 @@ const NewMessage = ({
     };
     socket.on("refresh", handler);
 
-    socket.on("error", (err) => {
-      console.error("Socket.IO error:", err);
-    });
-
-    socketRef.current = socket;
-
     return () => {
       socket.off("refresh", handler);
       if (conversationId) {
         socket.emit("leave conversation", String(conversationId));
       }
-      socket.disconnect();
     };
   }, [conversationId, getConversations]);
 

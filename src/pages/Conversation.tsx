@@ -31,7 +31,6 @@ type Message = {
 };
 
 const Conversation = () => {
-  console.log("Conversation component mounted");
   const { recipient } = useOutletContext<{ recipient: Recipient }>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
