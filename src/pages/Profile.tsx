@@ -20,6 +20,7 @@ const Profile = () => {
     userData: UserData;
     getUserData: () => void;
   }>();
+  console.log(userData);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const queryUsername = query.get("username");

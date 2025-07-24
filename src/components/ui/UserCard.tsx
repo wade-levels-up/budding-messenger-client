@@ -77,6 +77,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
               ? `${user.profile_picture_path}?t=${Date.now()}`
               : defaultProfilePicture
           }
+          loading="lazy"
         ></img>
         <div className="flex flex-col w-full justify-between p-1">
           <span className="text-center flex flex-col text-blue-500">
