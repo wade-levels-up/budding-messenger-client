@@ -82,6 +82,7 @@ const SignIn = () => {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete="email"
                 className="p-2 rounded-lg mb-4 mt-2 bg-white w-full"
                 value={email}
                 onChange={handleFormInput}
@@ -94,6 +95,7 @@ const SignIn = () => {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
+                  autoComplete="password"
                   className="p-2 pr-14 rounded-lg bg-white w-full"
                   value={password}
                   onChange={handleFormInput}
