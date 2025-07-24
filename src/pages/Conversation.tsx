@@ -134,7 +134,7 @@ const Conversation = () => {
   return (
     <div
       onLoad={() => window.scrollTo(0, document.body.scrollHeight)}
-      className="flex flex-col justify-between h-full w-full relative"
+      className="flex flex-col justify-between h-full w-full max-w-[800px] relative"
     >
       <div className="flex flex-col items-center gap-3">
         <h2 className="text-xl text-center">
@@ -169,7 +169,7 @@ const Conversation = () => {
           })}
         <div ref={messagesEndRef} />
       </div>
-      <div className="sticky gap-2 bottom-0 flex">
+      <div className="sticky p-3 shadow-md rounded-xl shadow-md bg-lime-400/30 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
         <NewMessage
           recipient={recipient.username ?? ""}
           conversationId={conversationId}

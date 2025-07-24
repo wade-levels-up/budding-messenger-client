@@ -45,10 +45,10 @@ const AllUsers = () => {
 
   return (
     <>
-      <div className="animate-fade-in-slow flex flex-col items-center w-full">
+      <div className="relative animate-fade-in-slow max-w-[1000px] flex flex-col items-center w-full">
         <h2 className="text-lg">All Users</h2>
-        <div className="flex lg:flex-row flex-col gap-2 items-center">
-          <label htmlFor="search">Search by username</label>
+        <div className="flex gap-2 items-center justify-start w-fit p-2 rounded-xl bg-lime-400/30 backdrop-blur-xs">
+          <label htmlFor="search">Search by username: </label>
           <input
             className="bg-white py-1 px-2 rounded-xl"
             id="search"
