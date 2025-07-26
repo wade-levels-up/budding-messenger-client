@@ -169,7 +169,7 @@ const Conversation = () => {
           })}
         <div ref={messagesEndRef} />
       </div>
-      <div className="sticky p-3rounded-xl shadow-md bg-lime-400/30 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
+      <div className="sticky p-3 rounded-xl shadow-md bg-lime-400/10 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
         <NewMessage
           recipient={recipient.username ?? ""}
           conversationId={conversationId}

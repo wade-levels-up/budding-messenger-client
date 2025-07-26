@@ -30,7 +30,7 @@ const NewMessage = ({
       });
 
       socketRef.current.on("error", (err) => {
-        console.error("Socket.IO error:", err);
+        toast(`❌ ${err.message}`);
       });
     }
 
@@ -66,6 +66,11 @@ const NewMessage = ({
   const sendNewMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!socketRef.current) return;
+    const sender = localStorage.getItem("username");
+    if (!recipient || !localStorage.getItem("token") || !sender) {
+      toast("🚫 Message must have a recipient");
+      return;
+    }
     socketRef.current.emit("chat message", {
       conversationId: conversationId,
       content: message,
@@ -95,13 +100,12 @@ const NewMessage = ({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sender, recipient, openingMessage: message }),
+        body: JSON.stringify({ sender, recipient, content: message }),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        toast("🚫 Failed to send message.");
-        toast(data.message);
+        toast(`❌  ${data.message}`);
         return;
       }
 
