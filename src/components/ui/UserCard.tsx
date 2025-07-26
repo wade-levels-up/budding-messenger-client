@@ -13,7 +13,7 @@ type UserCardProps = {
 };
 
 const userCardStyle =
-  "animate-fade-in-slow relative bg-lime-100/20 rounded-2xl flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100 hover:cursor-pointer items-center gap-1 py-2 px-1";
+  "animate-fade-in-slow relative bg-lime-100/20 rounded-2xl flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100/80 items-center gap-1 py-2 px-1";
 const customButtonStyle =
   "bg-lime-600 max-w-[50px] text-white py-1 w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
 
@@ -88,7 +88,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
           </span>
         )}
         <img
-          className="rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
+          className="hover:cursor-pointer rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
           src={
             user.profile_picture_path
               ? `${user.profile_picture_path}?t=${Date.now()}`
