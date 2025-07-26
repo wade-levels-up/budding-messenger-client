@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Button from "../ui/Button";
 import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
+import Sentiment from "sentiment";
 
 type NewMessageParams = {
   recipient: string;
@@ -17,6 +18,9 @@ const NewMessage = ({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const socketRef = useRef<Socket | null>(null);
+
+  const sentiment = new Sentiment();
+  const tone = Number(sentiment.analyze(message).score.toFixed(0));
 
   useEffect(() => {
     if (!socketRef.current) {
@@ -147,6 +151,14 @@ const NewMessage = ({
           </li>
           <li className="text-right">
             <Button type="submit" text="Submit" ariaLabel="Submit" />
+          </li>
+          <li
+            title="Message tone"
+            className="absolute top-[-15px] right-[-10px] text-2xl"
+          >
+            {!tone && <span>😐</span>}
+            {tone < 0 && <span>😡</span>}
+            {tone > 0 && <span>😃</span>}
           </li>
         </ul>
       </form>
