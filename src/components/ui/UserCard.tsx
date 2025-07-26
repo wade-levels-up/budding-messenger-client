@@ -40,7 +40,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
 
       const notify = (msg: string) => toast(msg);
 
-      notify(`Friend request sent to ${recipient}`);
+      notify(`☺️ Friend request sent to ${recipient}`);
       getUserData();
     } catch (error) {
       console.error(error);
@@ -48,22 +48,29 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   };
 
   const removeFriend = async (recipient: string) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/friends/${recipient}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    const confirmed = confirm(
+      `Are you sure you want to remove ${recipient} as a friend? This action can't be undone. Press 'OK' to confirm`
+    );
+    if (confirmed) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/friends/${recipient}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          return;
         }
-      );
 
-      if (!response.ok) {
-        return;
+        getUserData();
+      } catch (error) {
+        console.error(error);
       }
-
-      getUserData();
-    } catch (error) {
-      console.error(error);
     }
   };
 
