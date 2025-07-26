@@ -71,13 +71,16 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
     <>
       <li className={userCardStyle} key={user.username}>
         <img
-          className="rounded-full w-24 h-24 object-cover"
+          className="rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
           src={
             user.profile_picture_path
               ? `${user.profile_picture_path}?t=${Date.now()}`
               : defaultProfilePicture
           }
           loading="lazy"
+          onClick={() =>
+            navigate(`/dashboard/profile?username=${user.username}`)
+          }
         ></img>
         <div className="flex flex-col w-full justify-between p-1">
           <span className="text-center flex flex-col text-blue-500">
