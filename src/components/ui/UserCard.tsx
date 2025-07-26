@@ -74,9 +74,19 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
     }
   };
 
+  const joinedDate = new Date(user.joined);
+  const now = new Date();
+  const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
+  const newUser = now.getTime() - joinedDate.getTime() <= sevenDaysInMs;
+
   return (
     <>
       <li className={userCardStyle} key={user.username}>
+        {newUser && (
+          <span className="absolute bg-blue-200 p-1 rounded-md top-[-5px] right-[-5px]">
+            New
+          </span>
+        )}
         <img
           className="rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
           src={
