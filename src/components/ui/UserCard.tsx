@@ -4,7 +4,6 @@ import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
 import Button from "./Button";
 import type { Friend } from "../../types/types";
 import { toast } from "react-toastify";
-import { useDraggable } from "@dnd-kit/core";
 
 type UserCardProps = {
   user: Friend;
@@ -15,14 +14,6 @@ type UserCardProps = {
 
 const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const navigate = useNavigate();
-
-  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: user.username,
-    data: {
-      username: user.username,
-      profile_picture_path: user.profile_picture_path,
-    },
-  });
 
   const { getUserData } = useOutletContext<{
     getUserData: () => void;
@@ -83,24 +74,32 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
   const newUser = now.getTime() - joinedDate.getTime() <= sevenDaysInMs;
 
-  const userCardStyle = `${
-    isDragging && "opacity-50"
-  } animate-fade-in-slow relative bg-lime-100/20 rounded-2xl flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100/80 items-center gap-1 py-2 px-1`;
+  const userCardStyle = `animate-fade-in-slow relative bg-lime-100/20 rounded-2xl flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100/80 items-center gap-1 py-2 px-1`;
   const customButtonStyle =
     "bg-lime-600 max-w-[50px] text-white py-1 w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
 
   return (
     <>
-      <li className={userCardStyle} key={user.username}>
+      <li
+        draggable
+        onDragStart={(e) => {
+          e.dataTransfer.setData(
+            "application/json",
+            JSON.stringify({
+              username: user.username,
+              profile_picture_path: user.profile_picture_path,
+            })
+          );
+        }}
+        className={userCardStyle}
+        key={user.username}
+      >
         {newUser && (
           <span className="will-change-transform animate-flip shadow-sm absolute bg-blue-200 p-1 rounded-md top-[-5px] right-[-5px]">
             New
           </span>
         )}
         <img
-          ref={setNodeRef}
-          {...listeners}
-          {...attributes}
           className="hover:cursor-pointer rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
           src={
             user.profile_picture_path

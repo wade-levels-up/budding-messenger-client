@@ -5,7 +5,6 @@ import DashMain from "../components/ui/DashMain";
 import DashSideNav from "../components/ui/DashSideNav";
 import DashFooter from "../components/ui/DashFooter";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
-import { DndContext } from "@dnd-kit/core";
 
 type Friend = {
   username: string;
@@ -50,7 +49,6 @@ const Dashboard = () => {
       localStorage.setItem("username", data.userData.username);
       setUserData(data.userData);
     } catch {
-      // To-do display error
       navigate("/error");
     }
   }, [navigate]);
@@ -68,23 +66,21 @@ const Dashboard = () => {
   if (!userData) return <LoadingSpinner />;
 
   return (
-    <DndContext>
-      <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[auto_1fr_50px] rounded-xl p-2 shadow-md">
-        <DashHeader username={userData.username} />
-        <DashMain>
-          <Outlet
-            context={{
-              userData,
-              getUserData,
-              recipient,
-              setRecipient,
-            }}
-          />
-        </DashMain>
-        <DashSideNav />
-        <DashFooter />
-      </div>
-    </DndContext>
+    <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[auto_1fr_50px] rounded-xl p-2 shadow-md">
+      <DashHeader username={userData.username} />
+      <DashMain>
+        <Outlet
+          context={{
+            userData,
+            getUserData,
+            recipient,
+            setRecipient,
+          }}
+        />
+      </DashMain>
+      <DashSideNav />
+      <DashFooter />
+    </div>
   );
 };
 

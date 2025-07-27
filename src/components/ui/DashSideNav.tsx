@@ -1,10 +1,6 @@
 import Button from "./Button";
 
 const DashSideNav = () => {
-  const clearLocalStorage = () => {
-    localStorage.clear();
-  };
-
   const sideNavButtonStyle =
     "flex bg-lime-600 flex-row w-full justify-between gap-1 pl-3 pr-3 p-2 text-white rounded hover:bg-lime-500 hover:cursor-pointer focus:bg-lime-500 active:bg-lime-500 ";
 
@@ -47,23 +43,22 @@ const DashSideNav = () => {
           </li>
           <li>
             <Button
+              text="Group Chats"
+              icon="faComments"
+              ariaLabel="View All Users"
+              customStyle={sideNavButtonStyle}
+              fullWidth
+              vanishingText
+              href="/dashboard/group-chats"
+            />
+          </li>
+          <li>
+            <Button
               text="About"
               icon="faCircleInfo"
               ariaLabel="About"
               customStyle={sideNavButtonStyle}
               href="/dashboard/about"
-              fullWidth
-              vanishingText
-            />
-          </li>
-          <li>
-            <Button
-              text="Sign Out"
-              icon="faRightFromBracket"
-              ariaLabel="Sign Out"
-              customStyle={sideNavButtonStyle}
-              func={clearLocalStorage}
-              href="/"
               fullWidth
               vanishingText
             />

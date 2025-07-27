@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./Button";
-import { useDroppable, useDndMonitor } from "@dnd-kit/core";
+import { toast } from "react-toastify";
 
 type DashHeaderProps = {
   username: string;
@@ -14,65 +14,85 @@ type DroppedUser = {
 const DashHeader = ({ username }: DashHeaderProps) => {
   const [creatingGroupChat, setCreatingGroupChat] = useState(false);
   const [droppedUsers, setDroppedUsers] = useState<DroppedUser[]>([]);
-  const { isOver, setNodeRef } = useDroppable({ id: "droppable" });
 
-  // Listen for drag end events
-  useDndMonitor({
-    onDragEnd(event) {
-      if (
-        event.over &&
-        event.over.id === "droppable" &&
-        event.active.data.current
-      ) {
-        const userData = event.active.data.current as DroppedUser;
-        setDroppedUsers((prev) =>
-          prev.some((u) => u.username === userData.username)
-            ? prev
-            : [...prev, userData]
-        );
+  const handleDrop = (e: React.DragEvent<HTMLFieldSetElement>) => {
+    e.preventDefault();
+    const userData = e.dataTransfer.getData("application/json");
+    if (userData) {
+      const user: DroppedUser = JSON.parse(userData);
+      if (!droppedUsers.some((u) => u.username === user.username)) {
+        if (droppedUsers.length < 3) {
+          setDroppedUsers([...droppedUsers, user]);
+        } else {
+          toast("❌ Maximum of 4 users allowed");
+        }
       }
-    },
-  });
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLFieldSetElement>) => {
+    e.preventDefault();
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  };
+
+  const headerButtonStyle =
+    "bg-blue-600 hover:cursor-pointer flex items-center justify-center text-white p-[6px] w-[50px] rounded-md";
 
   return (
     <>
       <header className="flex flex-col gap-2 relative z-2 justify-center border-b-2 border-solid border-lime-300 p-2">
-        <h1 className="text-center font-[Walter_Turncoat] text-3xl lg:text-4xl">
-          {username}
-        </h1>
-        <div className="absolute top-[10px] right-2">
-          <Button
-            icon={creatingGroupChat ? "faXmark" : "faUsers"}
-            func={() => {
-              setCreatingGroupChat(!creatingGroupChat);
-              setDroppedUsers([]);
-            }}
-            ariaLabel={
-              creatingGroupChat
-                ? "Cancel Creating Group Chat"
-                : "Create Group Chat"
-            }
-            customStyle="bg-blue-600 hover:cursor-pointer flex items-center justify-center text-white p-[6px] w-[50px] rounded-xl"
-          />
+        <div className="flex justify-between px-2">
+          <h1 className="lg:text-center font-[Walter_Turncoat] text-lg lg:text-2xl">
+            {username}
+          </h1>
+          <div className="flex gap-[5px] top-[10px] right-1">
+            <Button
+              icon={creatingGroupChat ? "faXmark" : "faComments"}
+              func={() => {
+                setCreatingGroupChat(!creatingGroupChat);
+                setDroppedUsers([]);
+              }}
+              ariaLabel={
+                creatingGroupChat
+                  ? "Cancel Creating Group Chat"
+                  : "Create Group Chat"
+              }
+              customStyle={headerButtonStyle}
+            />
+            <Button
+              icon="faRightFromBracket"
+              ariaLabel="Sign Out"
+              customStyle={headerButtonStyle}
+              func={clearLocalStorage}
+              href="/"
+              fullWidth
+              vanishingText
+            />
+          </div>
         </div>
         {creatingGroupChat && (
           <fieldset
-            ref={setNodeRef}
-            className={`flex flex-col justify-end w-full h-fit border-2 border-blue-600 ${
-              isOver && "animate-pulse"
-            } bg-blue-100/70 shadow-md px-1 rounded-xl py-2`}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            className={`flex flex-col justify-end w-full min-h-[99px] h-fit border-2 border-blue-600 bg-blue-100/70 shadow-md px-1 rounded-xl py-2`}
           >
             <legend className="text-xs text-white bg-blue-600 rounded-md px-2 py-[1px] ml-2 lg:ml-6">
               Creating Group Chat
             </legend>
             {droppedUsers.length === 0 && (
               <p className="text-black/50 text-sm w-full text-center">
-                Add users by dragging them here.
+                Add users by dragging their user card here.
               </p>
             )}
             <ul className="relative flex gap-3 flex-wrap lg:justify-center px-2">
               {droppedUsers.map((user) => (
-                <li key={user.username} className="flex flex-col items-center">
+                <li
+                  key={user.username}
+                  className="flex flex-col gap-1 items-center"
+                >
                   <img
                     src={
                       user.profile_picture_path ||
@@ -88,7 +108,7 @@ const DashHeader = ({ username }: DashHeaderProps) => {
                 <li className="flex absolute right-1">
                   <Button
                     icon="faCheck"
-                    ariaLabel="Create Group Chat"
+                    ariaLabel="Confirm Group Chat Creation"
                     customStyle="hover:cursor-pointer bg-blue-600 text-white px-1 py-1 rounded"
                     func={() => {
                       // TODO: handle group chat creation
