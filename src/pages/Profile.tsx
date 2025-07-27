@@ -64,7 +64,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex shadow-2xl rounded-xl flex-col gap-4 items-start max-w-[800px] w-full p-3">
+      <div className="bg-white/10 flex shadow-2xl rounded-xl flex-col gap-4 items-start max-w-[800px] w-full p-3">
         <h2 className="text-center text-xl w-full">
           {anotherUsersData && `${anotherUsersData.username}'s`} Profile Page
         </h2>
