@@ -68,15 +68,17 @@ const AllUsers = () => {
                   mutualFriend = true;
                 }
               });
-              return (
-                <UserCard
-                  key={user.username}
-                  friendCard={mutualFriend}
-                  user={user}
-                  auxFn={setRecipient}
-                  getUsers={getUsers}
-                />
-              );
+              if (user.verified === true) {
+                return (
+                  <UserCard
+                    key={user.username}
+                    friendCard={mutualFriend}
+                    user={user}
+                    auxFn={setRecipient}
+                    getUsers={getUsers}
+                  />
+                );
+              }
             })}
         </ul>
       </div>
