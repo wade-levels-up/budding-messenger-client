@@ -21,6 +21,7 @@ import {
   faComment,
   faUserPlus,
   faUserXmark,
+  faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -57,6 +58,7 @@ const buttonIcons = {
   faArrowsRotate,
   faUserPlus,
   faUserXmark,
+  faCircleInfo,
 };
 
 const Button = ({

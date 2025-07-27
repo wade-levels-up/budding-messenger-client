@@ -4,6 +4,7 @@ export type UserData = {
   joined: string;
   profile_picture_path: string;
   friendsOf: Friend[];
+  verified: boolean;
 };
 
 export type Friend = {

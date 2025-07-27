@@ -47,6 +47,17 @@ const DashSideNav = () => {
           </li>
           <li>
             <Button
+              text="About"
+              icon="faCircleInfo"
+              ariaLabel="About"
+              customStyle={sideNavButtonStyle}
+              href="/dashboard/about"
+              fullWidth
+              vanishingText
+            />
+          </li>
+          <li>
+            <Button
               text="Sign Out"
               icon="faRightFromBracket"
               ariaLabel="Sign Out"
