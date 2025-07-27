@@ -154,7 +154,7 @@ const NewMessage = ({
           </li>
           <li
             title="Message tone"
-            className="absolute top-[-15px] right-[-10px] text-2xl"
+            className="absolute top-[-20px] right-[0px] text-2xl"
           >
             {!tone && <span>😐</span>}
             {tone < 0 && <span>😡</span>}
