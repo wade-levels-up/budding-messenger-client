@@ -55,7 +55,8 @@ const UpdatePictureModal = ({
     setSubmittedPic(false);
 
     if (!response.ok) {
-      setError(`Unable to update Profile Picture`);
+      const data = await response.json();
+      setError(data.message);
       return;
     }
 

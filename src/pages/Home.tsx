@@ -24,7 +24,7 @@ const Home = () => {
       </header>
       <main className="relative flex grow justify-center flex-col items-center gap-6 w-full">
         {returningUser ? (
-          <div className="flex flex-col items-center gap-4 animate-ghost-drop">
+          <div className="z-1 flex flex-col items-center gap-4 animate-ghost-drop">
             <h2 className="text-xl">Welcome back {username}!</h2>
             <p className="text-center">
               Click the button below to go to your dashboard

@@ -94,7 +94,6 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
               ? `${user.profile_picture_path}?t=${Date.now()}`
               : defaultProfilePicture
           }
-          loading="lazy"
           onClick={() =>
             navigate(`/dashboard/profile?username=${user.username}`)
           }
