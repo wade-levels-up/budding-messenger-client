@@ -83,7 +83,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
     <>
       <li className={userCardStyle} key={user.username}>
         {newUser && (
-          <span className="absolute bg-blue-200 p-1 rounded-md top-[-5px] right-[-5px]">
+          <span className="will-change-transform animate-flip shadow-sm absolute bg-blue-200 p-1 rounded-md top-[-5px] right-[-5px]">
             New
           </span>
         )}
@@ -97,6 +97,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
           onClick={() =>
             navigate(`/dashboard/profile?username=${user.username}`)
           }
+          alt={user.username}
         ></img>
         <div className="flex flex-col w-full justify-between p-1">
           <span className="text-center flex flex-col text-blue-500">
