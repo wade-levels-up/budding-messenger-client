@@ -17,12 +17,12 @@ const Home = () => {
 
   return (
     <>
-      <header className="p-1">
-        <h1 className="text-center font-[Walter_Turncoat] font-bold text-3xl mb-2">
+      <header className="relative p-1">
+        <h1 className="text-center font-[Walter_Turncoat] font-bold text-3xl pt-2">
           Budding Messenger
         </h1>
       </header>
-      <main className="flex grow justify-center flex-col items-center gap-6 w-full">
+      <main className="relative flex grow justify-center flex-col items-center gap-6 w-full">
         {returningUser ? (
           <div className="flex flex-col items-center gap-4 animate-ghost-drop">
             <h2 className="text-xl">Welcome back {username}!</h2>
@@ -35,6 +35,11 @@ const Home = () => {
           <Outlet />
         )}
       </main>
+      <img
+        className="z-0 sepia absolute w-[50vh] opacity-22 animate-fade-in-xslow"
+        src="../src/assets/tree160.png"
+        alt=""
+      />
     </>
   );
 };

@@ -49,7 +49,7 @@ const SignUp = () => {
   return loading ? (
     <LoadingSpinner />
   ) : submitted ? (
-    <div className="flex flex-col gap-8 p-4 items-center">
+    <div className="z-1 opacity-90 flex flex-col gap-8 p-4 items-center">
       <h2 className="text-2xl text-left w-full">Success!</h2>
       <p className="text-pretty text-center max-w-[600px] outline-2 outline-solid outline-lime-300 p-4 rounded-xl shadow-xl">
         Please check your inbox or junk folder to verify your account via the
@@ -62,7 +62,7 @@ const SignUp = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-4 rounded-xl m-2"
+        className="z-1 opacity-90 animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-4 rounded-xl m-2"
       >
         <fieldset>
           <legend className="text-center text-2xl p-3 mb-4">Sign up</legend>
@@ -127,7 +127,9 @@ const SignUp = () => {
           </ul>
         </fieldset>
       </form>
-      <Button text="Home" href="/" ariaLabel="Home" />
+      <nav className="z-1">
+        <Button text="Home" href="/" ariaLabel="Home" />
+      </nav>
     </>
   );
 };

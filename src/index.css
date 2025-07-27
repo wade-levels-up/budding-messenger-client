@@ -16,7 +16,6 @@
   }
   @keyframes fade-in {
     from { opacity: 0; }
-    to { opacity: 100; }
   }
 
   .animate-fade-in-slow {
@@ -24,7 +23,13 @@
   }
   @keyframes fade-in {
     from { opacity: 0; }
-    to { opacity: 100; }
+  }
+
+  .animate-fade-in-xslow {
+    animation: fade-in 3s ease-in;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
   }
 
   .animate-ghost-drop {
@@ -32,7 +37,7 @@
   }
   @keyframes ghost-drop {
     from { opacity: 0; transform: translateY(-20px);}
-    to { opacity: 100; transform: translateY(0px);}
+    to { transform: translateY(0px);}
   }
 
   .animate-slide-in {

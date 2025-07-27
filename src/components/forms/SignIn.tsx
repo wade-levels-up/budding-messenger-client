@@ -71,7 +71,7 @@ const SignIn = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-4 rounded-xl m-2"
+        className="z-1 opacity-90 animate-ghost-drop flex flex-col shadow-xl outline-2 outline-solid outline-lime-300 justify-center items-center max-w-lg p-4 rounded-xl m-2"
       >
         <fieldset>
           <legend className="text-center text-2xl p-3 mb-4">Sign in</legend>
@@ -119,12 +119,12 @@ const SignIn = () => {
           </ul>
         </fieldset>
       </form>
-      <div className="flex items-center flex-col gap-2">
+      <div className="z-1 flex items-center flex-col gap-2">
         <p className="animate-wiggle text-center">No account?</p>
-        <div className="flex gap-2">
+        <nav className="flex gap-2">
           <Button text="Sign in as Guest" func={handleGuestSignIn} />
           <Button text="Sign up" href="/sign-up" />
-        </div>
+        </nav>
       </div>
     </>
   );
