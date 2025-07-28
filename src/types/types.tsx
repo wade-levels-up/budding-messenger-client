@@ -7,6 +7,11 @@ export type UserData = {
   verified: boolean;
 };
 
+export type ShallowUserData = {
+  username: string;
+  profile_picture_path: string;
+};
+
 export type Friend = {
   username: string;
   profile_picture_path: string;

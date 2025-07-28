@@ -23,6 +23,7 @@ import {
   faUserXmark,
   faCircleInfo,
   faUsers,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonProps = {
@@ -61,6 +62,7 @@ const buttonIcons = {
   faUserXmark,
   faCircleInfo,
   faUsers,
+  faPlus,
 };
 
 const Button = ({

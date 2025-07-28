@@ -5,6 +5,8 @@ import DashMain from "../components/ui/DashMain";
 import DashSideNav from "../components/ui/DashSideNav";
 import DashFooter from "../components/ui/DashFooter";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import type { ShallowUserData } from "../types/types";
+import { toast } from "react-toastify";
 
 type Friend = {
   username: string;
@@ -21,10 +23,27 @@ type UserData = {
   friendsOf: Friend[];
 };
 
+type DroppedUser = {
+  username: string;
+  profile_picture_path: string;
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [recipient, setRecipient] = useState({});
+  const [creatingGroupChat, setCreatingGroupChat] = useState(false);
+  const [droppedUsers, setDroppedUsers] = useState<DroppedUser[]>([]);
+
+  const handleSetDroppedUsers = (user: ShallowUserData) => {
+    if (!droppedUsers.some((u) => u.username === user.username)) {
+      if (droppedUsers.length < 4) {
+        setDroppedUsers([...droppedUsers, user]);
+      } else {
+        toast("❌ Maximum of 4 users allowed");
+      }
+    }
+  };
 
   const getUserData = useCallback(async () => {
     setUserData(null);
@@ -67,7 +86,14 @@ const Dashboard = () => {
 
   return (
     <div className="relative min-h-full w-full grow flex flex-col lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[auto_1fr_50px] rounded-xl p-2 shadow-md">
-      <DashHeader username={userData.username} />
+      <DashHeader
+        username={userData.username}
+        creatingGroupChat={creatingGroupChat}
+        setCreatingGroupChat={setCreatingGroupChat}
+        handleSetDroppedUsers={handleSetDroppedUsers}
+        droppedUsers={droppedUsers}
+        setDroppedUsers={setDroppedUsers}
+      />
       <DashMain>
         <Outlet
           context={{
@@ -75,6 +101,8 @@ const Dashboard = () => {
             getUserData,
             recipient,
             setRecipient,
+            creatingGroupChat,
+            handleSetDroppedUsers,
           }}
         />
       </DashMain>

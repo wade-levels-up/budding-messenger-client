@@ -1,9 +1,12 @@
-import { useState } from "react";
 import Button from "./Button";
-import { toast } from "react-toastify";
 
 type DashHeaderProps = {
   username: string;
+  creatingGroupChat: boolean;
+  setCreatingGroupChat: (value: boolean) => void;
+  droppedUsers: DroppedUser[];
+  handleSetDroppedUsers: (value: DroppedUser) => void;
+  setDroppedUsers: (value: []) => void;
 };
 
 type DroppedUser = {
@@ -11,22 +14,20 @@ type DroppedUser = {
   profile_picture_path: string;
 };
 
-const DashHeader = ({ username }: DashHeaderProps) => {
-  const [creatingGroupChat, setCreatingGroupChat] = useState(false);
-  const [droppedUsers, setDroppedUsers] = useState<DroppedUser[]>([]);
-
+const DashHeader = ({
+  username,
+  creatingGroupChat,
+  setCreatingGroupChat,
+  droppedUsers,
+  handleSetDroppedUsers,
+  setDroppedUsers,
+}: DashHeaderProps) => {
   const handleDrop = (e: React.DragEvent<HTMLFieldSetElement>) => {
     e.preventDefault();
     const userData = e.dataTransfer.getData("application/json");
     if (userData) {
       const user: DroppedUser = JSON.parse(userData);
-      if (!droppedUsers.some((u) => u.username === user.username)) {
-        if (droppedUsers.length < 3) {
-          setDroppedUsers([...droppedUsers, user]);
-        } else {
-          toast("❌ Maximum of 4 users allowed");
-        }
-      }
+      handleSetDroppedUsers(user);
     }
   };
 
@@ -83,9 +84,14 @@ const DashHeader = ({ username }: DashHeaderProps) => {
               Creating Group Chat
             </legend>
             {droppedUsers.length === 0 && (
-              <p className="text-black/50 text-sm w-full text-center">
-                Add users by dragging their user card here.
-              </p>
+              <>
+                <p className="lg:block hidden text-black/50 text-sm w-full text-center">
+                  Add users by dragging their user card here.
+                </p>
+                <p className="lg:hidden block text-black/50 text-sm w-full text-center">
+                  Add users by clicking the '+' icon on their user card.
+                </p>
+              </>
             )}
             <ul className="relative flex gap-3 flex-wrap lg:justify-center px-2">
               {droppedUsers.map((user) => (
