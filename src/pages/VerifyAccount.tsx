@@ -37,7 +37,7 @@ const VerifyAccount = () => {
   }, [navigate, searchParams]);
 
   return (
-    <div className="flex flex-col gap-8 items-center">
+    <div className="z-1 flex flex-col gap-8 items-center">
       {loading ? (
         <LoadingSpinner />
       ) : (
