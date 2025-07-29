@@ -86,7 +86,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
   return (
     <>
       <li
-        draggable
+        draggable="true"
         onDragStart={(e) => {
           e.dataTransfer.setData(
             "application/json",
