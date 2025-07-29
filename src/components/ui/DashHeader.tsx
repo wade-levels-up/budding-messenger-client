@@ -105,7 +105,7 @@ const DashHeader = ({
                       "/src/assets/default_profile_picture.jpg"
                     }
                     alt={user.username}
-                    className="w-8 h-8 rounded-full"
+                    className="w-8 h-8 bg-white/30 rounded-full"
                   />
                   <span className="text-xs">{user.username}</span>
                 </li>

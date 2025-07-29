@@ -115,7 +115,7 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
           </div>
         )}
         <img
-          className="hover:cursor-pointer rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
+          className="hover:cursor-pointer bg-white/30 rounded-full w-24 h-24 object-cover hover:outline-2 hover:outline-lime-400 hover:animate-pulse"
           src={
             user.profile_picture_path
               ? `${user.profile_picture_path}?t=${Date.now()}`
