@@ -70,6 +70,7 @@ const NewMessage = ({
     e.preventDefault();
     if (!socketRef.current) return;
     const sender = localStorage.getItem("username");
+
     if (!recipient || !localStorage.getItem("token") || !sender) {
       toast("🚫 Message must have a recipient");
       return;
