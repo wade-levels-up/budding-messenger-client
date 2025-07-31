@@ -49,7 +49,7 @@ const DashSideNav = () => {
               customStyle={sideNavButtonStyle}
               fullWidth
               vanishingText
-              href="/dashboard/group-chats"
+              href="/dashboard/group-conversations"
             />
           </li>
           <li>

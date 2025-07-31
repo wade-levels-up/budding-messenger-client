@@ -13,6 +13,7 @@ import AllUsers from "./pages/AllUsers.tsx";
 import Conversation from "./pages/Conversation.tsx";
 import Friends from "./pages/Friends.tsx";
 import About from "./pages/About.tsx";
+import GroupConversations from "./pages/GroupConversations.tsx";
 import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/all-users", element: <AllUsers /> },
       { path: "/dashboard/conversation", element: <Conversation /> },
+      {
+        path: "/dashboard/group-conversations",
+        element: <GroupConversations />,
+      },
       { path: "/dashboard/friends", element: <Friends /> },
       { path: "/dashboard/about", element: <About /> },
     ],

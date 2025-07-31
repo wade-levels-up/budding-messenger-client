@@ -4,24 +4,7 @@ import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
 import Sentiment from "sentiment";
-
-type Recipient = {
-  username: string;
-  profile_picture_path: string;
-  joined: string;
-};
-
-type Conversation = {
-  id: number;
-  users: User[];
-  messages: string[];
-  lastMessage: string;
-  createdAt: string;
-};
-
-type User = {
-  username: string;
-};
+import type { Conversation, Friend, ShallowUserData } from "../types/types";
 
 type Message = {
   id: number;
@@ -32,7 +15,7 @@ type Message = {
 };
 
 const Conversation = () => {
-  const { recipient } = useOutletContext<{ recipient: Recipient }>();
+  const { recipient } = useOutletContext<{ recipient: Friend }>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [error, setError] = useState("");
@@ -101,7 +84,7 @@ const Conversation = () => {
         (conversation) => {
           if (!Array.isArray(conversation.users)) return false;
           const usernames = conversation.users.map(
-            (user: User) => user.username
+            (user: ShallowUserData) => user.username
           );
           return (
             usernames.includes(recipient.username) &&

@@ -19,3 +19,21 @@ export type Friend = {
   bio: string;
   friendsOf: Friend[];
 };
+
+export type Conversation = {
+  id: number;
+  name: string;
+  groupChat: boolean;
+  users: UserData[];
+  messages: string[];
+  lastMessage: string;
+  createdAt: string;
+};
+
+export type MessageData = {
+  id: number;
+  authorName: string;
+  content: string;
+  createdAt: string;
+  conversationId: number;
+};
