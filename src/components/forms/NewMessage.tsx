@@ -16,7 +16,6 @@ const NewMessage = ({
   getConversations,
 }: NewMessageParams) => {
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
   const socketRef = useRef<Socket | null>(null);
 
   const sentiment = new Sentiment();
@@ -114,7 +113,6 @@ const NewMessage = ({
       }
 
       setMessage("");
-      setError("");
       getConversations();
     } catch {
       toast("😔 Network error. Please try again.");
@@ -123,11 +121,6 @@ const NewMessage = ({
 
   return (
     <>
-      {error && (
-        <span className="mb-2 bg-red-300 p-1 rounded">
-          <p className="text-center text-pretty">{error}</p>
-        </span>
-      )}
       <form
         className="w-full"
         onSubmit={conversationId ? sendNewMessage : createNewConversation}
