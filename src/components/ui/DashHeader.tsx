@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { toast } from "react-toastify";
 import Button from "./Button";
 
 type DashHeaderProps = {
@@ -22,6 +24,8 @@ const DashHeader = ({
   handleSetDroppedUsers,
   setDroppedUsers,
 }: DashHeaderProps) => {
+  const [groupChatName, setGroupChatName] = useState("");
+
   const handleDrop = (e: React.DragEvent<HTMLFieldSetElement>) => {
     e.preventDefault();
     const userData = e.dataTransfer.getData("application/json");
@@ -39,8 +43,35 @@ const DashHeader = ({
     localStorage.clear();
   };
 
+  const createGroupChat = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/conversations/group_conversation`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            users: droppedUsers,
+            name: groupChatName,
+            creator: localStorage.getItem("username"),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        toast("Unable to create group chat");
+        return;
+      }
+    } catch {
+      toast("Unable to create group chat");
+    }
+  };
+
   const headerButtonStyle =
-    "bg-blue-600 hover:cursor-pointer flex items-center justify-center text-white p-[6px] w-[50px] rounded-md";
+    "bg-blue-600 hover:bg-blue-300 hover:cursor-pointer flex items-center justify-center text-white p-[6px] w-[50px] rounded-md";
 
   return (
     <>
@@ -110,21 +141,41 @@ const DashHeader = ({
                   <span className="text-xs">{user.username}</span>
                 </li>
               ))}
-              {droppedUsers.length > 0 && (
-                <li className="flex absolute right-1">
-                  <Button
-                    icon="faCheck"
-                    ariaLabel="Confirm Group Chat Creation"
-                    customStyle="hover:cursor-pointer bg-blue-600 text-white px-1 py-1 rounded"
-                    func={() => {
-                      // TODO: handle group chat creation
-                      setDroppedUsers([]);
-                      setCreatingGroupChat(false);
-                    }}
-                  />
-                </li>
-              )}
             </ul>
+            {droppedUsers.length > 1 && (
+              <form className="flex px-2 pt-1 gap-2 justify-between items-center text-[16px] w-full">
+                <div>
+                  <label hidden className="pr-2" htmlFor="name">
+                    Chat Name:
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    placeholder="Enter chat name"
+                    className="bg-white max-w-[200px] px-2 py-1 rounded-md"
+                    type="text"
+                    minLength={1}
+                    maxLength={16}
+                    pattern="[^<>]*"
+                    value={groupChatName}
+                    onChange={(e) => setGroupChatName(e.target.value)}
+                  />
+                </div>
+                <Button
+                  text="Submit"
+                  icon="faCheck"
+                  ariaLabel="Confirm Group Chat Creation"
+                  vanishingText
+                  customStyle="hover:cursor-pointer flex gap-2 bg-blue-600 text-white px-1 py-1 rounded"
+                  func={() => {
+                    createGroupChat();
+                    setGroupChatName("");
+                    setDroppedUsers([]);
+                    setCreatingGroupChat(false);
+                  }}
+                />
+              </form>
+            )}
           </fieldset>
         )}
       </header>

@@ -4,20 +4,17 @@ import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
 import Sentiment from "sentiment";
-import type { Conversation, Friend, ShallowUserData } from "../types/types";
-
-type Message = {
-  id: number;
-  authorName: string;
-  content: string;
-  createdAt: string;
-  conversationId: number;
-};
+import type {
+  ConversationData,
+  Friend,
+  ShallowUserData,
+  MessageData,
+} from "../types/types";
 
 const Conversation = () => {
   const { recipient } = useOutletContext<{ recipient: Friend }>();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [messages, setMessages] = useState<MessageData[]>([]);
+  const [conversations, setConversations] = useState<ConversationData[]>([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const loggedInUsersName = localStorage.getItem("username");
@@ -109,7 +106,7 @@ const Conversation = () => {
         );
 
         if (!response.ok) {
-          setError("Unable to retrieve conversation messages *(");
+          setError("Unable to retrieve conversation messages");
           return;
         }
 

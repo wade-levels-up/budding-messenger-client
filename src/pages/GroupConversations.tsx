@@ -33,18 +33,21 @@ const GroupConversations = () => {
   }, []);
 
   const conversationCardStyle =
-    "hover:cursor-pointer text-white bg-blue-500 px-2 py-1 rounded-lg";
+    "hover:cursor-pointer hover:bg-blue-300 w-full text-white bg-blue-500 px-2 py-1 rounded-lg";
 
   return (
     <>
-      <h2>Group Conversations</h2>
-      <ul className="flex flex-wrap w-full">
-        {conversations.map((c, index) => (
-          <li className={conversationCardStyle} key={index}>
-            {c.name}
-          </li>
-        ))}
-      </ul>
+      <div className="bg-white/10 flex flex-col items-center gap-2 rounded-xl shadow-2xl pt-2 pb-4 px-3 w-full">
+        <h2 className="text-lg text-center">Group Chats</h2>
+        <h3>Click to enter chat</h3>
+        <ul className="flex max-w-[400px] flex-col gap-2 w-full">
+          {conversations.map((c, index) => (
+            <li className={conversationCardStyle} key={index}>
+              {c.name}
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
