@@ -20,7 +20,7 @@ export type Friend = {
   friendsOf: Friend[];
 };
 
-export type Conversation = {
+export type ConversationData = {
   id: number;
   name: string;
   groupChat: boolean;
