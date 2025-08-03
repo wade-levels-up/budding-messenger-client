@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 type DashHeaderProps = {
   username: string;
@@ -25,7 +26,7 @@ const DashHeader = ({
   setDroppedUsers,
 }: DashHeaderProps) => {
   const [groupChatName, setGroupChatName] = useState("");
-  const [submitComplete, setSubmitComplete] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrop = (e: React.DragEvent<HTMLFieldSetElement>) => {
     e.preventDefault();
@@ -68,7 +69,11 @@ const DashHeader = ({
         return;
       }
 
-      setSubmitComplete(true);
+      toast(`Group chat '${groupChatName}' created!`);
+      setGroupChatName("");
+      setDroppedUsers([]);
+      setCreatingGroupChat(false);
+      navigate("/dashboard/group-conversations");
     } catch {
       toast("Unable to create group chat");
     }
@@ -77,12 +82,6 @@ const DashHeader = ({
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createGroupChat();
-    if (submitComplete === true) {
-      setGroupChatName("");
-      setDroppedUsers([]);
-      setCreatingGroupChat(false);
-      setSubmitComplete(false);
-    }
   };
 
   const headerButtonStyle =
