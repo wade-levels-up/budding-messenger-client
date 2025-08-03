@@ -25,6 +25,7 @@ const DashHeader = ({
   setDroppedUsers,
 }: DashHeaderProps) => {
   const [groupChatName, setGroupChatName] = useState("");
+  const [submitComplete, setSubmitComplete] = useState(false);
 
   const handleDrop = (e: React.DragEvent<HTMLFieldSetElement>) => {
     e.preventDefault();
@@ -62,11 +63,25 @@ const DashHeader = ({
       );
 
       if (!response.ok) {
-        toast("Unable to create group chat");
+        const data = await response.json();
+        toast(`🚫${data.message}`);
         return;
       }
+
+      setSubmitComplete(true);
     } catch {
       toast("Unable to create group chat");
+    }
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createGroupChat();
+    if (submitComplete === true) {
+      setGroupChatName("");
+      setDroppedUsers([]);
+      setCreatingGroupChat(false);
+      setSubmitComplete(false);
     }
   };
 
@@ -143,7 +158,10 @@ const DashHeader = ({
               ))}
             </ul>
             {droppedUsers.length > 1 && (
-              <form className="flex px-2 pt-1 gap-2 justify-between items-center text-[16px] w-full">
+              <form
+                onSubmit={handleFormSubmit}
+                className="flex px-2 pt-1 gap-2 justify-between items-center text-[16px] w-full"
+              >
                 <div>
                   <label hidden className="pr-2" htmlFor="name">
                     Chat Name:
@@ -159,20 +177,16 @@ const DashHeader = ({
                     pattern="[^<>]*"
                     value={groupChatName}
                     onChange={(e) => setGroupChatName(e.target.value)}
+                    required
                   />
                 </div>
                 <Button
                   text="Submit"
                   icon="faCheck"
+                  type="submit"
                   ariaLabel="Confirm Group Chat Creation"
                   vanishingText
                   customStyle="hover:cursor-pointer flex gap-2 bg-blue-600 text-white px-1 py-1 rounded"
-                  func={() => {
-                    createGroupChat();
-                    setGroupChatName("");
-                    setDroppedUsers([]);
-                    setCreatingGroupChat(false);
-                  }}
                 />
               </form>
             )}
