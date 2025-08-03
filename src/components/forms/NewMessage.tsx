@@ -5,7 +5,7 @@ import { io, Socket } from "socket.io-client";
 import Sentiment from "sentiment";
 
 type NewMessageParams = {
-  recipient: string;
+  recipient?: string;
   conversationId: number | undefined;
   getConversations: () => void;
 };
@@ -71,14 +71,13 @@ const NewMessage = ({
     if (!socketRef.current) return;
     const sender = localStorage.getItem("username");
 
-    if (!recipient || !localStorage.getItem("token") || !sender) {
-      toast("🚫 Message must have a recipient");
-      return;
-    }
+    if (!conversationId) return toast("🚫 Invalid conversation ID");
+    if (!sender) return toast("🚫 Can't find token of user to send from");
+
     socketRef.current.emit("chat message", {
       conversationId: conversationId,
       content: message,
-      sender: localStorage.getItem("username"),
+      sender: sender,
     });
 
     setMessage("");
@@ -87,15 +86,9 @@ const NewMessage = ({
   const createNewConversation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sender = localStorage.getItem("username");
-    if (!recipient || !localStorage.getItem("token") || !sender) {
-      toast("🚫 Message must have a recipient");
-      return;
-    }
 
-    if (recipient === sender) {
-      toast(`🚫 Can't send message to self`);
-      return;
-    }
+    if (!sender) return toast("🚫 Can't find token of user to send from");
+    if (!recipient) return toast("🚫 Message missing recipient");
 
     try {
       const response = await fetch(`http://localhost:3000/conversations`, {

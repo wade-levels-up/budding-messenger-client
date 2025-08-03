@@ -6,6 +6,7 @@ import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
 import Sentiment from "sentiment";
 import type { ConversationData, MessageData } from "../types/types";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const Conversation = () => {
   const [messages, setMessages] = useState<MessageData[]>([]);
@@ -16,22 +17,35 @@ const Conversation = () => {
   const query = new URLSearchParams(location.search);
   const recipient = query.get("recipient");
   const profilePictureFromQuery = query.get("profilePicture");
+  const groupChatName = query.get("name");
 
   const navigate = useNavigate();
 
   const loggedInUsersName = localStorage.getItem("username");
-  let conversationId: number | undefined = undefined;
-
-  // Conversation ID is set by the conversation ID off retrieved messages
-  if (messages.length > 0) {
-    conversationId = messages[0].conversationId;
-  }
 
   const getConversations = async () => {
     try {
+      // If conversation between two people GET conversation by recipient name
       if (recipient) {
         const response = await fetch(
           `http://localhost:3000/conversations/${recipient}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (!response.ok) return toast("🚫 Unable to retrieve conversation");
+        const data = await response.json();
+        setConversations(data.conversations);
+      }
+
+      // If conversation between mutiple people GET conversation by group chat name
+      if (groupChatName) {
+        const response = await fetch(
+          `http://localhost:3000/conversations/group_conversation/${groupChatName}`,
           {
             method: "GET",
             headers: {
@@ -51,12 +65,12 @@ const Conversation = () => {
 
   useEffect(() => {
     getConversations();
-  }, [recipient]);
+  }, [recipient, groupChatName]);
 
   useEffect(() => {
     const getConversationMessages = async () => {
       if (!loggedInUsersName) return toast("🚫 No user found.");
-      if (!recipient) return navigate("/dashboard");
+      if (!recipient && !groupChatName) return navigate("/dashboard");
 
       try {
         const response = await fetch(
@@ -84,7 +98,7 @@ const Conversation = () => {
     if (conversations.length > 0) {
       getConversationMessages();
     }
-  }, [conversations, recipient, navigate, loggedInUsersName]);
+  }, [conversations, recipient, navigate, loggedInUsersName, groupChatName]);
 
   // Scrolls to end of messages
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -151,6 +165,11 @@ const Conversation = () => {
             />
           </div>
         )}
+        {groupChatName && (
+          <div className="flex flex-col items-center gap-3">
+            <h2 className="text-xl text-center">{groupChatName}</h2>
+          </div>
+        )}
         <div className="flex flex-col w-full gap-3 py-4 px-2">
           {messages &&
             messages.map((message, index) => {
@@ -171,11 +190,19 @@ const Conversation = () => {
           <div ref={messagesEndRef} />
         </div>
         <div className="sticky p-3 rounded-xl shadow-md bg-lime-400/10 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
-          <NewMessage
-            recipient={recipient ?? ""}
-            conversationId={conversationId}
-            getConversations={getConversations}
-          />
+          {recipient && (
+            <NewMessage
+              recipient={recipient ?? ""}
+              conversationId={conversations[0]?.id}
+              getConversations={getConversations}
+            />
+          )}
+          {groupChatName && (
+            <NewMessage
+              conversationId={conversations[0]?.id}
+              getConversations={getConversations}
+            />
+          )}
         </div>
       </div>
     </>

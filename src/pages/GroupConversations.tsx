@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ConversationData } from "../types/types";
 import { toast } from "react-toastify";
 
 const GroupConversations = () => {
   const [conversations, setConversations] = useState<ConversationData[]>([]);
+  const navigate = useNavigate();
 
   const getConversations = async () => {
     try {
@@ -46,7 +48,13 @@ const GroupConversations = () => {
         )}
         <ul className="flex max-w-[400px] flex-col gap-2 w-full">
           {conversations.map((c, index) => (
-            <li className={conversationCardStyle} key={index}>
+            <li
+              className={conversationCardStyle}
+              key={index}
+              onClick={() => {
+                navigate(`/dashboard/conversation/?name=${c.name}`);
+              }}
+            >
               {c.name}
             </li>
           ))}
