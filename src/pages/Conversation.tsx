@@ -16,30 +16,15 @@ const Conversation = () => {
   const [messages, setMessages] = useState<MessageData[]>([]);
   const [conversations, setConversations] = useState<ConversationData[]>([]);
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const loggedInUsersName = localStorage.getItem("username");
   let conversationId: number | undefined = undefined;
 
+  // Conversation ID is set by the conversation ID off retrieved messages
   if (messages.length > 0) {
     conversationId = messages[0].conversationId;
   }
-
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
-
-  const sentiment = new Sentiment();
-  let tone = 0;
-  const setConversationTone = () => {
-    const messageScores: number[] = [];
-    messages.forEach((message) => {
-      messageScores.push(
-        Number(sentiment.analyze(message.content).score.toFixed(0))
-      );
-    });
-    let totalScore = 0;
-    messageScores.forEach((score) => (totalScore += score));
-    tone = totalScore / messages.length;
-  };
-  setConversationTone();
 
   const getConversations = async () => {
     try {
@@ -123,9 +108,27 @@ const Conversation = () => {
   }, [conversations, recipient, navigate]);
 
   // Scrolls to end of messages
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Message Analysis & Tree Handling
+  const sentiment = new Sentiment();
+  let tone = 0;
+  const setConversationTone = () => {
+    const messageScores: number[] = [];
+    messages.forEach((message) => {
+      messageScores.push(
+        Number(sentiment.analyze(message.content).score.toFixed(0))
+      );
+    });
+    let totalScore = 0;
+    messageScores.forEach((score) => (totalScore += score));
+    tone = totalScore / messages.length;
+  };
+  setConversationTone();
 
   let treeLevel = 10;
   const setTreeLevel = () => {

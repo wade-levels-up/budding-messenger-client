@@ -37,9 +37,13 @@ const GroupConversations = () => {
 
   return (
     <>
-      <div className="bg-white/10 flex flex-col items-center gap-2 rounded-xl shadow-2xl pt-2 pb-4 px-3 w-full">
+      <div className="bg-white/10 flex flex-col items-center gap-2 rounded-xl shadow-2xl pt-2 pb-4 px-3 w-full max-w-[800px]">
         <h2 className="text-lg text-center">Group Chats</h2>
-        <h3>Click to enter chat</h3>
+        {conversations.length > 0 ? (
+          <h3>Click to enter chat</h3>
+        ) : (
+          <p>Looks like you don't have any group chats yet!</p>
+        )}
         <ul className="flex max-w-[400px] flex-col gap-2 w-full">
           {conversations.map((c, index) => (
             <li className={conversationCardStyle} key={index}>
