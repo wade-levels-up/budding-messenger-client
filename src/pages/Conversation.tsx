@@ -6,7 +6,6 @@ import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
 import Sentiment from "sentiment";
 import type { ConversationData, MessageData } from "../types/types";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const Conversation = () => {
   const [messages, setMessages] = useState<MessageData[]>([]);
