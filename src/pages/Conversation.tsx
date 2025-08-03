@@ -136,6 +136,24 @@ const Conversation = () => {
   };
   setTreeLevel();
 
+  // Assign Message component colours based on username
+  type UserMessageColorMap = {
+    username: string;
+    index: number;
+    style: string;
+  };
+
+  const participants: UserMessageColorMap[] = [];
+  conversations[0]?.users.forEach((user, index) => {
+    let style = "";
+    if (index === 0) style = "bg-lime-200/70 border-lime-400";
+    if (index === 1) style = "bg-blue-100/70 border-blue-400";
+    if (index === 2) style = "bg-emerald-200/70 border-emerald-400";
+    if (index === 3) style = "bg-orange-200/70 border-orange-400";
+    if (index === 4) style = "bg-yellow-200/70 border-yellow-400";
+    participants.push({ username: user.username, index, style });
+  });
+
   return (
     <>
       <div className="absolute opacity-40 h-[200px] flex justify-center top-[50%] items-end">
@@ -180,6 +198,11 @@ const Conversation = () => {
                   }`}
                 >
                   <Message
+                    messageStyle={
+                      participants.find(
+                        (p) => p.username === message.authorName
+                      )?.style || ""
+                    }
                     authorName={message.authorName}
                     content={message.content}
                   />
@@ -189,19 +212,11 @@ const Conversation = () => {
           <div ref={messagesEndRef} />
         </div>
         <div className="sticky p-3 rounded-xl shadow-md bg-lime-400/10 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
-          {recipient && (
-            <NewMessage
-              recipient={recipient ?? ""}
-              conversationId={conversations[0]?.id}
-              getConversations={getConversations}
-            />
-          )}
-          {groupChatName && (
-            <NewMessage
-              conversationId={conversations[0]?.id}
-              getConversations={getConversations}
-            />
-          )}
+          <NewMessage
+            recipient={recipient ?? ""}
+            conversationId={conversations[0]?.id}
+            getConversations={getConversations}
+          />
         </div>
       </div>
     </>
