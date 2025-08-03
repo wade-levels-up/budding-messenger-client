@@ -12,7 +12,7 @@ type UserCardProps = {
   getUsers?: () => void;
 };
 
-const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
+const UserCard = ({ user, friendCard = false }: UserCardProps) => {
   const navigate = useNavigate();
 
   const { getUserData, creatingGroupChat, handleSetDroppedUsers } =
@@ -142,8 +142,13 @@ const UserCard = ({ user, friendCard = false, auxFn }: UserCardProps) => {
             <Button
               ariaLabel={`Chat with ${user.username}`}
               func={() => {
-                auxFn?.(user);
-                navigate("/dashboard/conversation");
+                navigate(
+                  `/dashboard/conversation?recipient=${
+                    user.username
+                  }&profilePicture=${encodeURIComponent(
+                    user.profile_picture_path || ""
+                  )}`
+                );
               }}
               icon="faComment"
               customStyle={customButtonStyle}

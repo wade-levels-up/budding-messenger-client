@@ -1,23 +1,24 @@
 import { useEffect, useState, useRef } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import NewMessage from "../components/forms/NewMessage";
 import ProfilePicture from "../components/ui/ProfilePicture";
 import Message from "../components/ui/Message";
 import Sentiment from "sentiment";
-import type {
-  ConversationData,
-  Friend,
-  ShallowUserData,
-  MessageData,
-} from "../types/types";
+import type { ConversationData, MessageData } from "../types/types";
 
 const Conversation = () => {
-  const { recipient } = useOutletContext<{ recipient: Friend }>();
   const [messages, setMessages] = useState<MessageData[]>([]);
   const [conversations, setConversations] = useState<ConversationData[]>([]);
-  const [error, setError] = useState("");
+
+  // Extract query params from URL
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const recipient = query.get("recipient");
+  const profilePictureFromQuery = query.get("profilePicture");
 
   const navigate = useNavigate();
+
   const loggedInUsersName = localStorage.getItem("username");
   let conversationId: number | undefined = undefined;
 
@@ -28,60 +29,38 @@ const Conversation = () => {
 
   const getConversations = async () => {
     try {
-      const response = await fetch("http://localhost:3000/conversations", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      if (recipient) {
+        const response = await fetch(
+          `http://localhost:3000/conversations/${recipient}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-      if (!response.ok) {
-        setError("Unable to retrieve conversation");
-        return;
+        if (!response.ok) return toast("🚫 Unable to retrieve conversation");
+        const data = await response.json();
+        setConversations(data.conversations);
       }
-
-      const data = await response.json();
-
-      setConversations(data.conversations);
     } catch {
-      setError("Unable to retrieve conversation");
+      toast("🚫 Unable to retrieve conversation");
     }
   };
 
   useEffect(() => {
     getConversations();
-  }, []);
+  }, [recipient]);
 
   useEffect(() => {
     const getConversationMessages = async () => {
-      const loggedInUsername = localStorage.getItem("username");
-      if (!loggedInUsername) {
-        setError("No current user found.");
-        return;
-      }
-
-      if (!recipient.username) {
-        navigate("/dashboard");
-      }
-
-      const conversationWithRecipientAndUser = conversations.find(
-        (conversation) => {
-          if (!Array.isArray(conversation.users)) return false;
-          const usernames = conversation.users.map(
-            (user: ShallowUserData) => user.username
-          );
-          return (
-            usernames.includes(recipient.username) &&
-            usernames.includes(loggedInUsername)
-          );
-        }
-      );
-
-      if (!conversationWithRecipientAndUser) {
-        return;
-      }
+      if (!loggedInUsersName) return toast("🚫 No user found.");
+      if (!recipient) return navigate("/dashboard");
 
       try {
         const response = await fetch(
-          `http://localhost:3000/conversations/${conversationWithRecipientAndUser.id}/messages`,
+          `http://localhost:3000/conversations/${conversations[0].id}/messages`,
           {
             method: "GET",
             headers: {
@@ -91,21 +70,21 @@ const Conversation = () => {
         );
 
         if (!response.ok) {
-          setError("Unable to retrieve conversation messages");
+          toast("🚫 Unable to retrieve conversation messages");
           return;
         }
 
         const data = await response.json();
         setMessages(data.conversationMessages);
       } catch {
-        setError("Unable to retrieve conversation messages");
+        toast("🚫 Unable to retrieve conversation messages");
       }
     };
 
     if (conversations.length > 0) {
       getConversationMessages();
     }
-  }, [conversations, recipient, navigate]);
+  }, [conversations, recipient, navigate, loggedInUsersName]);
 
   // Scrolls to end of messages
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -157,19 +136,20 @@ const Conversation = () => {
         onLoad={() => window.scrollTo(0, document.body.scrollHeight)}
         className="flex flex-col justify-between h-full w-full max-w-[800px] relative"
       >
-        <div className="flex flex-col items-center gap-3">
-          <h2 className="text-xl text-center">
-            Conversation with {recipient.username}
-          </h2>
-          <ProfilePicture
-            src={recipient.profile_picture_path}
-            alt={recipient.username}
-          />
-        </div>
-        {error && (
-          <span className="mb-2 bg-red-300 p-1 rounded">
-            <p className="text-center text-pretty">{error}</p>
-          </span>
+        {/* If one on one Conversation - display recipient details */}
+        {recipient && (
+          <div className="flex flex-col items-center gap-3">
+            <h2 className="text-xl text-center">
+              Conversation with {recipient}
+            </h2>
+            <ProfilePicture
+              src={
+                profilePictureFromQuery ||
+                "/src/assets/default_profile_picture.jpg"
+              }
+              alt={recipient || "Profile picture"}
+            />
+          </div>
         )}
         <div className="flex flex-col w-full gap-3 py-4 px-2">
           {messages &&
@@ -192,7 +172,7 @@ const Conversation = () => {
         </div>
         <div className="sticky p-3 rounded-xl shadow-md bg-lime-400/10 backdrop-blur-xs gap-2 bottom-0 flex items-center justify-center">
           <NewMessage
-            recipient={recipient.username ?? ""}
+            recipient={recipient ?? ""}
             conversationId={conversationId}
             getConversations={getConversations}
           />

@@ -31,7 +31,6 @@ type DroppedUser = {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [recipient, setRecipient] = useState({});
   const [creatingGroupChat, setCreatingGroupChat] = useState(false);
   const [droppedUsers, setDroppedUsers] = useState<DroppedUser[]>([]);
 
@@ -99,8 +98,6 @@ const Dashboard = () => {
           context={{
             userData,
             getUserData,
-            recipient,
-            setRecipient,
             creatingGroupChat,
             handleSetDroppedUsers,
           }}
