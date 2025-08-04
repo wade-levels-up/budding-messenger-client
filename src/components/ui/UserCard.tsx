@@ -25,7 +25,7 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
   const addFriend = async (recipient: string) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/friends/${recipient}`,
+        `${import.meta.env.VITE_API_BASE_URL}/friends/${recipient}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -52,7 +52,7 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
     if (confirmed) {
       try {
         const response = await fetch(
-          `http://localhost:3000/friends/${recipient}`,
+          `${import.meta.env.VITE_API_BASE_URL}/friends/${recipient}`,
           {
             method: "DELETE",
             headers: {

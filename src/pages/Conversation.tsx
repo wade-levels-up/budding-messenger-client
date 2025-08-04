@@ -27,7 +27,7 @@ const Conversation = () => {
       // If conversation between two people GET conversation by recipient name
       if (recipient) {
         const response = await fetch(
-          `http://localhost:3000/conversations/${recipient}`,
+          `${import.meta.env.VITE_API_BASE_URL}/conversations/${recipient}`,
           {
             method: "GET",
             headers: {
@@ -44,7 +44,9 @@ const Conversation = () => {
       // If conversation between mutiple people GET conversation by group chat name
       if (groupChatName) {
         const response = await fetch(
-          `http://localhost:3000/conversations/group_conversation/${groupChatName}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/conversations/group_conversation/${groupChatName}`,
           {
             method: "GET",
             headers: {
@@ -73,7 +75,9 @@ const Conversation = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/conversations/${conversations[0].id}/messages`,
+          `${import.meta.env.VITE_API_BASE_URL}/conversations/${
+            conversations[0].id
+          }/messages`,
           {
             method: "GET",
             headers: {

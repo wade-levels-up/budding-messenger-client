@@ -48,7 +48,7 @@ const DashHeader = ({
   const createGroupChat = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/conversations/group_conversation`,
+        `${import.meta.env.VITE_API_BASE_URL}/conversations/group_conversation`,
         {
           method: "POST",
           headers: {

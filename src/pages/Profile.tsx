@@ -42,7 +42,7 @@ const Profile = () => {
       setAnotherUsersData(null);
 
       const response = await fetch(
-        `http://localhost:3000/users/${queryUsername}`
+        `${import.meta.env.VITE_API_BASE_URL}/users/${queryUsername}`
       );
 
       if (!response.ok) {

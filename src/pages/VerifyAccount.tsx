@@ -18,7 +18,9 @@ const VerifyAccount = () => {
       setLoading(true);
 
       const response = await fetch(
-        `http://localhost:3000/verify-user?token=${searchParams.get("token")}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/verify-user?token=${searchParams.get("token")}`,
         {
           method: "GET",
         }

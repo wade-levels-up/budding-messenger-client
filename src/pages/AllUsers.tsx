@@ -17,9 +17,12 @@ const AllUsers = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch("http://localhost:3000/users", {
-        method: "GET",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/users`,
+        {
+          method: "GET",
+        }
+      );
 
       if (!response.ok) setError("Cannot retrieve users");
 

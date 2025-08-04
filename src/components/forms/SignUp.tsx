@@ -22,15 +22,18 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
 
-    const response = await fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
-      }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/signup`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          password: password,
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();

@@ -47,10 +47,13 @@ const Dashboard = () => {
   const getUserData = useCallback(async () => {
     setUserData(null);
     try {
-      const response = await fetch("http://localhost:3000/users/me", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/users/me`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
       if (!response.ok) {
         localStorage.clear();

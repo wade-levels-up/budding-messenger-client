@@ -19,11 +19,14 @@ const SignIn = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, password: password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/signin`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: password }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
@@ -44,14 +47,17 @@ const SignIn = () => {
     setEmail("guest@buddingmessenger.com.au");
     setPassword("welcomeNewFriend1");
     try {
-      const response = await fetch("http://localhost:3000/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: "guest@buddingmessenger.com.au",
-          password: "welcomeNewFriend1",
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/signin`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: "guest@buddingmessenger.com.au",
+            password: "welcomeNewFriend1",
+          }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();

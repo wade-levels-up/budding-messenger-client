@@ -21,10 +21,15 @@ const Friends = () => {
   useEffect(() => {
     const retrieveUserFriends = async () => {
       try {
-        const response = await fetch("http://localhost:3000/friends", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/friends`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           setError("Unable to retrieve users friends");
@@ -65,7 +70,7 @@ const Friends = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await fetch("http://localhost:3000/users", {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users`, {
       method: "GET",
     });
 

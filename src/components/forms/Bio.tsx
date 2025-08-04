@@ -23,14 +23,17 @@ const Bio = ({ userBio, getUserData, setUpdatingBio }: BioParams) => {
 
   const handleBioFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/users/me/bio", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content: newBio }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/users/me/bio`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: newBio }),
+      }
+    );
 
     if (!response.ok) {
       const data = await response.json();

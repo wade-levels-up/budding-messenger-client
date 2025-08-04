@@ -42,7 +42,7 @@ const UpdatePictureModal = ({
     formData.append("file", selectedFile);
 
     const response = await fetch(
-      "http://localhost:3000/users/me/profile_picture",
+      `${import.meta.env.VITE_API_BASE_URL}/users/me/profile_picture`,
       {
         method: "PUT",
         headers: {

@@ -24,7 +24,7 @@ const NewMessage = ({
   useEffect(() => {
     if (!socketRef.current) {
       const token = localStorage.getItem("token");
-      socketRef.current = io("http://localhost:3000", {
+      socketRef.current = io(`${import.meta.env.VITE_API_BASE_URL}`, {
         auth: { token },
       });
 
@@ -91,14 +91,17 @@ const NewMessage = ({
     if (!recipient) return toast("🚫 Message missing recipient");
 
     try {
-      const response = await fetch(`http://localhost:3000/conversations`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ sender, recipient, content: message }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/conversations`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sender, recipient, content: message }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
