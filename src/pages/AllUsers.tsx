@@ -43,6 +43,14 @@ const AllUsers = () => {
     return user.username !== loggedInUsername;
   });
 
+  const orderedUsers = filteredUsers?.sort((a, b) => {
+    const nameA = a.username.toUpperCase();
+    const nameB = b.username.toUpperCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
+
   return (
     <>
       <div className="relative animate-fade-in-slow max-w-[1000px] flex flex-col items-center w-full">
@@ -60,8 +68,8 @@ const AllUsers = () => {
         </div>
         <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
           {error && <li>{error}</li>}
-          {filteredUsers &&
-            filteredUsers.map((user) => {
+          {orderedUsers &&
+            orderedUsers.map((user) => {
               let mutualFriend = false;
               friendsOf.forEach((friend) => {
                 if (friend.username === user.username) {
