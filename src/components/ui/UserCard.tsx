@@ -80,6 +80,8 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
   const userCardStyle = `animate-fade-in-slow relative bg-lime-100/20 rounded-2xl flex flex-col w-full max-w-[250px] shadow-lg hover:bg-blue-100/80 items-center gap-1 py-2 px-1`;
   const customButtonStyle =
     "bg-lime-600 max-w-[50px] text-white py-1 w-full px-2 hover:bg-lime-500 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
+  const customRemoveFriendButtonStyle =
+    "bg-red-400 max-w-[50px] text-white py-1 w-full px-2 hover:bg-red-300 focus:bg-lime-500 active:bg-lime-500 hover:cursor-pointer transition-colors";
   const customBlueButtonStyle =
     "bg-blue-600 w-[32px] h-[32px] rounded-full text-[16px] text-white hover:bg-blue-500 focus:bg-blue-500 active:bg-blue-500 hover:cursor-pointer transition-colors";
 
@@ -169,7 +171,7 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
                 func={() => {
                   removeFriend(user.username);
                 }}
-                customStyle={customButtonStyle}
+                customStyle={customRemoveFriendButtonStyle}
               />
             )}
           </div>

@@ -192,7 +192,7 @@ const Conversation = () => {
               <h2 className="text-xl text-center">'{groupChatName}'</h2>
               <h3>Participants</h3>
               {conversations && (
-                <ol className="flex gap-[4px] lg:gap-4 pb-1">
+                <ol className="flex gap-[4px] lg:gap-2 pb-1">
                   {conversations[0]?.users.map((u) => {
                     return (
                       <div
@@ -200,7 +200,7 @@ const Conversation = () => {
                           navigate(`/dashboard/profile?username=${u.username}`)
                         }
                         key={u.username}
-                        className="flex flex-col items-center gap-[2px]"
+                        className="flex lg:w-[90px] flex-col items-center gap-1 hover:cursor-pointer hover:bg-white/30 p-1 rounded-md hover:text-blue-600"
                       >
                         <img
                           className="rounded-full w-[40px] lg:w-[48px] bg-white/30"
