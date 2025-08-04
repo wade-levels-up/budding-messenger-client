@@ -159,7 +159,7 @@ const DashHeader = ({
             {droppedUsers.length > 1 && (
               <form
                 onSubmit={handleFormSubmit}
-                className="flex px-2 pt-1 gap-2 justify-between items-center text-[16px] w-full"
+                className="flex px-2 pt-1 gap-2 justify-end items-center text-[16px] w-full"
               >
                 <div>
                   <label hidden className="pr-2" htmlFor="name">

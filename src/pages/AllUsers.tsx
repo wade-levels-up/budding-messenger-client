@@ -69,7 +69,7 @@ const AllUsers = () => {
             value={search}
           />
         </div>
-        <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+        <ul className="flex flex-col overflow-auto items-center lg:flex-row flex-wrap gap-6 w-full p-4">
           {error && <li>{error}</li>}
           {orderedUsers &&
             orderedUsers.map((user) => {

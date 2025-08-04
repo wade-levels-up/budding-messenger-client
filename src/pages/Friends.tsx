@@ -86,14 +86,14 @@ const Friends = () => {
   return (
     <>
       <div className="animate-fade-in-slow flex flex-col items-center gap-4 w-full p-1">
-        <div className="bg-white/10 flex flex-col items-center gap-2 rounded-xl shadow-2xl py-2 px-3 w-full">
+        <div className="bg-white/10 overflow-auto flex flex-col items-center gap-2 rounded-xl shadow-2xl py-2 px-3 w-full">
           <h2 className="text-lg text-center">Friends</h2>
           {mutualFriends.length > 0 ? (
             mutualFriends?.map((friend, index) => {
               return (
                 <ul
                   key={index}
-                  className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4"
+                  className="flex overflow-atuo flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4"
                 >
                   <UserCard
                     user={friend}
@@ -125,7 +125,7 @@ const Friends = () => {
         <div className="bg-white/10 flex flex-col items-center gap-2 shadow-2xl rounded-xl py-4 px-6 w-full">
           <h3 className="text-lg text-center">Friend Requests</h3>
           {/* If users are a friendOf the logged in user but the logged in user isn't a friend of theirs show them in Friend Requests */}
-          <ul className="flex flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
+          <ul className="flex overflow-auto flex-col items-center lg:flex-row flex-wrap gap-6 w-full p-4">
             {allUsers?.map((user) => {
               if (
                 user.friendsOf.some(
