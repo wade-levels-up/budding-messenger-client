@@ -35,7 +35,7 @@ const GroupConversations = () => {
   }, []);
 
   const conversationCardStyle =
-    "hover:cursor-pointer hover:bg-blue-300 w-full text-white bg-blue-500 px-2 py-1 rounded-lg";
+    "flex justify-between items-center hover:cursor-pointer hover:bg-blue-300 w-full text-white bg-blue-500 px-2 py-1 rounded-lg";
 
   return (
     <>
@@ -55,7 +55,22 @@ const GroupConversations = () => {
                 navigate(`/dashboard/conversation/?name=${c.name}`);
               }}
             >
-              {c.name}
+              <span>{c.name}</span>
+              <div className="flex -space-x-2">
+                {c.users.map((u) => {
+                  return (
+                    <img
+                      className={`rounded-full w-[32px] lg:w-[38px] bg-white border-3 border-blue-500`}
+                      src={
+                        u.profile_picture_path ||
+                        "/src/assets/default_profile_picture.jpg"
+                      }
+                      alt={u.username}
+                      title={u.username}
+                    />
+                  );
+                })}
+              </div>
             </li>
           ))}
         </ul>
