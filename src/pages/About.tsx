@@ -13,7 +13,7 @@ const About = () => {
           <p className="text-center">
             Share a tree that grows with the health of your conversations
           </p>
-          <div className="flex items-end">
+          <div className="flex items-end overflow-auto">
             <img
               src="../src/assets/tree10.png"
               alt=""
@@ -56,7 +56,7 @@ const About = () => {
             Why isn't our tree growing? My friend and I have shared lots of
             messages together!
           </p>
-          <p className="flex gap-1">
+          <div className="flex gap-1">
             <span className="text-bold h-fit bg-blue-200 py-1 px-2 rounded-md">
               A:
             </span>
@@ -89,7 +89,7 @@ const About = () => {
                 positive you can expect to see your tree grow!
               </p>
             </div>
-          </p>
+          </div>
         </section>
       </div>
     </>

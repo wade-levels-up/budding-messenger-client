@@ -184,7 +184,8 @@ const Conversation = () => {
         )}
         {groupChatName && (
           <div className="flex flex-col items-center gap-3">
-            <h2 className="text-xl text-center">{groupChatName}</h2>
+            <h2 className="text-xl text-center">Group Chat</h2>
+            <h3 className="text-xl text-center">{groupChatName}</h3>
           </div>
         )}
         <div className="flex flex-col w-full gap-3 py-4 px-2">
