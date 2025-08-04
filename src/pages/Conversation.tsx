@@ -188,11 +188,41 @@ const Conversation = () => {
         )}
         {groupChatName && (
           <div className="flex flex-col items-center gap-3">
-            <h2 className="text-xl text-center">Group Chat</h2>
-            <h3 className="text-xl text-center">{groupChatName}</h3>
+            <div className="flex gap-2 flex-col items-center">
+              <h2 className="text-xl text-center">'{groupChatName}'</h2>
+              <h3>Participants</h3>
+              {conversations && (
+                <ol className="flex gap-[4px] lg:gap-4 pb-1">
+                  {conversations[0]?.users.map((u) => {
+                    return (
+                      <div
+                        onClick={() =>
+                          navigate(`/dashboard/profile?username=${u.username}`)
+                        }
+                        key={u.username}
+                        className="flex flex-col items-center gap-[2px]"
+                      >
+                        <img
+                          className="rounded-full w-[40px] lg:w-[48px] bg-white/30"
+                          src={
+                            u.profile_picture_path ||
+                            "/src/assets/default_profile_picture.jpg"
+                          }
+                          alt={u.username}
+                          title={u.username}
+                        />
+                        <span className="text-[12px] hidden lg:block">
+                          {u.username}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </ol>
+              )}
+            </div>
           </div>
         )}
-        <div className="flex flex-col w-full gap-3 py-4 px-2">
+        <div className="flex flex-col w-full gap-3 py-4">
           {messages &&
             messages.map((message, index) => {
               return (
