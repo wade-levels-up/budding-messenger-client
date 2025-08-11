@@ -14,31 +14,11 @@ const About = () => {
             Share a tree that grows with the health of your conversations
           </p>
           <div className="flex items-end overflow-auto">
-            <img
-              src="../src/assets/tree10.png"
-              alt=""
-              className="w-auto h-fit"
-            />
-            <img
-              src="../src/assets/tree20.png"
-              alt=""
-              className="w-auto h-fit"
-            />
-            <img
-              src="../src/assets/tree40.png"
-              alt=""
-              className="w-auto h-fit"
-            />
-            <img
-              src="../src/assets/tree80.png"
-              alt=""
-              className="w-auto h-fit"
-            />
-            <img
-              src="../src/assets/tree160.png"
-              alt=""
-              className="w-auto h-fit"
-            />
+            <img src="/tree10.png" alt="" className="w-auto h-fit" />
+            <img src="/tree20.png" alt="" className="w-auto h-fit" />
+            <img src="/tree40.png" alt="" className="w-auto h-fit" />
+            <img src="/tree80.png" alt="" className="w-auto h-fit" />
+            <img src="/tree160.png" alt="" className="w-auto h-fit" />
           </div>
           <hr />
           <p>
