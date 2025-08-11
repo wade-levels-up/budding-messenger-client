@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import NewMessage from "../components/forms/NewMessage";
@@ -22,9 +22,8 @@ const Conversation = () => {
 
   const loggedInUsersName = localStorage.getItem("username");
 
-  const getConversations = async () => {
+  const getConversations = useCallback(async () => {
     try {
-      // If conversation between two people GET conversation by recipient name
       if (recipient) {
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/conversations/${recipient}`,
@@ -41,7 +40,6 @@ const Conversation = () => {
         setConversations(data.conversations);
       }
 
-      // If conversation between mutiple people GET conversation by group chat name
       if (groupChatName) {
         const response = await fetch(
           `${
@@ -62,11 +60,11 @@ const Conversation = () => {
     } catch {
       toast("🚫 Unable to retrieve conversation");
     }
-  };
+  }, [recipient, groupChatName]);
 
   useEffect(() => {
     getConversations();
-  }, [recipient, groupChatName]);
+  }, [getConversations]);
 
   useEffect(() => {
     const getConversationMessages = async () => {
@@ -161,11 +159,7 @@ const Conversation = () => {
   return (
     <>
       <div className="absolute opacity-40 h-[200px] flex justify-center top-[50%] items-end">
-        <img
-          src={`../../src/assets/tree${treeLevel}.png`}
-          alt=""
-          width="auto"
-        />
+        <img src={`/tree${treeLevel}.png`} alt="" width="auto" />
       </div>
       <div
         onLoad={() => window.scrollTo(0, document.body.scrollHeight)}
@@ -178,10 +172,7 @@ const Conversation = () => {
               Conversation with {recipient}
             </h2>
             <ProfilePicture
-              src={
-                profilePictureFromQuery ||
-                "/src/assets/default_profile_picture.jpg"
-              }
+              src={profilePictureFromQuery || "/default_profile_picture.jpg"}
               alt={recipient || "Profile picture"}
             />
           </div>
@@ -206,7 +197,7 @@ const Conversation = () => {
                           className="rounded-full w-[40px] lg:w-[48px] bg-white/30"
                           src={
                             u.profile_picture_path ||
-                            "/src/assets/default_profile_picture.jpg"
+                            "/default_profile_picture.jpg"
                           }
                           alt={u.username}
                           title={u.username}

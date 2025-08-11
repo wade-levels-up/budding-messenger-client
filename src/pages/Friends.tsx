@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import UserCard from "../components/ui/UserCard";
 import { useEffect } from "react";
 import type { Friend, UserData } from "../types/types";
+import { toast } from "react-toastify";
 
 const Friends = () => {
   const [mutualFriends, setMutualFriends] = useState<Friend[]>([]);
@@ -39,7 +40,7 @@ const Friends = () => {
         const data = await response.json();
         setUserFriends(data.friends);
       } catch {
-        console.error("Unable to retrieve users friends");
+        toast("🚫 Unable to retrieve users friends");
       }
     };
 

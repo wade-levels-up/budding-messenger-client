@@ -57,13 +57,13 @@ const GroupConversations = () => {
             >
               <span>{c.name}</span>
               <div className="flex -space-x-2">
-                {c.users.map((u) => {
+                {c.users.map((u, index) => {
                   return (
                     <img
+                      key={index}
                       className={`rounded-full w-[32px] lg:w-[38px] bg-white border-3 border-blue-500`}
                       src={
-                        u.profile_picture_path ||
-                        "/src/assets/default_profile_picture.jpg"
+                        u.profile_picture_path || "/default_profile_picture.jpg"
                       }
                       alt={u.username}
                       title={u.username}

@@ -37,8 +37,7 @@ const SignIn = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
       navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
+    } catch {
       setError("Server error. Try again later.");
     }
   };

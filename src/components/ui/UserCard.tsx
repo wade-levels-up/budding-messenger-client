@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
+import defaultProfilePicture from "/default_profile_picture.jpg";
 import Button from "./Button";
 import type { Friend, ShallowUserData } from "../../types/types";
 import { toast } from "react-toastify";
@@ -40,8 +40,8 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
 
       notify(`☺️ Friend request sent to ${recipient}`);
       getUserData();
-    } catch (error) {
-      console.error(error);
+    } catch {
+      toast("🚫 Error: Unable to add friend");
     }
   };
 
@@ -66,8 +66,8 @@ const UserCard = ({ user, friendCard = false }: UserCardProps) => {
         }
 
         getUserData();
-      } catch (error) {
-        console.error(error);
+      } catch {
+        toast("🚫 Error: Unable to remove friend");
       }
     }
   };

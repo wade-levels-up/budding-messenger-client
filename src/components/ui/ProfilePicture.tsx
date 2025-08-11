@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ImgHTMLAttributes } from "react";
-import defaultProfilePicture from "../../assets/default_profile_picture.jpg";
+import defaultProfilePicture from "/default_profile_picture.jpg";
 
 type ProfileProps = {
   src: string;

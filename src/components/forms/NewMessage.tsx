@@ -28,10 +28,6 @@ const NewMessage = ({
         auth: { token },
       });
 
-      socketRef.current.on("connect", () => {
-        console.log("Socket connected!");
-      });
-
       socketRef.current.on("error", (err) => {
         toast(`❌ ${err.message}`);
       });

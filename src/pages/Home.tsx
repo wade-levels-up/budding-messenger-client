@@ -37,7 +37,7 @@ const Home = () => {
       </main>
       <img
         className="z-0 sepia absolute w-[50vh] opacity-22 animate-fade-in-xslow"
-        src="../src/assets/tree160.png"
+        src="/tree160.png"
         alt=""
       />
     </>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import Button from "../components/ui/Button";
 import ProfilePicture from "../components/ui/ProfilePicture";
-import defaultProfilePicture from "../assets/default_profile_picture.jpg";
+import defaultProfilePicture from "/default_profile_picture.jpg";
 import UpdatePictureModal from "../components/ui/UpdatePictureModal";
 import Bio from "../components/forms/Bio";
 import { format } from "date-fns";

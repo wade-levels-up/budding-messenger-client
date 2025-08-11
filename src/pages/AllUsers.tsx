@@ -89,6 +89,8 @@ const AllUsers = () => {
                     getUsers={getUsers}
                   />
                 );
+              } else {
+                return null;
               }
             })}
         </ul>

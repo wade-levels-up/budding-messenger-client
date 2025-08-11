@@ -147,7 +147,7 @@ const DashHeader = ({
                   <img
                     src={
                       user.profile_picture_path ||
-                      "/src/assets/default_profile_picture.jpg"
+                      "/default_profile_picture.jpg"
                     }
                     alt={user.username}
                     className="w-8 h-8 bg-white/30 rounded-full"
